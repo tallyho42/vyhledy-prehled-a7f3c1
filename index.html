@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Přehled zájemců — Výhledy Řeporyje</title>
+<style>
+  :root {
+    --bg: #f6f6f4;
+    --surface: #ffffff;
+    --surface-2: #f0efec;
+    --border: #e2e0da;
+    --text: #1c1b19;
+    --text-dim: #6b6862;
+    --accent: #2f6f4e;
+    --accent-soft: #e6f0ea;
+    --warn: #a1651a;
+    --warn-soft: #f6ecdd;
+    --mute: #5a6b7c;
+    --mute-soft: #e9eef2;
+    --off: #8a3d3d;
+    --off-soft: #f6e7e7;
+    --radius: 14px;
+    --shadow: 0 1px 2px rgba(0,0,0,.05), 0 4px 14px rgba(0,0,0,.04);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16181a;
+      --surface: #1e2124;
+      --surface-2: #24282c;
+      --border: #32373c;
+      --text: #eceae6;
+      --text-dim: #9a9791;
+      --accent: #7fc0a0;
+      --accent-soft: #1f3229;
+      --warn: #d9a45f;
+      --warn-soft: #33291a;
+      --mute: #9db4c9;
+      --mute-soft: #212a32;
+      --off: #d99191;
+      --off-soft: #33211f;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 14px rgba(0,0,0,.2);
+    }
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 28px 18px 64px; }
+
+  header h1 {
+    margin: 0 0 4px;
+    font-size: clamp(22px, 5vw, 30px);
+    letter-spacing: -.02em;
+  }
+  header .sub { color: var(--text-dim); font-size: 14px; margin: 0; }
+  header .stamp { color: var(--text-dim); font-size: 13px; margin: 10px 0 0; }
+
+  /* ---- statistiky ---- */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin: 22px 0 26px;
+  }
+  .stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    box-shadow: var(--shadow);
+  }
+  .stat .num { font-size: 30px; font-weight: 650; letter-spacing: -.03em; line-height: 1.1; }
+  .stat .lbl { font-size: 12.5px; color: var(--text-dim); margin-top: 4px; text-transform: uppercase; letter-spacing: .04em; }
+  .stat.total .num { color: var(--text); }
+  .stat.aktivni .num { color: var(--accent); }
+  .stat.prohlidka .num { color: var(--accent); }
+  .stat.proces .num { color: var(--warn); }
+  .stat.uzavreno .num { color: var(--off); }
+
+  /* ---- filtry ---- */
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+  .filters button {
+    font: inherit;
+    font-size: 13.5px;
+    padding: 7px 13px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-dim);
+    cursor: pointer;
+  }
+  .filters button[aria-pressed="true"] {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+  }
+
+  /* ---- karty zájemců ---- */
+  .list { display: grid; gap: 12px; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow);
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 14px;
+    align-items: start;
+  }
+  .ini {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-weight: 650; font-size: 15px; letter-spacing: .02em;
+    background: var(--surface-2);
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+  }
+  .card[data-grp="prohlidka"] .ini { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+  .card[data-grp="proces"] .ini { background: var(--warn-soft); color: var(--warn); border-color: transparent; }
+  .card[data-grp="uzavreno"] .ini { background: var(--off-soft); color: var(--off); border-color: transparent; }
+
+  .head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 2px; }
+  .badge {
+    font-size: 12px; font-weight: 600;
+    padding: 3px 9px; border-radius: 999px;
+    background: var(--mute-soft); color: var(--mute);
+  }
+  .badge.prohlidka { background: var(--accent-soft); color: var(--accent); }
+  .badge.proces { background: var(--warn-soft); color: var(--warn); }
+  .badge.uzavreno { background: var(--off-soft); color: var(--off); }
+  .when { font-size: 12.5px; color: var(--text-dim); }
+
+  .score { display: flex; align-items: center; gap: 8px; margin: 8px 0 6px; }
+  .bar { flex: 0 0 92px; height: 6px; border-radius: 3px; background: var(--surface-2); overflow: hidden; }
+  .bar i { display: block; height: 100%; background: var(--accent); border-radius: 3px; }
+  .score span { font-size: 12.5px; color: var(--text-dim); }
+
+  .summary { margin: 6px 0 0; font-size: 14.5px; color: var(--text); }
+  .next {
+    margin: 10px 0 0;
+    font-size: 13.5px;
+    color: var(--text-dim);
+    border-top: 1px dashed var(--border);
+    padding-top: 9px;
+  }
+  .next b { color: var(--text); font-weight: 600; }
+
+  footer { margin-top: 34px; font-size: 12.5px; color: var(--text-dim); line-height: 1.6; }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 20px 14px 48px; }
+    .card { grid-template-columns: 40px 1fr; gap: 11px; padding: 14px; }
+    .ini { width: 40px; height: 40px; font-size: 13.5px; }
+    .stat { padding: 12px 14px; }
+    .stat .num { font-size: 26px; }
+    .summary { font-size: 14px; }
+    .score { flex-direction: column; align-items: flex-start; gap: 5px; }
+    .bar { flex: 0 0 auto; width: 120px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Přehled zájemců o pronájem</h1>
+    <p class="sub">Byt 2+kk · rezidence Výhledy Řeporyje</p>
+    <p class="stamp">Data k <b id="stamp">2. 9. 2026</b> · zájemci jsou vedeni pouze pod iniciálami</p>
+  </header>
+
+  <section class="stats" id="stats" aria-label="Souhrn"></section>
+
+  <div class="filters" id="filters" role="group" aria-label="Filtr">
+    <button data-f="vse" aria-pressed="true">Vše</button>
+    <button data-f="prohlidka" aria-pressed="false">Prohlídka</button>
+    <button data-f="proces" aria-pressed="false">V procesu</button>
+    <button data-f="uzavreno" aria-pressed="false">Uzavřeno</button>
+  </div>
+
+  <main class="list" id="list"></main>
+
+  <footer>
+    Stránka neobsahuje jména, kontakty ani jiné osobní údaje — jen iniciály a shrnutí stavu jednání.
+    Podklady k jednotlivým zájemcům zůstávají v soukromé evidenci majitele.
+  </footer>
+
+</div>
+
+<script>
+// ---------------------------------------------------------------------------
+// Data. Iniciály + shrnutí stavu. Žádná jména, kontakty, adresy ani odkazy.
+// grp: prohlidka | proces | uzavreno   (řídí barvy, filtr i souhrnné karty)
+// ---------------------------------------------------------------------------
+const ZAJEMCI = [
+  {
+    ini: "V. T.", grp: "prohlidka", stav: "Prohlídka domluvena",
+    when: "pá 4. 9. v 9:30", score: 3, scoreMax: 10,
+    summary: "Domácnost tvoří tři osoby, uvádí plný úvazek a nejsilněji ze všech formuluje záměr bydlet dlouhodobě. Profil na portálu je ověřený a rejstřík dlužníků čistý. Veřejné zdroje ale naznačují rozpor mezi tvrzením o zaměstnání a tím, kde je práce ve skutečnosti hledána — to je hlavní věc k vyjasnění na místě. Chybí čísla: čistý příjem domácnosti proti prahu, schopnost složit jistotu, a neuvedeno je kouření ani zvířata. Nízké skóre je tedy chybějící informací, ne špatným profilem.",
+    next: "Předem se nic nepíše. Na prohlídce: zaměstnání a čistý příjem, jistota, samostatnost při drobných závadách."
+  },
+  {
+    ini: "D. G.", grp: "prohlidka", stav: "Prohlídka domluvena",
+    when: "pá 4. 9. v 10:00", score: 3, scoreMax: 10,
+    summary: "Termín si vybírá sám den po nasdílení kalendáře, což je dobrý signál. Jde o pár bez dětí, nekuřáky, bez zvířat, stěhující se do Prahy za prací — profilem přesně cílová skupina, a o výjimky ze smluvních podmínek se nevyjednává. Profil na portálu je ověřený, rejstřík dlužníků čistý. Nízké skóre je čistě chybějící informací o penězích: neznáme příjem ani typ úvazku. Největší riziko je zkušební doba u obou naráz, což se z chatu vyčíst nedá.",
+    next: "Do pátku není co řešit. Na prohlídce: příjem obou, zkušební doba, reference, jistota, samostatnost."
+  },
+  {
+    ini: "D. L.", grp: "proces", stav: "Čeká se na odpověď",
+    when: "kalendář nasdílen 1. 9., termín nevybrán", score: 4, scoreMax: 10,
+    summary: "Nejvyšší skóre ze všech aktivních zájemců. Jedna osoba, podnikatel, nekuřák bez zvířat, hledá dlouhodobé bydlení — a jako jediný sám od sebe nabízí doložit příjem i reference. Podnikání je dohledatelné ve veřejném rejstříku a rejstřík dlužníků je čistý. Slabinou je, že kalendář prohlídek má od 1. 9. a termín si dosud nevybral, přestože o prohlídku sám žádal. Připravená zpráva řeší obojí naráz: připomíná rezervaci a bere ho za slovo ohledně doložení příjmu.",
+    next: "Odeslat připravenou zprávu. Když do pá 4. 9. nezareaguje, uzavřít."
+  },
+  {
+    ini: "V. K.", grp: "proces", stav: "Čeká se na odpověď",
+    when: "domluven telefonát, zpráva přečtena", score: 2, scoreMax: 10,
+    summary: "Strukturálně nejlepší shoda s cílovým profilem ze všech dosavadních zájemců: pár bez dětí, oba pracující, nekuřáci, bez zvířat, zájem o dlouhodobý pronájem. Chybí ale jakékoli číslo — profese ani čistý příjem domácnosti nejsou známé. Rejstřík dlužníků je čistý, profil na portálu neověřený a nevyplněný. Domluven je telefonát a zpráva s časovými okny je přečtená, takže míč je na druhé straně. Psát teď další zprávu by vypadalo netrpělivě.",
+    next: "Počkat. Když telefonát nevyjde, poslat kalendář prohlídek; bez reakce uzavřít."
+  },
+  {
+    ini: "A. B.", grp: "proces", stav: "Čeká se na odpověď",
+    when: "kontakt předán 1. 9., od té doby ticho", score: 0, scoreMax: 10,
+    summary: "O sobě neuvádí vůbec nic, a to ani po přímém dotazu — místo odpovědi přišla jen žádost o telefonní číslo. To je samo o sobě signál, ne pouze chybějící údaj. Profil na portálu je neověřený a nevyplněný, rejstřík dlužníků čistý, veřejné zdroje nedávají nic použitelného ke spárování. Kontakt byl předán 1. 9. odpoledne a od té doby je ticho. Další zpráva se nepíše — o informace už jednou požádáno bylo a opakovat to znamená doprošovat se.",
+    next: "Počkat do pá 4. 9. Bez reakce uzavřít; do té doby budou po dvou prohlídkách."
+  },
+  {
+    ini: "G. B.", grp: "proces", stav: "Nový zájemce",
+    when: "první kontakt 31. 8.", score: 0, scoreMax: 10,
+    summary: "Zatím jen krátká zpráva se zájmem o prohlídku a žádostí o telefon; o sobě neuvádí nic. Uvedeno je pouze počáteční písmeno příjmení, takže prověření ve veřejných rejstřících ani jinde není možné — ověřit půjde teprve po vlastním představení. Telefon se zatím nedává: hovor by celý padl na zjišťování základů, které se dají vyřídit písemně a rychleji. Připravená je zpráva se čtyřmi otázkami a shrnutím podmínek pronájmu.",
+    next: "Odeslat připravenou zprávu s otázkami. Podle odpovědi rozhodnout, jestli pokračovat."
+  },
+  {
+    ini: "M. N.", grp: "proces", stav: "Nový zájemce",
+    when: "první kontakt 31. 8.", score: 0, scoreMax: 10,
+    summary: "Byt se podle zprávy velice líbí a je požadován telefonický kontakt, o sobě ale není uvedeno nic. Rejstřík dlužníků je čistý, profil na portálu neověřený a bez fotky. Veřejné zdroje nabízejí několik shod, žádná se ale nedá potvrdit — jméno je běžné a spárovat podle fotky nešlo. Telefon se zatím nedává, základní informace se rychleji vyřídí písemně.",
+    next: "Odeslat připravenou zprávu s otázkami na počet osob, práci, příjem a dobu nájmu."
+  },
+  {
+    ini: "Y. D.", grp: "proces", stav: "Nový zájemce",
+    when: "první kontakt 31. 8.", score: 0, scoreMax: 10,
+    summary: "Vlastní zpráva zatím nepřišla, jen automatická reakce portálu — takže není jisté ani to, jestli o byt opravdu jde, nebo šlo o proklik. Profil na portálu je neověřený a prázdný, rejstřík dlužníků čistý. Veřejné zdroje ukazují jediný, rovněž prázdný profil bez zaměstnavatele a bez fotky, takže shodu nejde potvrdit. Jedna zpráva to rozhodne: buď přijde odpověď, nebo se karta zavírá.",
+    next: "Odeslat připravenou zprávu s otázkami. Bez odpovědi uzavřít."
+  },
+  {
+    ini: "C. B.", grp: "uzavreno", stav: "K odmítnutí",
+    when: "vylučovací podmínka — počet osob", score: null,
+    summary: "Odmítnutí stojí na vylučovací podmínce: čtyři osoby proti maximu tří. Byt má 47 m² a zbylé dva byty v domě jsou ještě menší, takže nabídnout není co. Jinak by šlo o jeden z nejsilnějších profilů, které zatím přišly — ověřený profil, dlouhodobý pobyt v ČR, obě dospělé osoby pracující, děti v českých školách a explicitní zájem o dlouhodobý domov. Kdyby do nabídky přibyl větší byt, stojí za to se ozvat.",
+    next: "Odeslat připravené odmítnutí. Důvodem je velikost bytu proti počtu osob, nic jiného."
+  },
+  {
+    ini: "D. T.", grp: "uzavreno", stav: "K odmítnutí",
+    when: "vylučovací podmínka — zvíře", score: null,
+    summary: "Odmítnutí stojí na vylučovací podmínce: zvíře v bytě, uvedené v úvodní zprávě. Mrzí to, protože jinak jde o nejpodrobněji připravenou poptávku ze všech — dvě osoby, nekuřáci, sami od sebe nabízejí doložení příjmu, reference i jistotu a uvádějí zamýšlenou délku nájmu. Rešerše se dál nevede, skóre se nepočítá. Kdyby se podmínka o zvířatech někdy uvolnila, je tohle první karta, ke které se vracet.",
+    next: "Odeslat připravené odmítnutí — anglicky, protože v angličtině přišla i poptávka."
+  },
+  {
+    ini: "S. C.", grp: "uzavreno", stav: "K odmítnutí",
+    when: "vylučovací podmínka — zvíře", score: null,
+    summary: "Odmítnutí stojí na vylučovací podmínce: zvíře v bytě, uvedené v úvodní zprávě. Ta má dohromady devět slov, takže víc se neví skoro nic — chybí počet osob, profese, příjem i to, jestli se kouří. Profil na portálu je ověřený a rejstřík dlužníků čistý, na věci to ale nic nemění. Karta zůstává pro případ, že by majitel podmínku někdy uvolnil.",
+    next: "Odeslat připravené odmítnutí. Nenabízet, že by se to dalo domluvit."
+  },
+  {
+    ini: "K. M.", grp: "uzavreno", stav: "K odmítnutí",
+    when: "podmínka příjmu", score: null,
+    summary: "Odmítnutí stojí na podmínce příjmu. Tříčlenná domácnost s jediným příjmem, který se požadovanému trojnásobku nájmu včetně záloh ani nepřibližuje; vyplývá to z vlastního popisu situace v úvodní zprávě. Rešerše je po tomto nálezu zastavena, doklady se nevyžadují a kalendář prohlídek se neposílá. Text odmítnutí se opírá výhradně o příjmovou podmínku, kterou majitel drží u všech zájemců stejně.",
+    next: "Odeslat připravené odmítnutí. Nic dalšího nedoptávat."
+  },
+  {
+    ini: "O. N.", grp: "uzavreno", stav: "K odmítnutí",
+    when: "podmínka příjmu", score: null,
+    summary: "Odmítnutí stojí na podmínce příjmu — o vlastním příjmu není zmínka a veřejně dostupné informace neukazují nic, co by prahu odpovídalo. Ověření na portálu zůstalo nedokončené, rejstřík dlužníků je čistý. Ve hře jsou momentálně silnější kandidáti, takže se dál nedoptává. Text odmítnutí jede čistě na příjmovou podmínku a nic dalšího nezmiňuje.",
+    next: "Odeslat připravené odmítnutí."
+  },
+  {
+    ini: "T. O.", grp: "uzavreno", stav: "Odstoupeno",
+    when: "uzavřeno z druhé strany 1. 9.", score: null,
+    summary: "Uzavřeno z druhé strany. Šlo o prostředníka, ne o zájemce o bydlení pro sebe; rodina, kterou zastupoval, byt odmítla kvůli dojíždění dítěte do školy. Odpovídat není potřeba, rozloučení proběhlo zdvořile. Za zapamatování stojí drobný rozpor mezi první a poslední zprávou o tom, kdo by v bytě vlastně bydlel — kdyby se konverzace někdy znovu otevřela.",
+    next: "Nic nedělat."
+  }
+];
+
+// ---------------------------------------------------------------------------
+
+const $list = document.getElementById("list");
+const $stats = document.getElementById("stats");
+
+function pocty(d) {
+  const prohlidka = d.filter(z => z.grp === "prohlidka").length;
+  const proces = d.filter(z => z.grp === "proces").length;
+  const uzavreno = d.filter(z => z.grp === "uzavreno").length;
+  return [
+    { k: "total",     n: d.length,             l: "Celkem zájemců" },
+    { k: "aktivni",   n: prohlidka + proces,   l: "Aktivních" },
+    { k: "prohlidka", n: prohlidka,            l: "Prohlídka domluvena" },
+    { k: "proces",    n: proces,               l: "V procesu" },
+    { k: "uzavreno",  n: uzavreno,             l: "Odmítnuto / uzavřeno" }
+  ];
+}
+
+$stats.innerHTML = pocty(ZAJEMCI).map(s => `
+  <div class="stat ${s.k}">
+    <div class="num">${s.n}</div>
+    <div class="lbl">${s.l}</div>
+  </div>`).join("");
+
+function karta(z) {
+  const skore = z.score === null ? "" : `
+    <div class="score">
+      <div class="bar"><i style="width:${Math.round(z.score / z.scoreMax * 100)}%"></i></div>
+      <span>skóre ${z.score}/${z.scoreMax} — zbytek nerozhodnutý, chybí informace</span>
+    </div>`;
+  return `
+  <article class="card" data-grp="${z.grp}">
+    <div class="ini" aria-hidden="true">${z.ini}</div>
+    <div>
+      <div class="head">
+        <span class="badge ${z.grp}">${z.stav}</span>
+        <span class="when">${z.when}</span>
+      </div>
+      ${skore}
+      <p class="summary">${z.summary}</p>
+      <p class="next"><b>Další krok:</b> ${z.next}</p>
+    </div>
+  </article>`;
+}
+
+function vykresli(filtr) {
+  const data = filtr === "vse" ? ZAJEMCI : ZAJEMCI.filter(z => z.grp === filtr);
+  $list.innerHTML = data.map(karta).join("");
+}
+
+document.getElementById("filters").addEventListener("click", e => {
+  const btn = e.target.closest("button");
+  if (!btn) return;
+  for (const b of e.currentTarget.querySelectorAll("button")) {
+    b.setAttribute("aria-pressed", String(b === btn));
+  }
+  vykresli(btn.dataset.f);
+});
+
+vykresli("vse");
+</script>
+</body>
+</html>
