@@ -405,10 +405,12 @@ const ZAJEMCI = [
     kontakt: {
       tah: "konec",
       hl: "Vyřízeno — odmítnuto na portálu 3. 9. v 10:26",
-      prubeh: "Jediná zpráva z 1. 9. odpoledne, celkem devět slov — pracující, malý vychovaný pes, bezproblémová — a tím bylo rozhodnuto; kalendář prohlídek nasdílen nebyl. Odmítnuto přes portál 3. 9. v 10:26."
+      prubeh: "Jediná zpráva z 1. 9. odpoledne, celkem devět slov — pracující, malý vychovaný pes, bezproblémová; profil na portálu k tomu doplnil obor a velikost domácnosti. Odmítnuto přes portál 3. 9. v 10:26."
     },
-    summary: "Odmítnutí stálo na vylučovací podmínce: zvíře v bytě, uvedené v úvodní zprávě. Ta má dohromady devět slov, takže víc se nevědělo skoro nic — chybí počet osob, profese, příjem i to, jestli se kouří. Rešerše proběhla a nic proti ní nenašla, ale na věci to nic neměnilo, protože podmínka je jednoznačná. Kdyby majitel podmínku o zvířatech někdy uvolnil, začínalo by se stejně od úplných základů.",
+    summary: "Odmítnutí stálo na dvou nezávislých důvodech, každý sám o sobě dostačující. Zvíře v bytě je vylučovací podmínka, uvedené v úvodní zprávě. K tomu profil na portálu doplnil, co zpráva neřekla: dvoučlenná domácnost s jediným uvedeným zaměstnáním, obor zdravotnictví — i při nadprůměrném platu je jeden takový příjem na dvoučlennou domácnost proti požadovanému prahu dlouhodobě těsný až nedostatečný. Bez doloženého čísla je to odhad, ne ověřený fakt, ale ve spojení se zvířetem už není potřeba ho dál ověřovat.",
     resh: [
+      { src: "Zvíře", res: "nalez", txt: "<b>Malý pes</b>, uvedený v úvodní zprávě i v profilu. <b>Vylučovací podmínka.</b>" },
+      { src: "Příjem", res: "nalez", klic: true, txt: "<b>Profil na portálu</b> (dodatečné informace, ne text zprávy) uvádí dvoučlennou domácnost a zaměstnání v oboru <b>zdravotnictví</b> — bez druhého uvedeného zaměstnání. Jeden příjem z tohoto oboru na dvoučlennou domácnost je proti prahu dlouhodobě <b>na hraně až pod ním</b>. Odhad majitele, číslo nedoložené — ale v kombinaci se zvířetem stačí." },
       { src: "Profil portál", res: "ok", txt: "<b>Ověřená uživatelka.</b> Pojištění odpovědnosti nemá." },
       { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
       { src: "LinkedIn", res: "nic", txt: "<b>Žádný výsledek</b> na jméno ani příjmení. Profil nemá." }
