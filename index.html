@@ -213,7 +213,7 @@
 
   <header>
     <h1>Přehled zájemců o pronájem</h1>
-    <p class="stamp">Poslední aktualizace <b>2. 9. 2026 v 15:00</b> · zájemci jsou vedeni pouze pod iniciálami</p>
+    <p class="stamp">Poslední aktualizace <b>3. 9. 2026 v 11:00</b> · zájemci jsou vedeni pouze pod iniciálami</p>
   </header>
 
   <section class="stats" id="stats" aria-label="Souhrn"></section>
@@ -289,10 +289,10 @@ const ZAJEMCI = [
     termin: null,
     kontakt: {
       tah: "zajemce",
-      hl: "Kalendář dostal 1. 9. — termín si dosud nevybral",
-      prubeh: "První kontakt 31. 8. večer s podrobným představením a vlastní nabídkou doložit příjem i reference; 1. 9. v poledne nasdílen kalendář prohlídek a nabídnut telefon, a od té doby ticho — přitom o prohlídku v první zprávě sám žádal. Uzávěrka je pátek 4. 9."
+      hl: "Kalendář aktualizován 3. 9. — termín stále nevybraný",
+      prubeh: "První kontakt 31. 8. večer s podrobným představením a vlastní nabídkou doložit příjem i reference; 1. 9. v poledne nasdílen kalendář prohlídek a nabídnut telefon — bez odezvy. 3. 9. ráno majitel kalendář ještě jednou aktualizoval a připomněl nabídku i doklady k příjmu, termín ale pořád nevybral."
     },
-    summary: "Nejvyšší skóre ze všech aktivních zájemců. Jedna osoba, podnikatel, nekuřák bez zvířat, hledá dlouhodobé bydlení — a jako jediný ze čtrnácti sám od sebe nabízí doložit příjem i reference. Ochota doložit je dobrý signál a zároveň naznačuje, že reference z předchozího nájmu nejspíš má. Proti tomu stojí, že kalendář má a termín si nevybral, ačkoli o prohlídku sám žádal. Připravená zpráva řeší obojí naráz: připomíná rezervaci a rovnou ho bere za slovo ohledně příjmu.",
+    summary: "Nejvyšší skóre ze všech aktivních zájemců. Jedna osoba, podnikatel, nekuřák bez zvířat, hledá dlouhodobé bydlení — a jako jediný ze všech sám od sebe nabízí doložit příjem i reference. Ochota doložit je dobrý signál a zároveň naznačuje, že reference z předchozího nájmu nejspíš má. Proti tomu stojí, že kalendář má už od úterý a dnes byl ještě aktualizovaný, a termín si přesto nevybral, ačkoli o prohlídku sám žádal. Dvakrát nabídnutá příležitost bez reakce je slabší signál než jednou nevyužitá.",
     resh: [
       { src: "Profil portál", res: "ok", txt: "<b>Ověřený uživatel.</b> Pojištění odpovědnosti nemá." },
       { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů, aktuální i ukončená řízení." },
@@ -305,11 +305,11 @@ const ZAJEMCI = [
     score: 2, scoreMax: 10,
     termin: null,
     kontakt: {
-      tah: "zajemce",
-      hl: "Zpráva přečtená — čeká se na telefonát, dnes do 16:00",
-      prubeh: "První kontakt 1. 9. brzy ráno s představením páru a žádostí o telefonické domluvení prohlídky; téhož dne v poledne odeslán kontakt a časová okna pro zavolání — zpráva je označená jako přečtená, telefonát zatím nepřišel."
+      tah: "my",
+      hl: "Telefonát nevyšel — na tahu je nasdílení kalendáře",
+      prubeh: "První kontakt 1. 9. brzy ráno s představením páru a žádostí o telefonické domluvení prohlídky; téhož dne v poledne odeslán kontakt a časová okna pro zavolání. Obě okna uplynula bez hovoru, zpráva zůstala jen přečtená — telefonát tedy nevyšel a další pobízení ke hovoru už nemá smysl."
     },
-    summary: "Strukturálně nejlepší shoda s cílovým profilem ze všech dosavadních zájemců: pár bez dětí, oba pracující, nekuřáci, bez zvířat, zájem o dlouhodobý pronájem. Přesně to, co je poptávané. Chybí ale jakékoli číslo — profese ani čistý příjem domácnosti nejsou známé, a rešerše k tomu nic nepřidala. Skóre 2 je proto skoro celé nerozhodnuté, ne špatné. Až se ozve, jsou dvě otázky, které rozhodnou: profese obou a čistý příjem domácnosti.",
+    summary: "Strukturálně nejlepší shoda s cílovým profilem ze všech dosavadních zájemců: pár bez dětí, oba pracující, nekuřáci, bez zvířat, zájem o dlouhodobý pronájem. Přesně to, co je poptávané. Chybí ale jakékoli číslo — profese ani čistý příjem domácnosti nejsou známé, a rešerše k tomu nic nepřidala. Skóre 2 je proto skoro celé nerozhodnuté, ne špatné. Telefonát se nepovedl domluvit, takže dál je na řadě nasdílení kalendáře prohlídek — rezervace posune věc dál bez dalšího dohadování, a kdo si termín i tak nevybere, dá tím samotnou odpověď.",
     resh: [
       { src: "Profil portál", res: "pozor", txt: "<b>Neověřená uživatelka</b>, osobní profil nevyplněný, bez pojištění odpovědnosti." },
       { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
@@ -350,14 +350,14 @@ const ZAJEMCI = [
   },
   {
     ini: "Y. D.", grp: "proces", stav: "Čeká se na odpověď",
-    score: 0, scoreMax: 10,
+    score: 2, scoreMax: 10,
     termin: null,
     kontakt: {
       tah: "zajemce",
-      hl: "Doptání odesláno 2. 9. — uzávěrka pátek 4. 9.",
-      prubeh: "Z jeho strany je v konverzaci jediná událost — automatická reakce portálu z 31. 8. dopoledne, žádná vlastní zpráva; 2. 9. odesláno standardní doptání na počet osob, zaměstnání, čistý příjem a důvod zájmu, a od té chvíle je míč na jeho straně."
+      hl: "Kalendář nasdílen 2. 9. — termín zatím nevybral",
+      prubeh: "Z jeho strany byla v konverzaci nejdřív jen automatická reakce portálu z 31. 8.; na doptání odeslané 2. 9. odpoledne odpověděl o tři hodiny později s celým profilem — pár se stěhuje dohromady z oddělených pronajatých pokojů, oba pracují, hledají dlouhodobě. Kalendář prohlídek nasdílen týž den, zatím ale jen s termíny na pátek a pondělí — širší nabídka přibude začátkem příštího týdne."
     },
-    summary: "Vlastní zpráva zatím nepřišla, jen automatická reakce portálu — takže není jisté ani to, jestli o byt opravdu jde. Rešerše přinesla jediný, ale rovněž prázdný profil: žádný headline, žádný zaměstnavatel, žádná fotka. Vzácné jméno dává slušnou jistotu, že jde o tutéž osobu, jenže potvrdit to nešlo a stejně by to nic nepřidalo. Dohromady to znamená, že o něm nevíme nic použitelného. Doptání odešlo 2. 9. a rozhodne za nás: buď přijde odpověď, nebo se karta v pátek 4. 9. zavírá.",
+    summary: "Rozhodne příjem, a ten neuvedl. Přítelkyně je prodavačka v obchodě, on instalatér na živnost s příjmem „podle odvedené práce\" — dva výdělky, ale ani jedno číslo. Zastavovací nález to není: jsou to dva příjmy a zaběhnutý řemeslník vydělávat může, bez čísla se to jen nedá rozhodnout. Rešerše přinesla jediný, ale prázdný profil — žádný headline, žádný zaměstnavatel, žádná fotka; vzácné jméno dává slušnou jistotu, že jde o tutéž osobu, ale nic použitelného to nepřidalo. Kalendář je zatím skoro prázdný, takže nevybraný termín teď ještě neznamená nezájem — skutečný test přijde, až budou volné i pozdější dny.",
     resh: [
       { src: "Profil portál", res: "pozor", txt: "<b>Neověřený uživatel</b>, bez pojištění odpovědnosti, <b>bez avataru</b>." },
       { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
@@ -365,15 +365,15 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "C. B.", grp: "uzavreno", stav: "K odmítnutí",
+    ini: "C. B.", grp: "uzavreno", stav: "Odmítnuto",
     score: null,
     termin: null,
     kontakt: {
-      tah: "my",
-      hl: "Odmítnutí připravené — vylučovací podmínka",
-      prubeh: "Jediná zpráva z 1. 9. ráno, zato se vším podstatným — čtyřčlenná rodina, v ČR přes pět let, obě dospělé osoby pracující, děti v českých školách, zájem o dlouhodobý domov — a hned z ní plyne vylučovací podmínka."
+      tah: "konec",
+      hl: "Vyřízeno — odmítnuto na portálu 3. 9. v 10:26",
+      prubeh: "Jediná zpráva z 1. 9. ráno, zato se vším podstatným — čtyřčlenná rodina, v ČR přes pět let, obě dospělé osoby pracující, děti v českých školách, zájem o dlouhodobý domov — a hned z ní plyne vylučovací podmínka. Odmítnuto přes portál 3. 9. v 10:26."
     },
-    summary: "Odmítnutí stojí na vylučovací podmínce: čtyři osoby proti maximu tří. Byt je pro čtyři osoby malý a zbylé dva byty v nabídce jsou ještě menší, takže nabídnout není co — netýká se to jen téhle nabídky. Jinak by šlo o jeden z nejsilnějších profilů, které zatím přišly: ověřený profil, dlouhodobý pobyt v ČR, obě dospělé osoby pracující, děti v českých školách, explicitní zájem o dlouhodobý domov. Rešerše se dál nevedla, protože podmínka rozhodla dřív. Kdyby do nabídky přibyl větší byt, stojí za to se ozvat.",
+    summary: "Odmítnutí stálo na vylučovací podmínce: čtyři osoby proti maximu tří. Byt je pro čtyři osoby malý a zbylé dva byty v nabídce jsou ještě menší, takže nabídnout nebylo co — netýkalo se to jen téhle nabídky. Jinak by šlo o jeden z nejsilnějších profilů, které zatím přišly: ověřený profil, dlouhodobý pobyt v ČR, obě dospělé osoby pracující, děti v českých školách, explicitní zájem o dlouhodobý domov. Rešerše se dál nevedla, protože podmínka rozhodla dřív. Kdyby do nabídky přibyl větší byt, stojí za to se ozvat.",
     resh: [
       { src: "Profil portál", res: "ok", txt: "<b>Ověřená uživatelka.</b> Pojištění odpovědnosti nemá." },
       { src: "ISIR", res: "nehl", txt: "<b>Rešerše nezahájena</b> — vylučovací podmínka rozhodla dřív, skóre se nepočítá." },
@@ -399,15 +399,15 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "S. C.", grp: "uzavreno", stav: "K odmítnutí",
+    ini: "S. C.", grp: "uzavreno", stav: "Odmítnuto",
     score: null,
     termin: null,
     kontakt: {
-      tah: "my",
-      hl: "Odmítnutí připravené — vylučovací podmínka",
-      prubeh: "Jediná zpráva z 1. 9. odpoledne, celkem devět slov — pracující, malý vychovaný pes, bezproblémová — a tím je rozhodnuto; kalendář prohlídek nasdílen nebyl."
+      tah: "konec",
+      hl: "Vyřízeno — odmítnuto na portálu 3. 9. v 10:26",
+      prubeh: "Jediná zpráva z 1. 9. odpoledne, celkem devět slov — pracující, malý vychovaný pes, bezproblémová — a tím bylo rozhodnuto; kalendář prohlídek nasdílen nebyl. Odmítnuto přes portál 3. 9. v 10:26."
     },
-    summary: "Odmítnutí stojí na vylučovací podmínce: zvíře v bytě, uvedené v úvodní zprávě. Ta má dohromady devět slov, takže víc se neví skoro nic — chybí počet osob, profese, příjem i to, jestli se kouří. Rešerše proběhla a nic proti ní nenašla, ale na věci to nic nemění, protože podmínka je jednoznačná. Karta zůstává pro případ, že by majitel podmínku někdy uvolnil — jenže pak by se stejně muselo začít od úplných základů.",
+    summary: "Odmítnutí stálo na vylučovací podmínce: zvíře v bytě, uvedené v úvodní zprávě. Ta má dohromady devět slov, takže víc se nevědělo skoro nic — chybí počet osob, profese, příjem i to, jestli se kouří. Rešerše proběhla a nic proti ní nenašla, ale na věci to nic neměnilo, protože podmínka je jednoznačná. Kdyby majitel podmínku o zvířatech někdy uvolnil, začínalo by se stejně od úplných základů.",
     resh: [
       { src: "Profil portál", res: "ok", txt: "<b>Ověřená uživatelka.</b> Pojištění odpovědnosti nemá." },
       { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
@@ -448,15 +448,15 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "O. N.", grp: "uzavreno", stav: "K odmítnutí",
+    ini: "O. N.", grp: "uzavreno", stav: "Odmítnuto",
     score: null,
     termin: null,
     kontakt: {
-      tah: "my",
-      hl: "Odmítnutí připravené — podmínka příjmu",
-      prubeh: "První kontakt 31. 8. odpoledne automatickou reakcí a hned za ní pár otázek k bytu se žádostí o telefonát, o sobě přitom nic; kalendář prohlídek nasdílen nebyl a rozhodla až následná rešerše."
+      tah: "konec",
+      hl: "Vyřízeno — odmítnuto na portálu 3. 9. v 10:27",
+      prubeh: "První kontakt 31. 8. odpoledne automatickou reakcí a hned za ní pár otázek k bytu se žádostí o telefonát, o sobě přitom nic; kalendář prohlídek nasdílen nebyl a rozhodla až následná rešerše. Odmítnuto přes portál 3. 9. v 10:27."
     },
-    summary: "Tohle je jediný případ, kdy o odmítnutí rozhodla rešerše, ne to, co zájemkyně sama napsala. Ze zprávy nešlo poznat nic — jen otázky k bytu a žádost o telefonát. Veřejný profil ale ukazuje studium bez jakékoli zmínky o příjmu, a to proti požadovanému trojnásobku nájmu včetně záloh nevychází, pokud k tomu není práce nebo spolubydlící s příjmem. Jistota identity je přitom vysoká: příjmení je vzácné a lokalita sedí. Ve hře jsou momentálně silnější kandidáti, takže se dál nedoptává.",
+    summary: "Tohle je jediný případ, kdy o odmítnutí rozhodla rešerše, ne to, co zájemkyně sama napsala. Ze zprávy nešlo poznat nic — jen otázky k bytu a žádost o telefonát. Veřejný profil ale ukazoval studium bez jakékoli zmínky o příjmu, a to proti požadovanému trojnásobku nájmu včetně záloh nevycházelo, pokud k tomu není práce nebo spolubydlící s příjmem. Jistota identity byla přitom vysoká: příjmení je vzácné a lokalita sedí. Ve hře byli momentálně silnější kandidáti, takže se dál nedoptávalo.",
     resh: [
       { src: "Profil portál", res: "pozor", txt: "<b>Ověření nedokončené</b> — ověření bezdlužnosti sice proběhlo, ale minimálně jeden rejstřík nebyl prověřen, protože nebyla dodána všechna data. Profil nevyplněný, bez pojištění. Doplnit jde tlačítkem <b>„Vyžádat\"</b> přímo v konverzaci." },
       { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
@@ -477,6 +477,23 @@ const ZAJEMCI = [
       { src: "Profil portál", res: "pozor", txt: "<b>Neověřená uživatelka</b>, profil nevyplněný, bez pojištění odpovědnosti." },
       { src: "ISIR", res: "nehl", txt: "<b>Rešerše nezahájena</b> — zájemkyně odstoupila sama, hledat nemá smysl." },
       { src: "LinkedIn", res: "nehl", txt: "<b>Rešerše nezahájena</b> — ze stejného důvodu." }
+    ]
+  },
+  {
+    ini: "M. S.", grp: "uzavreno", stav: "Odmítnuto",
+    score: null,
+    termin: null,
+    kontakt: {
+      tah: "konec",
+      hl: "Vyřízeno — odmítnuto na portálu 3. 9. v 10:26",
+      prubeh: "První kontakt 2. 9. odpoledne, hned následovalo standardní doptání — a odpověď přišla o hodinu a čtvrt později se vším požadovaným najednou: čtyři osoby, práce na živnost, konkrétní rozmezí čistého příjmu. Odmítnuto přes portál 3. 9. v 10:26."
+    },
+    summary: "Odmítnutí stálo na dvou nezávislých vylučujících zjištěních, každé samo o sobě dostačující. Domácnost má čtyři osoby — nad hranicí tří, kterou má i zbytek nabídky v domě, takže náhradní byt nebyl. A jediný příjem čtyřčlenné domácnosti nedosahoval požadovaného trojnásobku nájmu včetně záloh, ani zdaleka. Odpověděl přitom vzorně: na všechny otázky, s konkrétním číslem, rychle. Kdyby šlo o jednu nebo dvě osoby s vyšším příjmem, byl by to slušný kandidát — tahle karta stojí za připomenutí, kdyby se nabídka v domě někdy rozšířila.",
+    resh: [
+      { src: "Počet osob", res: "nalez", klic: true, txt: "<b>Čtyři osoby</b> — on, manželka, dvě děti. <b>Vylučovací podmínka</b>, uvedeno vlastním tvrzením v odpovědi na doptání." },
+      { src: "Příjem", res: "nalez", klic: true, txt: "<b>Čistý příjem 50–55 tisíc Kč</b> měsíčně, jediný pro čtyřčlennou domácnost — pod požadovaným prahem. <b>Vylučovací podmínka</b>, uvedeno vlastním tvrzením." },
+      { src: "Profil portál", res: "ok", txt: "<b>Ověřený uživatel.</b> Pojištění odpovědnosti nemá." },
+      { src: "ISIR / LinkedIn", res: "nehl", txt: "<b>Rešerše nezahájena</b> — vylučovací podmínky rozhodly z vlastní odpovědi, skóre se nepočítá." }
     ]
   }
 ];
