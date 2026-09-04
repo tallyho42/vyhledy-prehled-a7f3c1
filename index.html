@@ -213,7 +213,7 @@
 
   <header>
     <h1>Přehled zájemců o pronájem</h1>
-    <p class="stamp">Poslední aktualizace <b>3. 9. 2026 v 11:00</b> · zájemci jsou vedeni pouze pod iniciálami</p>
+    <p class="stamp">Poslední aktualizace <b>4. 9. 2026 v 12:00</b> · zájemci jsou vedeni pouze pod iniciálami</p>
   </header>
 
   <section class="stats" id="stats" aria-label="Souhrn"></section>
@@ -252,35 +252,19 @@
 // ---------------------------------------------------------------------------
 const ZAJEMCI = [
   {
-    ini: "V. T.", grp: "prohlidka", stav: "Prohlídka domluvena",
-    score: 3, scoreMax: 10,
-    termin: { den: "pátek 4. 9. 2026", cas: "9:30 – 10:00", pozn: "Rezervováno den po nasdílení kalendáře." },
+    ini: "V. T.", grp: "proces", stav: "Prohlídka proběhla",
+    score: 5, scoreMax: 10,
+    termin: null,
     kontakt: {
-      tah: "klid",
-      hl: "Domluveno",
-      prubeh: "První kontakt 31. 8. rovnou s představením — tři osoby, plný úvazek, zájem o dlouhodobý domov; následovalo nasdílení kalendáře 1. 9., rezervace termínu ještě týž den a krátké poděkování."
+      tah: "zajemce",
+      hl: "Prohlídka proběhla 4. 9. — čeká se na čísla",
+      prubeh: "První kontakt 31. 8. rovnou s představením — tři osoby, plný úvazek, zájem o dlouhodobý domov; nasdílení kalendáře 1. 9. a rezervace termínu ještě týž den. Prohlídka 4. 9. proběhla a majiteli se velmi líbila — osobně vysvětlila dřívější rozpor s profilem (nová práce v Praze) a zmínila druhý zdroj příjmu z pronájmu vlastních bytů. Poté napsala, poděkovala za setkání a požádala o půdorysy, které týž den dostala."
     },
-    summary: "Domácnost tvoří tři osoby, uvádí plný úvazek a nejsilněji ze všech formuluje záměr bydlet dlouhodobě — „dlouhodobý domov\", „stabilní bydlení\". Tři osoby jsou horní hranice, ne přes ni. Chybí ale čísla: čistý příjem domácnosti proti prahu, schopnost složit jistotu, a neuvedeno není ani kouření a zvířata. Nízké skóre je tedy chybějící informací, ne špatným profilem. Hlavní věc k vyjasnění je rozpor mezi tím, co píše o zaměstnání, a tím, co ukazuje veřejný profil.",
+    summary: "Prohlídka dopadla mimořádně dobře a dvě dřívější otevřené otázky se vyjasnily samy. Rozpor mezi tím, co psala o zaměstnání, a neaktuálním veřejným profilem má vysvětlení — nová práce je důvodem stěhování, ne indicií nezaměstnanosti. Dlouhodobost je teď jednoznačná: racionální důvod stěhování se potvrdil. Solventnost o kousek vzrostla, protože kromě zaměstnání zmínila i druhý zdroj příjmu z vlastního pronájmu bytů, ale ani jedno číslo dosud nezná. Tři osoby zůstávají na horní hranici, ne přes ni. Zbývá jediná věc, která rozhodne: konkrétní čísla obou příjmů proti prahu.",
     resh: [
       { src: "Profil portál", res: "ok", txt: "<b>Ověřená uživatelka.</b> Pojištění odpovědnosti nemá." },
       { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů, aktuální i ukončená řízení." },
-      { src: "LinkedIn", res: "pozor", klic: true, txt: "<b>Profil dohledán, jistota identity vysoká</b> (nepříliš časté příjmení, adresa profilu bez číselné přípony). Jenže: štítek <b>„Open to work\"</b>, <b>žádný aktuální zaměstnavatel</b>, a pracovní preference míří do <b>jiného města, než kam se stěhuje</b>. To se rozchází s tvrzením o plném úvazku a solventní rodině. Není to důkaz nezaměstnanosti — profil může být zastaralý — ale vysvětlit to musí." }
-    ]
-  },
-  {
-    ini: "D. G.", grp: "prohlidka", stav: "Prohlídka domluvena",
-    score: 3, scoreMax: 10,
-    termin: { den: "pátek 4. 9. 2026", cas: "10:00 – 10:30", pozn: "Termín si vybral sám den po nasdílení kalendáře." },
-    kontakt: {
-      tah: "klid",
-      hl: "Domluveno",
-      prubeh: "První kontakt 31. 8. s představením páru stěhujícího se za prací; po nasdílení kalendáře 1. 9. přišla rezervace termínu během čtyř minut a poté potvrzení, že se v pátek uvidíme."
-    },
-    summary: "Profilem přesně cílová skupina: pár bez dětí, nekuřáci, bez zvířat, stěhování do Prahy za prací — racionální důvod, ne rozmar. O výjimky ze smluvních podmínek se nevyjednává. Rezervace během čtyř minut od nasdílení kalendáře je nejlepší reakční doba ze všech zájemců. Nízké skóre je čistě chybějící informací o penězích: neznáme příjem ani typ úvazku. Největší riziko je zkušební doba u obou naráz, a to se z chatu vyčíst nedá.",
-    resh: [
-      { src: "Profil portál", res: "ok", txt: "<b>Ověřený uživatel.</b> Pojištění odpovědnosti nemá." },
-      { src: "ISIR", res: "pozor", txt: "<b>Čistý</b> — 0 nálezů, aktuální i ukončená řízení. <b>Výhrada:</b> část případné historie může ležet mimo dosah českého rejstříku, protože dosavadní život probíhal převážně mimo ČR." },
-      { src: "LinkedIn", res: "nic", txt: "<b>Nedohledán.</b> Jediný výsledek je falešná shoda na část příjmení — jiná země, jiné jméno. Profil podle všeho nemá. <b>Zaměstnavatele se dozvíme až v pátek.</b>" }
+      { src: "LinkedIn", res: "ok", klic: true, txt: "<b>Rozpor vyřešen.</b> Profil dřív ukazoval štítek <b>„Open to work\"</b> s preferencí jiného města a bez aktuálního zaměstnavatele, což se rozcházelo s tvrzením o plném úvazku. Na prohlídce vysvětlila: jde o <b>novou práci v Praze</b>, kvůli které se stěhuje — profil byl jen neaktuální, ne signál nezaměstnanosti." }
     ]
   },
   {
@@ -314,38 +298,6 @@ const ZAJEMCI = [
       { src: "Profil portál", res: "pozor", txt: "<b>Neověřená uživatelka</b>, osobní profil nevyplněný, bez pojištění odpovědnosti." },
       { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
       { src: "LinkedIn", res: "nic", txt: "<b>Žádný výsledek</b> na jméno ani příjmení. Profil nemá. Rešerše tedy nepřinesla nic, co by doplnilo chybějící čísla." }
-    ]
-  },
-  {
-    ini: "A. B.", grp: "proces", stav: "Čeká se na odpověď",
-    score: 0, scoreMax: 10,
-    termin: null,
-    kontakt: {
-      tah: "zajemce",
-      hl: "Kontakt předán 1. 9. odpoledne — od té doby ticho",
-      prubeh: "První kontakt 31. 8. jen automatickou reakcí a dotazem na aktuálnost nabídky; na přímou žádost o krátké info o sobě 1. 9. odpověď nepřišla, místo toho dorazila žádost o telefonní číslo — to bylo týž den odpoledne předáno a od té doby je ticho. Uzávěrka je pátek 4. 9."
-    },
-    summary: "O sobě neuvádí vůbec nic, a to ani po přímém dotazu — místo odpovědi přišla jen žádost o telefonní číslo. To je samo o sobě signál, ne pouze chybějící údaj: jeden pokus o získání informací už proběhl a skončil naprázdno. Rešerše nedokázala mezeru zaplnit, protože není co spárovat. Kontakt má od 1. 9. odpoledne, takže míč je jednoznačně na její straně. Další zprávu psát nemá smysl — opakovat žádost znamená doprošovat se.",
-    resh: [
-      { src: "Profil portál", res: "pozor", txt: "<b>Neověřená uživatelka</b>, osobní profil nevyplněný, bez pojištění odpovědnosti a <b>bez avataru</b> — což pak znemožnilo ověřit shodu podle fotky." },
-      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
-      { src: "LinkedIn", res: "nic", txt: "<b>Nedohledán.</b> Hledání vrátilo přes šest stran jmenovkyň napříč šesti zeměmi. Jediný tuzemský výsledek má jiné křestní jméno. Bez fotky a bez jediného údaje od ní by výběr kohokoli z nich bylo hádání — <b>proto nikdo vybrán nebyl</b>." }
-    ]
-  },
-  {
-    ini: "M. N.", grp: "proces", stav: "Čeká se na odpověď",
-    score: 0, scoreMax: 10,
-    termin: null,
-    kontakt: {
-      tah: "zajemce",
-      hl: "Doptání odesláno 2. 9. — uzávěrka pátek 4. 9.",
-      prubeh: "První kontakt 31. 8. dopoledne — byt se velice líbí a je požadován telefonický kontakt, o sobě přitom nic; 2. 9. odesláno standardní doptání na počet osob, zaměstnání, čistý příjem a důvod zájmu, a od té chvíle je míč na její straně."
-    },
-    summary: "Byt se podle zprávy velice líbí a je požadován telefonický kontakt, o sobě ale není uvedeno nic. Rešerše narazila na kombinaci běžného jména a chybějící fotky: kandidátek je víc a hned dvě sedí lokalitou, ale potvrdit se nedá ani jedna. Žádná z nich proto vybrána nebyla — hádat by bylo horší než nevědět. Telefon se nedával, základní informace se vyřídí písemně rychleji — doptání odešlo 2. 9. Míč je teď na její straně; když do pátku 4. 9. neodpoví, karta se zavírá.",
-    resh: [
-      { src: "Profil portál", res: "pozor", txt: "<b>Neověřená uživatelka</b>, osobní profil nevyplněný, bez pojištění odpovědnosti, <b>bez avataru</b>." },
-      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů v aktuálních řízeních." },
-      { src: "LinkedIn", res: "nic", txt: "<b>Nedohledáno.</b> Kandidátek je několik a <b>dvě z nich sedí lokalitou</b>, jenže jméno je běžné a bez avataru nešlo ověřit shodu podle fotky. <b>Žádná nebyla vybrána</b> — spárování by bylo hádání." }
     ]
   },
   {
@@ -496,6 +448,54 @@ const ZAJEMCI = [
       { src: "Příjem", res: "nalez", klic: true, txt: "<b>Čistý příjem 50–55 tisíc Kč</b> měsíčně, jediný pro čtyřčlennou domácnost — pod požadovaným prahem. <b>Vylučovací podmínka</b>, uvedeno vlastním tvrzením." },
       { src: "Profil portál", res: "ok", txt: "<b>Ověřený uživatel.</b> Pojištění odpovědnosti nemá." },
       { src: "ISIR / LinkedIn", res: "nehl", txt: "<b>Rešerše nezahájena</b> — vylučovací podmínky rozhodly z vlastní odpovědi, skóre se nepočítá." }
+    ]
+  },
+  {
+    ini: "D. G.", grp: "uzavreno", stav: "Odstoupil",
+    score: 3, scoreMax: 10,
+    termin: null,
+    kontakt: {
+      tah: "konec",
+      hl: "Uzavřeno — zájemce sám zrušil (podepsal jiný byt)",
+      prubeh: "První kontakt 31. 8., rezervace prohlídky na pátek 4. 9. hned den po nasdílení kalendáře. Krátce po půlnoci 4. 9. napsal, že večer předtím podepsali rezervaci na jiný byt a jejich zájem tím skončil — poděkoval za čas a ochotu. Majitel odpověděl věcně a poté ho na portálu uzavřel."
+    },
+    summary: "Nejde o odmítnutí na základě kritérií — zájemce odstoupil sám, protože si mezitím zajistil jiné bydlení. Do té doby šlo o profil přesně podle cílové skupiny: pár bez dětí, nekuřáci, bez zvířat, stěhování za prací, nejrychlejší rezervace termínu ze všech. Nízké skóre bylo čistě chybějící informací o penězích, ne špatným profilem — na to už se ale nedostalo, protože rozhodl čas: jiná nabídka byla rychlejší.",
+    resh: [
+      { src: "Profil portál", res: "ok", txt: "<b>Ověřený uživatel.</b> Pojištění odpovědnosti nemá." },
+      { src: "ISIR", res: "pozor", txt: "<b>Čistý</b> — 0 nálezů, aktuální i ukončená řízení. <b>Výhrada:</b> část případné historie může ležet mimo dosah českého rejstříku, protože dosavadní život probíhal převážně mimo ČR." },
+      { src: "LinkedIn", res: "nic", txt: "<b>Nedohledán.</b> Jediný výsledek je falešná shoda na část příjmení — jiná země, jiné jméno. Profil podle všeho nemá." }
+    ]
+  },
+  {
+    ini: "M. N.", grp: "uzavreno", stav: "Odmítnuto",
+    score: null,
+    termin: null,
+    kontakt: {
+      tah: "konec",
+      hl: "Vyřízeno — odmítnuto po nereagování na doptání",
+      prubeh: "První kontakt 31. 8. dopoledne — byt se velice líbí, žádost o telefonní kontakt, o sobě přitom nic; 2. 9. odesláno standardní doptání na počet osob, zaměstnání, čistý příjem a důvod zájmu. Do slíbené uzávěrky v pátek 4. 9. nepřišla žádná odpověď — odmítnuto na portálu."
+    },
+    summary: "Odmítnutí stojí na tom, že na doptání odeslané 2. 9. nepřišla do slíbené uzávěrky v pátek 4. 9. žádná odpověď. O zájemkyni se tak nepodařilo zjistit nic než počáteční nadšení z bytu — rešerše narazila na kombinaci běžného jména a chybějící fotky, takže ani z veřejných zdrojů nepřibylo nic použitelného. V mezidobě navíc přibyli silnější kandidáti z pátečních prohlídek, takže se dál nedoptávalo.",
+    resh: [
+      { src: "Profil portál", res: "pozor", txt: "<b>Neověřená uživatelka</b>, osobní profil nevyplněný, bez pojištění odpovědnosti, <b>bez avataru</b>." },
+      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů v aktuálních řízeních." },
+      { src: "LinkedIn", res: "nic", txt: "<b>Nedohledáno.</b> Kandidátek je několik a <b>dvě z nich sedí lokalitou</b>, jenže jméno je běžné a bez avataru nešlo ověřit shodu podle fotky. <b>Žádná nebyla vybrána</b> — spárování by bylo hádání." }
+    ]
+  },
+  {
+    ini: "A. B.", grp: "uzavreno", stav: "Odstoupila",
+    score: null,
+    termin: null,
+    kontakt: {
+      tah: "konec",
+      hl: "Uzavřeno — účet zájemkyně byl smazán",
+      prubeh: "První kontakt 31. 8. jen automatickou reakcí; na přímou žádost o krátké info o sobě 1. 9. odpověď nepřišla, místo toho žádost o telefonní číslo, které bylo předáno. Od té doby ticho a 4. 9. se konverzace uzamkla s poznámkou, že si uživatelka smazala účet — nejde jí nic napsat ani ji odmítnout."
+    },
+    summary: "Případ se uzavřel sám, bez rozhodnutí na základě kritérií. Zájemkyně o sobě od začátku neuvedla nic, ani po přímém dotazu, a teď si smazala účet — konverzace je needitovatelná a žádná další akce není možná. Do té doby o ní rešerše nezjistila nic použitelného: jméno je časté napříč zeměmi a bez fotky se žádný z kandidátů nedal spárovat.",
+    resh: [
+      { src: "Profil portál", res: "pozor", txt: "<b>Neověřená uživatelka</b>, osobní profil nevyplněný, bez pojištění odpovědnosti a <b>bez avataru</b> — což pak znemožnilo ověřit shodu podle fotky." },
+      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
+      { src: "LinkedIn", res: "nic", txt: "<b>Nedohledán.</b> Hledání vrátilo přes šest stran jmenovkyň napříč šesti zeměmi. Jediný tuzemský výsledek má jiné křestní jméno. Bez fotky a bez jediného údaje od ní by výběr kohokoli z nich bylo hádání — <b>proto nikdo vybrán nebyl</b>." }
     ]
   }
 ];
