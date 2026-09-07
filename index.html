@@ -213,7 +213,7 @@
 
   <header>
     <h1>Přehled zájemců o pronájem</h1>
-    <p class="stamp">Poslední aktualizace <b>4. 9. 2026 v 13:00</b> · zájemci jsou vedeni pouze pod iniciálami</p>
+    <p class="stamp">Poslední aktualizace <b>4. 9. 2026 v 14:00</b> · zájemci jsou vedeni pouze pod iniciálami</p>
   </header>
 
   <section class="stats" id="stats" aria-label="Souhrn"></section>
@@ -252,17 +252,18 @@
 // ---------------------------------------------------------------------------
 const ZAJEMCI = [
   {
-    ini: "V. T.", grp: "uzavreno", stav: "Odmítnuto",
-    score: null,
+    ini: "V. T.", grp: "proces", stav: "Smlouva odeslána",
+    score: 8, scoreMax: 10,
     termin: null,
     kontakt: {
-      tah: "konec",
-      hl: "Vyřízeno — odmítnuto e-mailem 4. 9.",
-      prubeh: "První kontakt 31. 8. rovnou s představením — tři osoby, plný úvazek, zájem o dlouhodobý domov; nasdílení kalendáře 1. 9. a rezervace termínu ještě týž den. Prohlídka 4. 9. proběhla a majiteli se velmi líbila — osobně vysvětlila dřívější rozpor s profilem (nová práce v Praze) a zmínila druhý zdroj příjmu z pronájmu vlastních bytů. Poté napsala, poděkovala za setkání a požádala o půdorysy. Krátce nato se ale ukázalo, že byt se nově pronajímá jen jako celek s garážovým stáním a sklepem, o což neměla zájem — odmítnuto e-mailem."
+      tah: "zajemce",
+      hl: "Nájemní smlouva odeslána 4. 9. — čeká se na podpis",
+      prubeh: "První kontakt 31. 8. rovnou s představením — tři osoby, plný úvazek, zájem o dlouhodobý domov; nasdílení kalendáře 1. 9. a rezervace termínu ještě týž den. Prohlídka 4. 9. proběhla a majiteli se velmi líbila. Následně se vyjasnily i zbylé otevřené otázky — stání a sklep nakonec přijala a příjem se ukázal dostatečný. Majitel proto odeslal nájemní smlouvu a čeká na podpis."
     },
-    summary: "Skóre se nepočítá, odmítnutí stojí na podmínce pronájmu, ne na profilu. Prohlídka přitom dopadla mimořádně dobře a dvě dřívější otevřené otázky se vyjasnily samy — rozpor s veřejným profilem měl vysvětlení (nová práce v Praze) a dlouhodobost byla jednoznačná. Rozhodla ale nová podmínka bytu: pronajímá se už jen jako celek s garážovým stáním a sklepem, a o to nestála. Škoda, protože jinak šlo o jeden z nejlépe vypadajících profilů — ale odmítnutí je tady o podmínkách nabídky, ne o ní.",
+    summary: "Nejsilnější profil ze všech čtrnácti zájemců. Prohlídka dopadla mimořádně dobře, dlouhodobost je jednoznačná a rozpor s veřejným profilem měl jednoduché vysvětlení — nová práce v Praze. Podmínka garážového stání a sklepu, která zprvu bránila dohodě, se vyřešila — zájemkyně ji nakonec přijala. Příjem kombinuje víc zdrojů a majitel ho posoudil jako dostatečný proti prahu, i bez zaznamenané přesné částky. Zbývá jediná neznámá — samostatnost, kterou se na prohlídce nestihlo probrat. Teď je na řadě podpis smlouvy z její strany.",
     resh: [
-      { src: "Podmínky pronájmu", res: "nalez", klic: true, txt: "<b>Toto rozhodlo.</b> Byt se nově pronajímá jen jako celek s garážovým stáním a sklepem — o tuhle podmínku nestála. Jediný důvod, který jí byl sdělen." },
+      { src: "Podmínky pronájmu", res: "ok", txt: "<b>Vyřešeno.</b> Garážové stání a sklep, které byt teď vyžaduje jako celek, nakonec přijala." },
+      { src: "Příjem", res: "ok", txt: "<b>Dostatečný.</b> Kombinuje víc zdrojů příjmu; přesná částka není zaznamenaná, ale majitel to posoudil jako splňující práh." },
       { src: "Profil portál", res: "ok", txt: "<b>Ověřená uživatelka.</b> Pojištění odpovědnosti nemá." },
       { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů, aktuální i ukončená řízení." },
       { src: "LinkedIn", res: "ok", txt: "<b>Rozpor vyřešen.</b> Profil dřív ukazoval štítek <b>„Open to work\"</b> s preferencí jiného města a bez aktuálního zaměstnavatele, což se rozcházelo s tvrzením o plném úvazku. Na prohlídce vysvětlila: jde o <b>novou práci v Praze</b>, kvůli které se stěhuje — profil byl jen neaktuální, ne signál nezaměstnanosti." }
@@ -277,7 +278,7 @@ const ZAJEMCI = [
       hl: "Kalendář aktualizován 3. 9. — termín stále nevybraný",
       prubeh: "První kontakt 31. 8. večer s podrobným představením a vlastní nabídkou doložit příjem i reference; 1. 9. v poledne nasdílen kalendář prohlídek a nabídnut telefon — bez odezvy. 3. 9. ráno majitel kalendář ještě jednou aktualizoval a připomněl nabídku i doklady k příjmu, termín ale pořád nevybral."
     },
-    summary: "Nejvyšší skóre ze všech aktivních zájemců. Jedna osoba, podnikatel, nekuřák bez zvířat, hledá dlouhodobé bydlení — a jako jediný ze všech sám od sebe nabízí doložit příjem i reference. Ochota doložit je dobrý signál a zároveň naznačuje, že reference z předchozího nájmu nejspíš má. Proti tomu stojí, že kalendář má už od úterý a dnes byl ještě aktualizovaný, a termín si přesto nevybral, ačkoli o prohlídku sám žádal. Dvakrát nabídnutá příležitost bez reakce je slabší signál než jednou nevyužitá.",
+    summary: "Nejvyšší skóre ze všech, kdo dosud nebyli na prohlídce. Jedna osoba, podnikatel, nekuřák bez zvířat, hledá dlouhodobé bydlení — a jako jediný ze všech sám od sebe nabízí doložit příjem i reference. Ochota doložit je dobrý signál a zároveň naznačuje, že reference z předchozího nájmu nejspíš má. Proti tomu stojí, že kalendář má už od úterý a dnes byl ještě aktualizovaný, a termín si přesto nevybral, ačkoli o prohlídku sám žádal. Dvakrát nabídnutá příležitost bez reakce je slabší signál než jednou nevyužitá.",
     resh: [
       { src: "Profil portál", res: "ok", txt: "<b>Ověřený uživatel.</b> Pojištění odpovědnosti nemá." },
       { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů, aktuální i ukončená řízení." },
