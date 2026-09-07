@@ -213,7 +213,7 @@
 
   <header>
     <h1>Přehled zájemců o pronájem</h1>
-    <p class="stamp">Poslední aktualizace <b>4. 9. 2026 v 12:00</b> · zájemci jsou vedeni pouze pod iniciálami</p>
+    <p class="stamp">Poslední aktualizace <b>4. 9. 2026 v 13:00</b> · zájemci jsou vedeni pouze pod iniciálami</p>
   </header>
 
   <section class="stats" id="stats" aria-label="Souhrn"></section>
@@ -252,19 +252,20 @@
 // ---------------------------------------------------------------------------
 const ZAJEMCI = [
   {
-    ini: "V. T.", grp: "proces", stav: "Prohlídka proběhla",
-    score: 5, scoreMax: 10,
+    ini: "V. T.", grp: "uzavreno", stav: "Odmítnuto",
+    score: null,
     termin: null,
     kontakt: {
-      tah: "zajemce",
-      hl: "Prohlídka proběhla 4. 9. — čeká se na čísla",
-      prubeh: "První kontakt 31. 8. rovnou s představením — tři osoby, plný úvazek, zájem o dlouhodobý domov; nasdílení kalendáře 1. 9. a rezervace termínu ještě týž den. Prohlídka 4. 9. proběhla a majiteli se velmi líbila — osobně vysvětlila dřívější rozpor s profilem (nová práce v Praze) a zmínila druhý zdroj příjmu z pronájmu vlastních bytů. Poté napsala, poděkovala za setkání a požádala o půdorysy, které týž den dostala."
+      tah: "konec",
+      hl: "Vyřízeno — odmítnuto e-mailem 4. 9.",
+      prubeh: "První kontakt 31. 8. rovnou s představením — tři osoby, plný úvazek, zájem o dlouhodobý domov; nasdílení kalendáře 1. 9. a rezervace termínu ještě týž den. Prohlídka 4. 9. proběhla a majiteli se velmi líbila — osobně vysvětlila dřívější rozpor s profilem (nová práce v Praze) a zmínila druhý zdroj příjmu z pronájmu vlastních bytů. Poté napsala, poděkovala za setkání a požádala o půdorysy. Krátce nato se ale ukázalo, že byt se nově pronajímá jen jako celek s garážovým stáním a sklepem, o což neměla zájem — odmítnuto e-mailem."
     },
-    summary: "Prohlídka dopadla mimořádně dobře a dvě dřívější otevřené otázky se vyjasnily samy. Rozpor mezi tím, co psala o zaměstnání, a neaktuálním veřejným profilem má vysvětlení — nová práce je důvodem stěhování, ne indicií nezaměstnanosti. Dlouhodobost je teď jednoznačná: racionální důvod stěhování se potvrdil. Solventnost o kousek vzrostla, protože kromě zaměstnání zmínila i druhý zdroj příjmu z vlastního pronájmu bytů, ale ani jedno číslo dosud nezná. Tři osoby zůstávají na horní hranici, ne přes ni. Zbývá jediná věc, která rozhodne: konkrétní čísla obou příjmů proti prahu.",
+    summary: "Skóre se nepočítá, odmítnutí stojí na podmínce pronájmu, ne na profilu. Prohlídka přitom dopadla mimořádně dobře a dvě dřívější otevřené otázky se vyjasnily samy — rozpor s veřejným profilem měl vysvětlení (nová práce v Praze) a dlouhodobost byla jednoznačná. Rozhodla ale nová podmínka bytu: pronajímá se už jen jako celek s garážovým stáním a sklepem, a o to nestála. Škoda, protože jinak šlo o jeden z nejlépe vypadajících profilů — ale odmítnutí je tady o podmínkách nabídky, ne o ní.",
     resh: [
+      { src: "Podmínky pronájmu", res: "nalez", klic: true, txt: "<b>Toto rozhodlo.</b> Byt se nově pronajímá jen jako celek s garážovým stáním a sklepem — o tuhle podmínku nestála. Jediný důvod, který jí byl sdělen." },
       { src: "Profil portál", res: "ok", txt: "<b>Ověřená uživatelka.</b> Pojištění odpovědnosti nemá." },
       { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů, aktuální i ukončená řízení." },
-      { src: "LinkedIn", res: "ok", klic: true, txt: "<b>Rozpor vyřešen.</b> Profil dřív ukazoval štítek <b>„Open to work\"</b> s preferencí jiného města a bez aktuálního zaměstnavatele, což se rozcházelo s tvrzením o plném úvazku. Na prohlídce vysvětlila: jde o <b>novou práci v Praze</b>, kvůli které se stěhuje — profil byl jen neaktuální, ne signál nezaměstnanosti." }
+      { src: "LinkedIn", res: "ok", txt: "<b>Rozpor vyřešen.</b> Profil dřív ukazoval štítek <b>„Open to work\"</b> s preferencí jiného města a bez aktuálního zaměstnavatele, což se rozcházelo s tvrzením o plném úvazku. Na prohlídce vysvětlila: jde o <b>novou práci v Praze</b>, kvůli které se stěhuje — profil byl jen neaktuální, ne signál nezaměstnanosti." }
     ]
   },
   {
