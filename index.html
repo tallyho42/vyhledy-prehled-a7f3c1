@@ -88,29 +88,49 @@
     text-transform: uppercase; letter-spacing: .04em;
   }
   .chart-scroll { overflow-x: auto; }
+  .chart-area { position: relative; min-width: 100%; }
   .chart { display: flex; gap: 4px; min-width: 100%; }
   .chart .col {
     display: flex; flex-direction: column; align-items: center;
     flex: 1 0 22px;
   }
-  .chart .col .n {
-    font-size: 11px; font-weight: 650; color: var(--text-dim);
-    min-height: 14px; line-height: 1; margin-bottom: 3px;
-  }
   .chart .col .track {
     display: flex; align-items: flex-end; justify-content: center;
-    width: 100%; height: 90px;
+    width: 100%; height: 90px; margin-top: 18px;
   }
-  .chart .col .bar {
+  .chart .col .cbar {
+    position: relative;
     width: 100%; max-width: 26px; min-height: 2px; border-radius: 3px 3px 0 0;
     background: var(--accent-soft);
   }
-  .chart .col.has-val .bar { background: var(--accent); }
-  .chart .col .lbl {
-    margin-top: 6px; font-size: 10.5px; color: var(--text-dim);
+  .chart .col.has-val .cbar { background: var(--accent); }
+  .chart .col .cbar .n {
+    position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+    margin-bottom: 3px; font-size: 11px; font-weight: 650; color: var(--text-dim);
     white-space: nowrap;
   }
-  .chart .col.today .lbl { color: var(--text); font-weight: 700; }
+  .chart .col .lbl {
+    margin-top: 6px; display: flex; flex-direction: column; align-items: center; gap: 1px;
+  }
+  .chart .col .lbl .dow { font-size: 10.5px; font-weight: 600; color: var(--text-dim); white-space: nowrap; }
+  .chart .col .lbl .ddate { font-size: 10px; color: var(--text-dim); white-space: nowrap; }
+  .chart .col.today .lbl .dow, .chart .col.today .lbl .ddate { color: var(--text); font-weight: 700; }
+
+  /* ---- milniky (vystaveni/zruseni inzeratu) ---- */
+  .chart-overlay { position: absolute; inset: 0; pointer-events: none; }
+  .meznik {
+    position: absolute; top: 0; bottom: 32px; width: 0;
+    border-left: 2px dashed var(--mezník-barva, var(--mute));
+  }
+  .meznik.zruseno { --mezník-barva: var(--off); }
+  .meznik.vystaveno { --mezník-barva: var(--mute); }
+  .chart-legend {
+    display: flex; flex-wrap: wrap; gap: 14px; margin-top: 10px;
+    font-size: 12px; color: var(--text-dim);
+  }
+  .chart-legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .chart-legend .sw { width: 14px; height: 0; border-top: 2px dashed var(--mute); }
+  .chart-legend .sw.zruseno { border-top-color: var(--off); }
 
   /* ---- filtry ---- */
   .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
@@ -277,7 +297,14 @@
       <h2>Noví zájemci podle data prvního kontaktu</h2>
     </div>
     <div class="chart-scroll">
-      <div class="chart" id="chart"></div>
+      <div class="chart-area" id="chartArea">
+        <div class="chart" id="chart"></div>
+        <div class="chart-overlay" id="chartOverlay"></div>
+      </div>
+    </div>
+    <div class="chart-legend">
+      <span><i class="sw vystaveno"></i> inzerát vystaven</span>
+      <span><i class="sw zruseno"></i> inzerát zrušen</span>
     </div>
   </section>
 
@@ -890,15 +917,30 @@ const filtrovana = () => ZAJEMCI
 const pad2 = n => String(n).padStart(2, "0");
 const parseDatum = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
 const klicDatum = d => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+const DNY_ZKR = ["Ne", "Po", "Út", "St", "Čt", "Pá", "So"];
+
+// Milníky inzerce — kdy byl který byt vystaven / stažen z nabídky.
+const MEZNIKY = [
+  { byt: "A1", datum: "2026-08-30", typ: "vystaveno", label: "A1 vystaven 30. 8." },
+  { byt: "A1", datum: "2026-09-07", typ: "zruseno", label: "A1 zrušen 7. 9." },
+  { byt: "A2", datum: "2026-09-07", typ: "vystaveno", label: "A2 vystaven 7. 9." }
+];
 
 function vykresliGraf(data) {
   const $chart = document.getElementById("chart");
-  if (!data.length) { $chart.innerHTML = ""; return; }
+  const $overlay = document.getElementById("chartOverlay");
+  const mezninky = MEZNIKY.filter(m => filtrByt === "vse" || m.byt === filtrByt);
+
+  if (!data.length && !mezninky.length) { $chart.innerHTML = ""; $overlay.innerHTML = ""; return; }
 
   const poctyDny = {};
   data.forEach(z => { poctyDny[z.datum] = (poctyDny[z.datum] || 0) + 1; });
 
-  const nejstarsi = data.map(z => parseDatum(z.datum)).reduce((a, b) => a < b ? a : b);
+  const kandidatyNaNejstarsi = [
+    ...data.map(z => parseDatum(z.datum)),
+    ...mezninky.map(m => parseDatum(m.datum))
+  ];
+  const nejstarsi = kandidatyNaNejstarsi.reduce((a, b) => a < b ? a : b);
   const dnes = new Date(); dnes.setHours(0, 0, 0, 0);
 
   const dny = [];
@@ -913,13 +955,33 @@ function vykresliGraf(data) {
     const n = poctyDny[klic] || 0;
     const vyska = Math.round((n / maxPocet) * 100);
     const jeDnes = klic === klicDatum(dnes);
-    const label = `${d.getDate()}. ${d.getMonth() + 1}.`;
+    const denZkr = DNY_ZKR[d.getDay()];
+    const datumTxt = `${d.getDate()}. ${d.getMonth() + 1}.`;
     return `
-      <div class="col${n ? " has-val" : ""}${jeDnes ? " today" : ""}" title="${label}${jeDnes ? " (dnes)" : ""}: ${n} nových zájemců">
-        <div class="n">${n || ""}</div>
-        <div class="track"><div class="bar" style="height:${vyska}%"></div></div>
-        <div class="lbl">${label}</div>
+      <div class="col${n ? " has-val" : ""}${jeDnes ? " today" : ""}" title="${denZkr} ${datumTxt}${jeDnes ? " (dnes)" : ""}: ${n} nových zájemců">
+        <div class="track"><div class="cbar" style="height:${vyska}%">${n ? `<span class="n">${n}</span>` : ""}</div></div>
+        <div class="lbl"><span class="dow">${denZkr}</span><span class="ddate">${datumTxt}</span></div>
       </div>`;
+  }).join("");
+
+  // Milníky se kreslí až po vykreslení sloupců — potřebují znát jejich skutečnou pozici.
+  // Když na stejný den připadne víc milníků (např. den zrušení jednoho bytu = den
+  // vystavení druhého), rozestrč se, ať nejsou čáry přesně na sobě.
+  const sloupce = $chart.querySelectorAll(".col");
+  const oblast = document.getElementById("chartArea").getBoundingClientRect();
+  const naStejnyDen = {};
+  mezninky.forEach(m => { (naStejnyDen[m.datum] = naStejnyDen[m.datum] || []).push(m); });
+
+  $overlay.innerHTML = mezninky.map(m => {
+    const idx = dny.findIndex(d => klicDatum(d) === m.datum);
+    if (idx === -1 || !sloupce[idx]) return "";
+    const skupina = naStejnyDen[m.datum];
+    const posun = skupina.length > 1
+      ? (skupina.indexOf(m) - (skupina.length - 1) / 2) * 7
+      : 0;
+    const rect = sloupce[idx].getBoundingClientRect();
+    const left = Math.round(rect.left - oblast.left + rect.width / 2 + posun);
+    return `<div class="meznik ${m.typ}" style="left:${left}px" title="${m.label}"></div>`;
   }).join("");
 }
 
@@ -951,6 +1013,14 @@ document.getElementById("filtersByt").addEventListener("click", e => {
 });
 
 vykresli();
+
+// Milníky v grafu jsou napozicované na pixel podle aktuální šířky sloupců —
+// při změně velikosti okna (otočení telefonu, zúžení okna) je potřeba přepočítat.
+let resizeRAF;
+window.addEventListener("resize", () => {
+  cancelAnimationFrame(resizeRAF);
+  resizeRAF = requestAnimationFrame(() => vykresliGraf(filtrovana()));
+});
 </script>
 </body>
 </html>
