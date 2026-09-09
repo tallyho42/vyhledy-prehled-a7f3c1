@@ -76,6 +76,42 @@
   .stat.proces .num { color: var(--warn); }
   .stat.uzavreno .num { color: var(--off); }
 
+  /* ---- graf novych zajemcu ---- */
+  .chartcard {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px 16px 14px; box-shadow: var(--shadow);
+    margin: 0 0 26px;
+  }
+  .chartcard-head { margin-bottom: 12px; }
+  .chartcard-head h2 {
+    margin: 0; font-size: 12.5px; font-weight: 700; color: var(--text-dim);
+    text-transform: uppercase; letter-spacing: .04em;
+  }
+  .chart-scroll { overflow-x: auto; }
+  .chart { display: flex; gap: 4px; min-width: 100%; }
+  .chart .col {
+    display: flex; flex-direction: column; align-items: center;
+    flex: 1 0 22px;
+  }
+  .chart .col .n {
+    font-size: 11px; font-weight: 650; color: var(--text-dim);
+    min-height: 14px; line-height: 1; margin-bottom: 3px;
+  }
+  .chart .col .track {
+    display: flex; align-items: flex-end; justify-content: center;
+    width: 100%; height: 90px;
+  }
+  .chart .col .bar {
+    width: 100%; max-width: 26px; min-height: 2px; border-radius: 3px 3px 0 0;
+    background: var(--accent-soft);
+  }
+  .chart .col.has-val .bar { background: var(--accent); }
+  .chart .col .lbl {
+    margin-top: 6px; font-size: 10.5px; color: var(--text-dim);
+    white-space: nowrap;
+  }
+  .chart .col.today .lbl { color: var(--text); font-weight: 700; }
+
   /* ---- filtry ---- */
   .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
   .filters button {
@@ -236,6 +272,15 @@
 
   <section class="stats" id="stats" aria-label="Souhrn"></section>
 
+  <section class="chartcard" aria-label="Noví zájemci v čase">
+    <div class="chartcard-head">
+      <h2>Noví zájemci podle data prvního kontaktu</h2>
+    </div>
+    <div class="chart-scroll">
+      <div class="chart" id="chart"></div>
+    </div>
+  </section>
+
   <main class="list" id="list"></main>
 
   <footer>
@@ -263,7 +308,7 @@
 // ---------------------------------------------------------------------------
 const ZAJEMCI = [
   {
-    ini: "V. T.", grp: "proces", stav: "Smlouva odeslána", byt: "A1",
+    ini: "V. T.", grp: "proces", stav: "Smlouva odeslána", byt: "A1", datum: "2026-08-31",
     score: 8, scoreMax: 10,
     termin: null,
     kontakt: {
@@ -281,72 +326,197 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "D. L.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1",
+    ini: "V. S.", grp: "proces", stav: "Prohlídka proběhla", byt: "A2", datum: "2026-09-04",
+    score: 7, scoreMax: 10,
+    termin: null,
+    kontakt: {
+      tah: "my",
+      hl: "Prohlídka proběhla 9. 9. — rozhodnutí do úterý",
+      prubeh: "První kontakt 4. 9. s představením mladého páru a racionálním důvodem spěchu — současná majitelka prodává byt, kde teď bydlí. Kalendář nasdílen 7. 9., termín rezervován týž den. Prohlídka 9. 9. proběhla a dopadla dobře — majitel jim slíbil ozvat se s rozhodnutím do úterý, mezitím se čeká, jestli se neobjeví silnější kandidát na některý z obou aktuálně nabízených bytů."
+    },
+    summary: "Prohlídka dopadla dobře — přišli oba, byt se jim líbil, žádný problém s žádnou podmínkou. Samostatnost jde na plný počet, protože jde o přímé pozorování z místa, ne odhad. Solventnost mírně nahoru: dohromady tři zdroje příjmu na dvoučlennou domácnost, pořád ale bez konkrétních čísel. Dlouhodobost má racionální, ověřitelný důvod spěchu — nucené stěhování kvůli prodeji bytu, kde teď bydlí. Rozhodnutí je odložené do úterý, aby šlo porovnat s případnými dalšími zájemci.",
+    resh: [
+      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
+      { src: "LinkedIn", res: "nic", txt: "<b>Nalezen jen jmenovec</b> — jiná profese i jiná země, nejde o tutéž osobu. Rešerše tedy nic nepřidala." }
+    ]
+  },
+  {
+    ini: "E. D.", grp: "prohlidka", stav: "Prohlídka domluvena", byt: "A2", datum: "2026-09-08",
     score: 4, scoreMax: 10,
-    termin: null,
+    termin: { den: "čtvrtek 10. 9. 2026", cas: "11:45 – 12:15", pozn: "Rezervovala den po nasdílení kalendáře." },
     kontakt: {
-      tah: "konec",
-      hl: "Vyřízeno — odmítnuto na portálu 8. 9. (byt obsazen)",
-      prubeh: "První kontakt 31. 8. večer s podrobným představením a vlastní nabídkou doložit příjem i reference; 1. 9. nasdílen kalendář prohlídek a nabídnut telefon, 3. 9. majitel kalendář ještě jednou aktualizoval a připomněl nabídku i doklady k příjmu — bez odezvy ani jednou. Byt mezitím obsadil jiný zájemce, takže 8. 9. odmítnuto na portálu."
+      tah: "klid",
+      hl: "Domluveno",
+      prubeh: "První kontakt 8. 9.: líbí se jí byt, chce domluvit prohlídku, představila mladou rodinu — dvoupříjmová domácnost, bez zvířat, nekuřáci. Majitel odpověděl a rovnou nasdílel kalendář prohlídek. Termín rezervovala 9. 9."
     },
-    summary: "Kalendář nabídnutý dvakrát a nikdy nevyužitý, ačkoli o prohlídku v první zprávě sám žádal — to byla hlavní slabina profilu. Jinak šlo jednu chvíli o zájemce s nejvyšším skóre ze všech, kdo na tenhle byt čekali na odpověď: jedna osoba, podnikatel, nekuřák bez zvířat, jediný ze všech, kdo sám od sebe nabídl doložit příjem i reference. Rozhodl ale čas — byt mezitím obsadil jiný zájemce.",
+    summary: "Dvoupříjmová domácnost, takže ani jedna jednotlivě nízkopříjmová profese sama o sobě nezastavuje. Rejstřík dlužníků má na shodné jméno víc nálezů, ale jméno je velmi časté a ani jeden geograficky neukazuje k Praze — jistota shody nízká, ověření bezdlužnosti přes portál by to potvrdilo najisto. Chybí zatím počet osob, konkrétní příjem a doba pobytu v ČR — ta se zjistí na prohlídce.",
     resh: [
-      { src: "Profil portál", res: "ok", txt: "<b>Ověřený uživatel.</b> Pojištění odpovědnosti nemá." },
-      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů, aktuální i ukončená řízení." },
-      { src: "ARES", res: "pozor", txt: "<b>Podnikání dohledáno</b> — shoda jména přesná a v rejstříku je jediný, takže jistota identity je vyšší než u běžných jmen. Dvě výhrady: <b>sídlo je v úplně jiném kraji</b>, než kde podle sebe pracuje (u podnikatelů to bývá trvalé bydliště, takže rozpor to být nemusí), a <b>datum vzniku živnosti se zjistit nepodařilo</b> — přitom kritérium chce prokazatelně fungující podnikání 2+ roky." },
-      { src: "LinkedIn", res: "nic", txt: "<b>Nedohledán.</b> Ze čtyř kandidátů jeden seděl jménem i oborem, ale <b>na fotce je někdo jiný</b> než na portálovém avataru — falešná shoda. Zbylí tři nesedí ani oborem, ani zemí." }
+      { src: "Profil portál", res: "pozor", txt: "<b>Neověřená uživatelka</b>, bez pojištění odpovědnosti." },
+      { src: "ISIR", res: "pozor", txt: "<b>Nízká jistota shody.</b> Jméno je velmi časté, více nálezů včetně aktivních řízení, ale bez věku nebo bydliště zájemkyně se nedá říct, jestli jde o ni — ani jeden nález geograficky neukazuje k Praze." },
+      { src: "LinkedIn", res: "nehl", txt: "<b>Nelze prověřit</b> — jméno partnera, u kterého by profese seděla, není známé." }
     ]
   },
   {
-    ini: "V. K.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1",
-    score: 2, scoreMax: 10,
+    ini: "M. U.", grp: "proces", stav: "Čeká se na odpověď", byt: "A2", datum: "2026-09-04",
+    score: 6, scoreMax: 10,
     termin: null,
     kontakt: {
-      tah: "konec",
-      hl: "Vyřízeno — odmítnuto na portálu (byt obsazen)",
-      prubeh: "První kontakt 1. 9. brzy ráno s představením páru a žádostí o telefonické domluvení prohlídky; telefonát se nikdy nepovedl domluvit, i po nabídnutých časových oknech. Byt mezitím obsadil jiný zájemce, takže odmítnuto na portálu."
+      tah: "zajemce",
+      hl: "Kalendář nasdílen 7. 9. — termín zatím nevybraný",
+      prubeh: "První kontakt 4. 9. s podrobným představením: manželský pár, v ČR 6 let, trvalý pobyt, oba pracující, bez zvířat, nekuřáci, hledají dlouhodobé bydlení. Profil vyhodnocen jako dost silný na rovnou nasdílení kalendáře prohlídek 7. 9., bez dalšího doptávání na přesná čísla. Termín zatím nevybrala."
     },
-    summary: "Strukturálně šlo o jednu z nejlepších shod s cílovým profilem ze všech zájemců o tenhle byt — pár bez dětí, oba pracující, nekuřáci, bez zvířat, zájem o dlouhodobý pronájem. Chybělo ale jakékoli číslo a telefonát se nikdy nepovedl domluvit. Rozhodl nakonec čas: byt mezitím obsadil jiný zájemce.",
+    summary: "Jeden z nejsilnějších profilů ze všech nových zájemců na tenhle byt. Dlouhá vazba na ČR — šest let, trvalý pobyt — dává vysokou jistotu dlouhodobosti. Oba pracují, jedna z profesí je jednotlivě nízkopříjmová, ale u dvoupříjmové domácnosti se to nezastavuje. Profil byl vyhodnocen jako dost silný na to, aby šel rovnou na prohlídku bez dalšího doptávání na přesná čísla — ta se zjistí na místě.",
     resh: [
-      { src: "Profil portál", res: "pozor", txt: "<b>Neověřená uživatelka</b>, osobní profil nevyplněný, bez pojištění odpovědnosti." },
       { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
-      { src: "LinkedIn", res: "nic", txt: "<b>Žádný výsledek</b> na jméno ani příjmení. Profil nemá. Rešerše tedy nepřinesla nic, co by doplnilo chybějící čísla." }
+      { src: "LinkedIn", res: "nic", txt: "<b>Žádný výsledek</b> na jméno." }
     ]
   },
   {
-    ini: "Y. D.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1",
-    score: 2, scoreMax: 10,
+    ini: "L. K.", grp: "proces", stav: "Nový zájemce", byt: "A2", datum: "2026-09-09",
+    score: 3, scoreMax: 10,
     termin: null,
     kontakt: {
-      tah: "konec",
-      hl: "Vyřízeno — odmítnuto na portálu (byt obsazen)",
-      prubeh: "Z jeho strany byla v konverzaci nejdřív jen automatická reakce portálu; na doptání odpověděl s celým profilem — pár se stěhuje dohromady z oddělených pronajatých pokojů, oba pracují, hledají dlouhodobě. Kalendář prohlídek nasdílen, termín nikdy nevybral. Byt mezitím obsadil jiný zájemce, takže odmítnuto na portálu."
+      tah: "zajemce",
+      hl: "Kalendář nasdílen 9. 9. — čeká se na rezervaci",
+      prubeh: "První kontakt 9. 9. s představením: dvě osoby (ona a studující dcera), vysokoškolské vzdělání, sama se popisuje jako solventní. Majitel týž den nasdílel kalendář prohlídek a nabídl termín do konce týdne."
     },
-    summary: "Rozhodoval by příjem, který nikdy neuvedl — přítelkyně prodavačka v obchodě, on instalatér na živnost s příjmem „podle odvedené práce\", ani jedno číslo. Zastavovací nález to nebyl, jen chybějící informace, kterou už nebylo potřeba dohánět. Kalendář prohlídek dostal, termín si ale nikdy nevybral, a byt mezitím obsadil jiný zájemce.",
+    summary: "Skóre je opatrnější, než jak vypadalo při prvním zápisu — profil na LinkedInu, který k ní byl zprvu přiřazen, se ukázal jako nespolehlivý podklad (fotka neodpovídala uváděnému věku) a byl stažen. Hodnocení proto stojí jen na tom, co sama napsala: vysokoškolské vzdělání a vlastní tvrzení o solventnosti, bez čísla. Domácnost je fakticky jednopříjmová — druhá osoba studuje a typicky nemá vlastní příjem — takže kritérium pro jednopříjmové domácnosti (nadprůměrný příjem) je tu klíčové a zatím neověřené. Čeká se, jestli si vybere termín prohlídky.",
     resh: [
-      { src: "Profil portál", res: "pozor", txt: "<b>Neověřený uživatel</b>, bez pojištění odpovědnosti, <b>bez avataru</b>." },
+      { src: "Profil portál", res: "ok", txt: "<b>Ověřená identita</b> — zelená fajfka, jedna z mála." },
       { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
-      { src: "LinkedIn", res: "nic", txt: "<b>Jediný výsledek, jméno je vzácné</b> → jistota identity slušná, ale <b>profil je prázdný</b>: bez headline, bez zaměstnavatele, bez fotky. Potvrdit shodu nešlo a nic použitelného to nepřineslo." }
+      { src: "LinkedIn", res: "pozor", klic: true, txt: "<b>Nalezený profil na shodné jméno se ukázal nespolehlivý.</b> Fotka na profilu neodpovídala uváděnému věku a avatar na portálu chybí, takže to nešlo ověřit jinak. Profesní údaj z něj se do hodnocení nepočítá — shoda jména a lokality sama o sobě nestačí." }
     ]
   },
   {
-    ini: "C. B.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1",
+    ini: "A. Z.", grp: "proces", stav: "Čeká se na odpověď", byt: "A2", datum: "2026-09-04",
+    score: 0, scoreMax: 10,
+    termin: null,
+    kontakt: {
+      tah: "zajemce",
+      hl: "Doptání odesláno 4. 9. — zatím bez odpovědi",
+      prubeh: "První kontakt 4. 9.: byt se jí líbí, vyhovuje cena i lokalita, žádá kontakt kvůli prohlídce — o sobě jinak nic. Odesláno standardní doptání týž den, odpověď zatím nepřišla."
+    },
+    summary: "Jediné, co víme, je že jí byt vyhovuje cenou i lokalitou — o sobě samotné nenapsala nic. Rešerše na jméno ani příjmení nic nenašla. Doptání čeká na odpověď.",
+    resh: [
+      { src: "Profil portál", res: "pozor", txt: "<b>Neověřená uživatelka</b>, bez pojištění odpovědnosti." },
+      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
+      { src: "LinkedIn", res: "nic", txt: "<b>Žádný výsledek.</b>" }
+    ]
+  },
+  {
+    ini: "D. T.", grp: "proces", stav: "Čeká se na odpověď", byt: "A2", datum: "2026-09-04",
+    score: 0, scoreMax: 10,
+    termin: null,
+    kontakt: {
+      tah: "zajemce",
+      hl: "Doptání odesláno 4. 9. — zatím bez odpovědi",
+      prubeh: "První kontakt 4. 9.: chce řešit telefonicky nebo přes zprávy, na webu prý moc často není. Odesláno doptání na důvod zájmu, počet osob a zaměstnání, odpověď zatím nepřišla."
+    },
+    summary: "O zájemkyni zatím není známo nic než preference komunikace mimo web. Rešerše na jméno ani příjmení nic nenašla. Doptání čeká na odpověď.",
+    resh: [
+      { src: "Profil portál", res: "pozor", txt: "<b>Neověřená uživatelka</b>, bez pojištění odpovědnosti." },
+      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
+      { src: "LinkedIn", res: "nic", txt: "<b>Žádný výsledek.</b>" }
+    ]
+  },
+  {
+    ini: "I. S.", grp: "proces", stav: "Čeká se na odpověď", byt: "A2", datum: "2026-09-04",
+    score: 0, scoreMax: 10,
+    termin: null,
+    kontakt: {
+      tah: "zajemce",
+      hl: "Doptání odesláno 4. 9. — zatím bez odpovědi",
+      prubeh: "První kontakt 4. 9.: termín prohlídky jí vyhovuje kdykoliv, žádá telefonní kontakt. Odesláno doptání včetně otázky na příjem, odpověď zatím nepřišla."
+    },
+    summary: "Rešerše u příjmení na portálu naráží na nejistotu — zobrazené jméno má dodatečný znak, který nejde s jistotou oddělit od skutečného příjmení, takže výsledek hledání v rejstříku dlužníků má nízkou váhu. LinkedIn nic nenašel. O zájemkyni samotné zatím nevíme nic než ochotu k prohlídce kdykoliv.",
+    resh: [
+      { src: "Profil portál", res: "pozor", txt: "<b>Neověřená uživatelka</b>, bez pojištění odpovědnosti." },
+      { src: "ISIR", res: "pozor", txt: "<b>Nízká jistota.</b> Zobrazené příjmení na portálu má dodatečný znak, takže nejde spolehlivě určit, na co přesně hledat — výsledek („čistý\") má proto nízkou váhu." },
+      { src: "LinkedIn", res: "nic", txt: "<b>Žádný výsledek.</b>" }
+    ]
+  },
+  {
+    ini: "H. H.", grp: "proces", stav: "Čeká se na odpověď", byt: "A2", datum: "2026-09-04",
+    score: 0, scoreMax: 10,
+    termin: null,
+    kontakt: {
+      tah: "zajemce",
+      hl: "Doptání přečteno 4. 9. — zatím bez odpovědi",
+      prubeh: "První kontakt 4. 9. jen automatickou reakcí. Odesláno standardní doptání týž den, zpráva je označená jako přečtená, odpověď zatím nepřišla."
+    },
+    summary: "Jediná ze všech nových zájemců na tenhle byt, u koho portál ukazuje aktivní pojištění odpovědnosti bez nutnosti si ho vyžádat — není to důkaz solventnosti, ale signál, že věci kolem bydlení řeší dopředu. Jinak o ní zatím není známo nic, vlastní zprávu ještě nenapsala.",
+    resh: [
+      { src: "Profil portál", res: "ok", txt: "<b>Pojištění odpovědnosti aktivní</b> — jediná z nových zájemců na tenhle byt, kdo ho má bez vyžádání." },
+      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
+      { src: "LinkedIn", res: "nic", txt: "<b>Žádný použitelný výsledek</b> — hledání přesměrovalo na jinou, nesouvisející osobu." }
+    ]
+  },
+  {
+    ini: "M. Z.", grp: "proces", stav: "Čeká se na odpověď", byt: "A2", datum: "2026-09-08",
+    score: 1, scoreMax: 10,
+    termin: null,
+    kontakt: {
+      tah: "zajemce",
+      hl: "Druhá zpráva odeslána 9. 9. — čeká se na vysvětlení obojího",
+      prubeh: "První kontakt 8. 9. jen automatickou reakcí portálu; na doptání odpověděla na dvě ze tří otázek — dva lidé, čistotní a bez špatných návyků, důvod stěhování je prodej domu, kde teď bydlí. Na přímou otázku o zaměstnání a režimu práce ale neodpověděla vůbec. K tomu jméno v profilu neodpovídá popisu domácnosti ve zprávě, což majitel rovnou uvedl. Výjimečně proto poslal druhou zprávu, ne jen jednu obvyklou — žádá vyjasnit obojí: kdo skutečně bude bydlet a jaké je zaměstnání."
+    },
+    summary: "Rozhodují dvě otevřené otázky najednou. Na přímo položenou otázku o zaměstnání zatím nereagovala, přestože na zbylé dvě otázky ze stejné zprávy odpověděla — to je signál o tom, jak se bude domlouvat cokoli do budoucna, ne jen mezera k doplnění. K tomu jméno v profilu nesedí s tím, jak popsala domácnost — může jít o drobnou nesrovnalost, nebo o něco, co stojí za vyjasnění dřív, než se řeší cokoli dál. Důvod stěhování je racionální (prodej domu, kde teď bydlí), ne útěk z konfliktu. Pokud odpoví věrohodně na obojí, pokračuje se normálně; pokud ne, karta směřuje k odmítnutí.",
+    resh: [
+      { src: "Profil portál", res: "pozor", txt: "<b>Neověřená uživatelka</b>, bez pojištění odpovědnosti." },
+      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
+      { src: "LinkedIn", res: "nic", txt: "<b>Žádný výsledek.</b>" }
+    ]
+  },
+  {
+    ini: "K. K.", grp: "proces", stav: "Nový zájemce", byt: "A2", datum: "2026-09-04",
+    score: 0, scoreMax: 10,
+    termin: null,
+    kontakt: {
+      tah: "my",
+      hl: "Čeká na naši první odpověď — od 4. 9.",
+      prubeh: "První kontakt 4. 9.: vážný zájem, pracující lidé, hledají dlouhodobý pronájem, žádá termín prohlídky. Odpověď z naší strany zatím neodešla."
+    },
+    summary: "Na portálu uvedla jen počáteční písmeno příjmení, takže rešerši nešlo provést vůbec — ověřit půjde teprve po jejím vlastním celém představení. Připravená zpráva se ptá na základní údaje.",
+    resh: [
+      { src: "Profil portál", res: "pozor", txt: "<b>Neověřená uživatelka</b>, bez pojištění odpovědnosti." },
+      { src: "ISIR", res: "nehl", txt: "<b>Nelze prověřit</b> — uvedeno jen počáteční písmeno příjmení." },
+      { src: "LinkedIn", res: "nehl", txt: "<b>Nelze prověřit</b> — ze stejného důvodu." }
+    ]
+  },
+  {
+    ini: "A. B.", grp: "proces", stav: "Nový zájemce", byt: "A2", datum: "2026-09-04",
+    score: 0, scoreMax: 10,
+    termin: null,
+    kontakt: {
+      tah: "my",
+      hl: "Čeká na naši první odpověď — od 4. 9.",
+      prubeh: "První kontakt 4. 9. jen automatickou reakcí. Jde o samostatnou, novou konverzaci na jiném bytě — jméno je shodné s dřívějším zájemcem o jiný byt v domě, ale nedá se rozlišit, jestli jde o téhož člověka. Odpověď z naší strany zatím neodešla."
+    },
+    summary: "Nová a samostatná konverzace, vedená stejným jménem jako dřívější, už uzavřený zájemce o jiný byt v domě. Může jít o tutéž osobu, která se přihlásila znovu, nebo o shodu jména — z jedné automatické reakce se to rozlišit nedá. Karta se vede zvlášť, dokud sama nenapíše víc.",
+    resh: [
+      { src: "Profil portál", res: "pozor", txt: "<b>Neověřená uživatelka</b>, bez pojištění odpovědnosti." },
+      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů (ověřeno už dřív pod stejným jménem u jiné konverzace)." },
+      { src: "LinkedIn", res: "nehl", txt: "<b>Nehledáno</b> — zatím jen automatická reakce, není co spárovat." }
+    ]
+  },
+  {
+    ini: "D. Q.", grp: "proces", stav: "Nový zájemce", byt: "A2", datum: "2026-09-04",
     score: null,
     termin: null,
     kontakt: {
-      tah: "konec",
-      hl: "Vyřízeno — odmítnuto na portálu 3. 9. v 10:26",
-      prubeh: "Jediná zpráva z 1. 9. ráno, zato se vším podstatným — čtyřčlenná rodina, v ČR přes pět let, obě dospělé osoby pracující, děti v českých školách, zájem o dlouhodobý domov — a hned z ní plyne vylučovací podmínka. Odmítnuto přes portál 3. 9. v 10:26."
+      tah: "my",
+      hl: "Nejasná identita — čeká se na vyjasnění",
+      prubeh: "První kontakt 4. 9.: chce přivést na prohlídku „své zájemce\" a poslat informace o nich, ptá se na termín — podepsáno mužským jménem, ne jménem z profilu. Druhá zpráva popisuje pracující pár bez dětí a zvířat, žádá telefonický kontakt — podepsána znovu mužským, ale opět jiným jménem. Odpověď z naší strany zatím neodešla."
     },
-    summary: "Odmítnutí stálo na vylučovací podmínce: čtyři osoby proti maximu tří. Byt je pro čtyři osoby malý a zbylé dva byty v nabídce jsou ještě menší, takže nabídnout nebylo co — netýkalo se to jen téhle nabídky. Jinak by šlo o jeden z nejsilnějších profilů, které zatím přišly: ověřený profil, dlouhodobý pobyt v ČR, obě dospělé osoby pracující, děti v českých školách, explicitní zájem o dlouhodobý domov. Rešerše se dál nevedla, protože podmínka rozhodla dřív. Kdyby do nabídky přibyl větší byt, stojí za to se ozvat.",
+    summary: "Skóre se zatím nedává. Profil na portálu je veden pod ženským jménem, ale obě zprávy podepsal muž — pokaždé mírně jiným jménem. Může jít o drobnou nesrovnalost (píše za partnerku, sdílený účet) nebo o zprostředkovatele — formulace naznačující, že mluví za někoho jiného, tomu nasvědčuje, ale z textu samotného se to jistě poznat nedá. Než se cokoliv řeší dál, je potřeba vyjasnit, kdo skutečně o byt žádá a kdo by v něm bydlel.",
     resh: [
-      { src: "Profil portál", res: "ok", txt: "<b>Ověřená uživatelka.</b> Pojištění odpovědnosti nemá." },
-      { src: "ISIR", res: "nehl", txt: "<b>Rešerše nezahájena</b> — vylučovací podmínka rozhodla dřív, skóre se nepočítá." },
-      { src: "LinkedIn", res: "nehl", txt: "<b>Rešerše nezahájena</b> — ze stejného důvodu." }
+      { src: "Profil portál", res: "pozor", txt: "<b>Neověřená uživatelka</b>, bez pojištění odpovědnosti." },
+      { src: "ISIR", res: "nehl", txt: "<b>Nelze spustit</b> — příjmení na portálu není použitelné a není jisté, na koho by se mělo hledat." },
+      { src: "LinkedIn", res: "nehl", txt: "<b>Nehledáno</b> — ze stejného důvodu." }
     ]
   },
   {
-    ini: "D. T.", grp: "uzavreno", stav: "K odmítnutí", byt: "A1",
+    ini: "D. T.", grp: "uzavreno", stav: "K odmítnutí", byt: "A1", datum: "2026-08-31",
     score: null,
     termin: null,
     kontakt: {
@@ -364,7 +534,106 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "S. C.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1",
+    ini: "G. B.", grp: "uzavreno", stav: "K odmítnutí", byt: "A1", datum: "2026-08-31",
+    score: null,
+    termin: null,
+    kontakt: {
+      tah: "my",
+      hl: "Odmítnutí připravené — na klíčové otázky neodpověděl",
+      prubeh: "První kontakt 31. 8. odpoledne se žádostí o telefon a bez jediného údaje o sobě; 2. 9. odpoledne odesláno standardní doptání na čtyři body a o čtyřicet minut později přišla odpověď jen na jeden z nich — pár, dvě osoby bez dětí, nekuřáci, bez zvířat, oba s oficiálním zaměstnáním, ale příjem, důvod zájmu ani doba nájmu chybí."
+    },
+    summary: "Odmítnutí stojí na tom, že na přímý dotaz odpověď nepřišla. Ze čtyř konkrétních otázek je zodpovězená jedna — chybí čistý příjem, důvod zájmu i zamýšlená doba nájmu, přestože po všech třech bylo výslovně ptáno. Strukturálně přitom profil sedí: pár, dvě osoby bez dětí, nekuřáci, bez zvířat, oba s oficiálním zaměstnáním. „Oficiální zaměstnání\" je ale bez jediného čísla slabá indicie a opakovat žádost by znamenalo doprošovat se. Přitěžuje, že tenhle zájemce nejde prověřit žádným nezávislým zdrojem, takže bez doloženého příjmu by o něm nebylo známo vůbec nic. V pátek jsou dvě prohlídky s lidmi, kteří odpověděli.",
+    resh: [
+      { src: "Profil portál", res: "pozor", txt: "<b>Neověřený uživatel</b>, osobní profil nevyplněný, bez pojištění odpovědnosti." },
+      { src: "ISIR", res: "nehl", klic: true, txt: "<b>Nelze prověřit</b> — uvedeno je jen počáteční písmeno příjmení, takže není co hledat. <b>Žádný nezávislý zdroj tu neexistuje</b>, což zesiluje váhu chybějící odpovědi." },
+      { src: "ARES", res: "nehl", txt: "<b>Nelze prověřit</b> — ze stejného důvodu." },
+      { src: "LinkedIn", res: "nehl", txt: "<b>Nelze prověřit</b> — ze stejného důvodu." }
+    ]
+  },
+  {
+    ini: "A. K.", grp: "uzavreno", stav: "K odmítnutí", byt: "A2", datum: "2026-09-08",
+    score: null,
+    termin: null,
+    kontakt: {
+      tah: "zajemce",
+      hl: "Zpráva odeslána 8. 9. — žádá vysvětlení",
+      prubeh: "První kontakt 8. 9. ráno: dotaz na dostupnost a termín prohlídky, krátký popis páru (nekuřáci, bez dětí a zvířat), žádost o telefon. Veřejně dostupné zdroje ukazují realitní zprostředkování, takže majitel mu odpověděl přímým dotazem, jestli jedná za sebe, nebo za klienta či agenturu, a rovnou uvedl, že o spolupráci s agenturou nemá zájem."
+    },
+    summary: "Skóre se nepočítá. Podle veřejně dostupných zdrojů jde nejspíš o realitního zprostředkovatele, ne o skutečného zájemce o bydlení — běžný vzorec, kdy makléř osloví soukromého majitele s tváří zájemce, aby získal byt do nabídky agentury. Majitel na to reagoval přímým dotazem místo automatického odmítnutí — pokud přijde věrohodné vysvětlení, dá se přehodnotit. Zatím ale karta zůstává nastavená na odmítnutí, protože indicie je ověřená z veřejně dostupného zdroje, ne z dohadu.",
+    resh: [
+      { src: "Veřejný profil", res: "nalez", klic: true, txt: "<b>Toto rozhodlo.</b> Veřejně dostupný profil uvádí realitní zprostředkování jako činnost a odkazuje na aktivní pražskou realitní kancelář. Jistota identity vysoká — shodné jméno, fotka, aktivní účet." },
+      { src: "Profil portál", res: "pozor", txt: "<b>Neověřený uživatel</b>, bez pojištění odpovědnosti." },
+      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů (bez praktického významu, pokud jde o zprostředkovatele)." },
+      { src: "LinkedIn", res: "nic", txt: "<b>Žádný výsledek.</b>" }
+    ]
+  },
+  {
+    ini: "D. L.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1", datum: "2026-08-31",
+    score: 4, scoreMax: 10,
+    termin: null,
+    kontakt: {
+      tah: "konec",
+      hl: "Vyřízeno — odmítnuto na portálu 8. 9. (byt obsazen)",
+      prubeh: "První kontakt 31. 8. večer s podrobným představením a vlastní nabídkou doložit příjem i reference; 1. 9. nasdílen kalendář prohlídek a nabídnut telefon, 3. 9. majitel kalendář ještě jednou aktualizoval a připomněl nabídku i doklady k příjmu — bez odezvy ani jednou. Byt mezitím obsadil jiný zájemce, takže 8. 9. odmítnuto na portálu."
+    },
+    summary: "Kalendář nabídnutý dvakrát a nikdy nevyužitý, ačkoli o prohlídku v první zprávě sám žádal — to byla hlavní slabina profilu. Jinak šlo jednu chvíli o zájemce s nejvyšším skóre ze všech, kdo na tenhle byt čekali na odpověď: jedna osoba, podnikatel, nekuřák bez zvířat, jediný ze všech, kdo sám od sebe nabídl doložit příjem i reference. Rozhodl ale čas — byt mezitím obsadil jiný zájemce.",
+    resh: [
+      { src: "Profil portál", res: "ok", txt: "<b>Ověřený uživatel.</b> Pojištění odpovědnosti nemá." },
+      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů, aktuální i ukončená řízení." },
+      { src: "ARES", res: "pozor", txt: "<b>Podnikání dohledáno</b> — shoda jména přesná a v rejstříku je jediný, takže jistota identity je vyšší než u běžných jmen. Dvě výhrady: <b>sídlo je v úplně jiném kraji</b>, než kde podle sebe pracuje (u podnikatelů to bývá trvalé bydliště, takže rozpor to být nemusí), a <b>datum vzniku živnosti se zjistit nepodařilo</b> — přitom kritérium chce prokazatelně fungující podnikání 2+ roky." },
+      { src: "LinkedIn", res: "nic", txt: "<b>Nedohledán.</b> Ze čtyř kandidátů jeden seděl jménem i oborem, ale <b>na fotce je někdo jiný</b> než na portálovém avataru — falešná shoda. Zbylí tři nesedí ani oborem, ani zemí." }
+    ]
+  },
+  {
+    ini: "V. K.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1", datum: "2026-09-01",
+    score: 2, scoreMax: 10,
+    termin: null,
+    kontakt: {
+      tah: "konec",
+      hl: "Vyřízeno — odmítnuto na portálu (byt obsazen)",
+      prubeh: "První kontakt 1. 9. brzy ráno s představením páru a žádostí o telefonické domluvení prohlídky; telefonát se nikdy nepovedl domluvit, i po nabídnutých časových oknech. Byt mezitím obsadil jiný zájemce, takže odmítnuto na portálu."
+    },
+    summary: "Strukturálně šlo o jednu z nejlepších shod s cílovým profilem ze všech zájemců o tenhle byt — pár bez dětí, oba pracující, nekuřáci, bez zvířat, zájem o dlouhodobý pronájem. Chybělo ale jakékoli číslo a telefonát se nikdy nepovedl domluvit. Rozhodl nakonec čas: byt mezitím obsadil jiný zájemce.",
+    resh: [
+      { src: "Profil portál", res: "pozor", txt: "<b>Neověřená uživatelka</b>, osobní profil nevyplněný, bez pojištění odpovědnosti." },
+      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
+      { src: "LinkedIn", res: "nic", txt: "<b>Žádný výsledek</b> na jméno ani příjmení. Profil nemá. Rešerše tedy nepřinesla nic, co by doplnilo chybějící čísla." }
+    ]
+  },
+  {
+    ini: "Y. D.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1", datum: "2026-08-31",
+    score: 2, scoreMax: 10,
+    termin: null,
+    kontakt: {
+      tah: "konec",
+      hl: "Vyřízeno — odmítnuto na portálu (byt obsazen)",
+      prubeh: "Z jeho strany byla v konverzaci nejdřív jen automatická reakce portálu; na doptání odpověděl s celým profilem — pár se stěhuje dohromady z oddělených pronajatých pokojů, oba pracují, hledají dlouhodobě. Kalendář prohlídek nasdílen, termín nikdy nevybral. Byt mezitím obsadil jiný zájemce, takže odmítnuto na portálu."
+    },
+    summary: "Rozhodoval by příjem, který nikdy neuvedl — přítelkyně prodavačka v obchodě, on instalatér na živnost s příjmem „podle odvedené práce\", ani jedno číslo. Zastavovací nález to nebyl, jen chybějící informace, kterou už nebylo potřeba dohánět. Kalendář prohlídek dostal, termín si ale nikdy nevybral, a byt mezitím obsadil jiný zájemce.",
+    resh: [
+      { src: "Profil portál", res: "pozor", txt: "<b>Neověřený uživatel</b>, bez pojištění odpovědnosti, <b>bez avataru</b>." },
+      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
+      { src: "LinkedIn", res: "nic", txt: "<b>Jediný výsledek, jméno je vzácné</b> → jistota identity slušná, ale <b>profil je prázdný</b>: bez headline, bez zaměstnavatele, bez fotky. Potvrdit shodu nešlo a nic použitelného to nepřineslo." }
+    ]
+  },
+  {
+    ini: "C. B.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1", datum: "2026-09-01",
+    score: null,
+    termin: null,
+    kontakt: {
+      tah: "konec",
+      hl: "Vyřízeno — odmítnuto na portálu 3. 9. v 10:26",
+      prubeh: "Jediná zpráva z 1. 9. ráno, zato se vším podstatným — čtyřčlenná rodina, v ČR přes pět let, obě dospělé osoby pracující, děti v českých školách, zájem o dlouhodobý domov — a hned z ní plyne vylučovací podmínka. Odmítnuto přes portál 3. 9. v 10:26."
+    },
+    summary: "Odmítnutí stálo na vylučovací podmínce: čtyři osoby proti maximu tří. Byt je pro čtyři osoby malý a zbylé dva byty v nabídce jsou ještě menší, takže nabídnout nebylo co — netýkalo se to jen téhle nabídky. Jinak by šlo o jeden z nejsilnějších profilů, které zatím přišly: ověřený profil, dlouhodobý pobyt v ČR, obě dospělé osoby pracující, děti v českých školách, explicitní zájem o dlouhodobý domov. Rešerše se dál nevedla, protože podmínka rozhodla dřív. Kdyby do nabídky přibyl větší byt, stojí za to se ozvat.",
+    resh: [
+      { src: "Profil portál", res: "ok", txt: "<b>Ověřená uživatelka.</b> Pojištění odpovědnosti nemá." },
+      { src: "ISIR", res: "nehl", txt: "<b>Rešerše nezahájena</b> — vylučovací podmínka rozhodla dřív, skóre se nepočítá." },
+      { src: "LinkedIn", res: "nehl", txt: "<b>Rešerše nezahájena</b> — ze stejného důvodu." }
+    ]
+  },
+  {
+    ini: "S. C.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1", datum: "2026-09-01",
     score: null,
     termin: null,
     kontakt: {
@@ -382,24 +651,7 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "G. B.", grp: "uzavreno", stav: "K odmítnutí", byt: "A1",
-    score: null,
-    termin: null,
-    kontakt: {
-      tah: "my",
-      hl: "Odmítnutí připravené — na klíčové otázky neodpověděl",
-      prubeh: "První kontakt 31. 8. odpoledne se žádostí o telefon a bez jediného údaje o sobě; 2. 9. odpoledne odesláno standardní doptání na čtyři body a o čtyřicet minut později přišla odpověď jen na jeden z nich — pár, dvě osoby bez dětí, nekuřáci, bez zvířat, oba s oficiálním zaměstnáním, ale příjem, důvod zájmu ani doba nájmu chybí."
-    },
-    summary: "Odmítnutí stojí na tom, že na přímý dotaz odpověď nepřišla. Ze čtyř konkrétních otázek je zodpovězená jedna — chybí čistý příjem, důvod zájmu i zamýšlená doba nájmu, přestože po všech třech bylo výslovně ptáno. Strukturálně přitom profil sedí: pár, dvě osoby bez dětí, nekuřáci, bez zvířat, oba s oficiálním zaměstnáním. „Oficiální zaměstnání\" je ale bez jediného čísla slabá indicie a opakovat žádost by znamenalo doprošovat se. Přitěžuje, že tenhle zájemce nejde prověřit žádným nezávislým zdrojem, takže bez doloženého příjmu by o něm nebylo známo vůbec nic. V pátek jsou dvě prohlídky s lidmi, kteří odpověděli.",
-    resh: [
-      { src: "Profil portál", res: "pozor", txt: "<b>Neověřený uživatel</b>, osobní profil nevyplněný, bez pojištění odpovědnosti." },
-      { src: "ISIR", res: "nehl", klic: true, txt: "<b>Nelze prověřit</b> — uvedeno je jen počáteční písmeno příjmení, takže není co hledat. <b>Žádný nezávislý zdroj tu neexistuje</b>, což zesiluje váhu chybějící odpovědi." },
-      { src: "ARES", res: "nehl", txt: "<b>Nelze prověřit</b> — ze stejného důvodu." },
-      { src: "LinkedIn", res: "nehl", txt: "<b>Nelze prověřit</b> — ze stejného důvodu." }
-    ]
-  },
-  {
-    ini: "K. M.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1",
+    ini: "K. M.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1", datum: "2026-09-02",
     score: null,
     termin: null,
     kontakt: {
@@ -415,7 +667,7 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "O. N.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1",
+    ini: "O. N.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1", datum: "2026-08-31",
     score: null,
     termin: null,
     kontakt: {
@@ -431,7 +683,7 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "T. O.", grp: "uzavreno", stav: "Odstoupeno", byt: "A1",
+    ini: "T. O.", grp: "uzavreno", stav: "Odstoupeno", byt: "A1", datum: "2026-08-31",
     score: null,
     termin: null,
     kontakt: {
@@ -447,7 +699,7 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "M. S.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1",
+    ini: "M. S.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1", datum: "2026-09-02",
     score: null,
     termin: null,
     kontakt: {
@@ -464,7 +716,7 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "D. G.", grp: "uzavreno", stav: "Odstoupil", byt: "A1",
+    ini: "D. G.", grp: "uzavreno", stav: "Odstoupil", byt: "A1", datum: "2026-08-31",
     score: 3, scoreMax: 10,
     termin: null,
     kontakt: {
@@ -480,7 +732,7 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "M. N.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1",
+    ini: "M. N.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1", datum: "2026-08-31",
     score: null,
     termin: null,
     kontakt: {
@@ -496,7 +748,7 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "A. B.", grp: "uzavreno", stav: "Odstoupila", byt: "A1",
+    ini: "A. B.", grp: "uzavreno", stav: "Odstoupila", byt: "A1", datum: "2026-08-31",
     score: null,
     termin: null,
     kontakt: {
@@ -512,22 +764,7 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "V. S.", grp: "proces", stav: "Prohlídka proběhla", byt: "A2",
-    score: 7, scoreMax: 10,
-    termin: null,
-    kontakt: {
-      tah: "my",
-      hl: "Prohlídka proběhla 9. 9. — rozhodnutí do úterý",
-      prubeh: "První kontakt 4. 9. s představením mladého páru a racionálním důvodem spěchu — současná majitelka prodává byt, kde teď bydlí. Kalendář nasdílen 7. 9., termín rezervován týž den. Prohlídka 9. 9. proběhla a dopadla dobře — majitel jim slíbil ozvat se s rozhodnutím do úterý, mezitím se čeká, jestli se neobjeví silnější kandidát na některý z obou aktuálně nabízených bytů."
-    },
-    summary: "Prohlídka dopadla dobře — přišli oba, byt se jim líbil, žádný problém s žádnou podmínkou. Samostatnost jde na plný počet, protože jde o přímé pozorování z místa, ne odhad. Solventnost mírně nahoru: dohromady tři zdroje příjmu na dvoučlennou domácnost, pořád ale bez konkrétních čísel. Dlouhodobost má racionální, ověřitelný důvod spěchu — nucené stěhování kvůli prodeji bytu, kde teď bydlí. Rozhodnutí je odložené do úterý, aby šlo porovnat s případnými dalšími zájemci.",
-    resh: [
-      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
-      { src: "LinkedIn", res: "nic", txt: "<b>Nalezen jen jmenovec</b> — jiná profese i jiná země, nejde o tutéž osobu. Rešerše tedy nic nepřidala." }
-    ]
-  },
-  {
-    ini: "Z. K.", grp: "uzavreno", stav: "Odmítnuto", byt: "A2",
+    ini: "Z. K.", grp: "uzavreno", stav: "Odmítnuto", byt: "A2", datum: "2026-09-04",
     score: null,
     termin: null,
     kontakt: {
@@ -543,134 +780,7 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "A. Z.", grp: "proces", stav: "Čeká se na odpověď", byt: "A2",
-    score: 0, scoreMax: 10,
-    termin: null,
-    kontakt: {
-      tah: "zajemce",
-      hl: "Doptání odesláno 4. 9. — zatím bez odpovědi",
-      prubeh: "První kontakt 4. 9.: byt se jí líbí, vyhovuje cena i lokalita, žádá kontakt kvůli prohlídce — o sobě jinak nic. Odesláno standardní doptání týž den, odpověď zatím nepřišla."
-    },
-    summary: "Jediné, co víme, je že jí byt vyhovuje cenou i lokalitou — o sobě samotné nenapsala nic. Rešerše na jméno ani příjmení nic nenašla. Doptání čeká na odpověď.",
-    resh: [
-      { src: "Profil portál", res: "pozor", txt: "<b>Neověřená uživatelka</b>, bez pojištění odpovědnosti." },
-      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
-      { src: "LinkedIn", res: "nic", txt: "<b>Žádný výsledek.</b>" }
-    ]
-  },
-  {
-    ini: "D. T.", grp: "proces", stav: "Čeká se na odpověď", byt: "A2",
-    score: 0, scoreMax: 10,
-    termin: null,
-    kontakt: {
-      tah: "zajemce",
-      hl: "Doptání odesláno 4. 9. — zatím bez odpovědi",
-      prubeh: "První kontakt 4. 9.: chce řešit telefonicky nebo přes zprávy, na webu prý moc často není. Odesláno doptání na důvod zájmu, počet osob a zaměstnání, odpověď zatím nepřišla."
-    },
-    summary: "O zájemkyni zatím není známo nic než preference komunikace mimo web. Rešerše na jméno ani příjmení nic nenašla. Doptání čeká na odpověď.",
-    resh: [
-      { src: "Profil portál", res: "pozor", txt: "<b>Neověřená uživatelka</b>, bez pojištění odpovědnosti." },
-      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
-      { src: "LinkedIn", res: "nic", txt: "<b>Žádný výsledek.</b>" }
-    ]
-  },
-  {
-    ini: "I. S.", grp: "proces", stav: "Čeká se na odpověď", byt: "A2",
-    score: 0, scoreMax: 10,
-    termin: null,
-    kontakt: {
-      tah: "zajemce",
-      hl: "Doptání odesláno 4. 9. — zatím bez odpovědi",
-      prubeh: "První kontakt 4. 9.: termín prohlídky jí vyhovuje kdykoliv, žádá telefonní kontakt. Odesláno doptání včetně otázky na příjem, odpověď zatím nepřišla."
-    },
-    summary: "Rešerše u příjmení na portálu naráží na nejistotu — zobrazené jméno má dodatečný znak, který nejde s jistotou oddělit od skutečného příjmení, takže výsledek hledání v rejstříku dlužníků má nízkou váhu. LinkedIn nic nenašel. O zájemkyni samotné zatím nevíme nic než ochotu k prohlídce kdykoliv.",
-    resh: [
-      { src: "Profil portál", res: "pozor", txt: "<b>Neověřená uživatelka</b>, bez pojištění odpovědnosti." },
-      { src: "ISIR", res: "pozor", txt: "<b>Nízká jistota.</b> Zobrazené příjmení na portálu má dodatečný znak, takže nejde spolehlivě určit, na co přesně hledat — výsledek („čistý\") má proto nízkou váhu." },
-      { src: "LinkedIn", res: "nic", txt: "<b>Žádný výsledek.</b>" }
-    ]
-  },
-  {
-    ini: "H. H.", grp: "proces", stav: "Čeká se na odpověď", byt: "A2",
-    score: 0, scoreMax: 10,
-    termin: null,
-    kontakt: {
-      tah: "zajemce",
-      hl: "Doptání přečteno 4. 9. — zatím bez odpovědi",
-      prubeh: "První kontakt 4. 9. jen automatickou reakcí. Odesláno standardní doptání týž den, zpráva je označená jako přečtená, odpověď zatím nepřišla."
-    },
-    summary: "Jediná ze všech nových zájemců na tenhle byt, u koho portál ukazuje aktivní pojištění odpovědnosti bez nutnosti si ho vyžádat — není to důkaz solventnosti, ale signál, že věci kolem bydlení řeší dopředu. Jinak o ní zatím není známo nic, vlastní zprávu ještě nenapsala.",
-    resh: [
-      { src: "Profil portál", res: "ok", txt: "<b>Pojištění odpovědnosti aktivní</b> — jediná z nových zájemců na tenhle byt, kdo ho má bez vyžádání." },
-      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
-      { src: "LinkedIn", res: "nic", txt: "<b>Žádný použitelný výsledek</b> — hledání přesměrovalo na jinou, nesouvisející osobu." }
-    ]
-  },
-  {
-    ini: "K. K.", grp: "proces", stav: "Nový zájemce", byt: "A2",
-    score: 0, scoreMax: 10,
-    termin: null,
-    kontakt: {
-      tah: "my",
-      hl: "Čeká na naši první odpověď — od 4. 9.",
-      prubeh: "První kontakt 4. 9.: vážný zájem, pracující lidé, hledají dlouhodobý pronájem, žádá termín prohlídky. Odpověď z naší strany zatím neodešla."
-    },
-    summary: "Na portálu uvedla jen počáteční písmeno příjmení, takže rešerši nešlo provést vůbec — ověřit půjde teprve po jejím vlastním celém představení. Připravená zpráva se ptá na základní údaje.",
-    resh: [
-      { src: "Profil portál", res: "pozor", txt: "<b>Neověřená uživatelka</b>, bez pojištění odpovědnosti." },
-      { src: "ISIR", res: "nehl", txt: "<b>Nelze prověřit</b> — uvedeno jen počáteční písmeno příjmení." },
-      { src: "LinkedIn", res: "nehl", txt: "<b>Nelze prověřit</b> — ze stejného důvodu." }
-    ]
-  },
-  {
-    ini: "A. B.", grp: "proces", stav: "Nový zájemce", byt: "A2",
-    score: 0, scoreMax: 10,
-    termin: null,
-    kontakt: {
-      tah: "my",
-      hl: "Čeká na naši první odpověď — od 4. 9.",
-      prubeh: "První kontakt 4. 9. jen automatickou reakcí. Jde o samostatnou, novou konverzaci na jiném bytě — jméno je shodné s dřívějším zájemcem o jiný byt v domě, ale nedá se rozlišit, jestli jde o téhož člověka. Odpověď z naší strany zatím neodešla."
-    },
-    summary: "Nová a samostatná konverzace, vedená stejným jménem jako dřívější, už uzavřený zájemce o jiný byt v domě. Může jít o tutéž osobu, která se přihlásila znovu, nebo o shodu jména — z jedné automatické reakce se to rozlišit nedá. Karta se vede zvlášť, dokud sama nenapíše víc.",
-    resh: [
-      { src: "Profil portál", res: "pozor", txt: "<b>Neověřená uživatelka</b>, bez pojištění odpovědnosti." },
-      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů (ověřeno už dřív pod stejným jménem u jiné konverzace)." },
-      { src: "LinkedIn", res: "nehl", txt: "<b>Nehledáno</b> — zatím jen automatická reakce, není co spárovat." }
-    ]
-  },
-  {
-    ini: "D. Q.", grp: "proces", stav: "Nový zájemce", byt: "A2",
-    score: null,
-    termin: null,
-    kontakt: {
-      tah: "my",
-      hl: "Nejasná identita — čeká se na vyjasnění",
-      prubeh: "První kontakt 4. 9.: chce přivést na prohlídku „své zájemce\" a poslat informace o nich, ptá se na termín — podepsáno mužským jménem, ne jménem z profilu. Druhá zpráva popisuje pracující pár bez dětí a zvířat, žádá telefonický kontakt — podepsána znovu mužským, ale opět jiným jménem. Odpověď z naší strany zatím neodešla."
-    },
-    summary: "Skóre se zatím nedává. Profil na portálu je veden pod ženským jménem, ale obě zprávy podepsal muž — pokaždé mírně jiným jménem. Může jít o drobnou nesrovnalost (píše za partnerku, sdílený účet) nebo o zprostředkovatele — formulace naznačující, že mluví za někoho jiného, tomu nasvědčuje, ale z textu samotného se to jistě poznat nedá. Než se cokoliv řeší dál, je potřeba vyjasnit, kdo skutečně o byt žádá a kdo by v něm bydlel.",
-    resh: [
-      { src: "Profil portál", res: "pozor", txt: "<b>Neověřená uživatelka</b>, bez pojištění odpovědnosti." },
-      { src: "ISIR", res: "nehl", txt: "<b>Nelze spustit</b> — příjmení na portálu není použitelné a není jisté, na koho by se mělo hledat." },
-      { src: "LinkedIn", res: "nehl", txt: "<b>Nehledáno</b> — ze stejného důvodu." }
-    ]
-  },
-  {
-    ini: "M. U.", grp: "proces", stav: "Čeká se na odpověď", byt: "A2",
-    score: 6, scoreMax: 10,
-    termin: null,
-    kontakt: {
-      tah: "zajemce",
-      hl: "Kalendář nasdílen 7. 9. — termín zatím nevybraný",
-      prubeh: "První kontakt 4. 9. s podrobným představením: manželský pár, v ČR 6 let, trvalý pobyt, oba pracující, bez zvířat, nekuřáci, hledají dlouhodobé bydlení. Profil vyhodnocen jako dost silný na rovnou nasdílení kalendáře prohlídek 7. 9., bez dalšího doptávání na přesná čísla. Termín zatím nevybrala."
-    },
-    summary: "Jeden z nejsilnějších profilů ze všech nových zájemců na tenhle byt. Dlouhá vazba na ČR — šest let, trvalý pobyt — dává vysokou jistotu dlouhodobosti. Oba pracují, jedna z profesí je jednotlivě nízkopříjmová, ale u dvoupříjmové domácnosti se to nezastavuje. Profil byl vyhodnocen jako dost silný na to, aby šel rovnou na prohlídku bez dalšího doptávání na přesná čísla — ta se zjistí na místě.",
-    resh: [
-      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
-      { src: "LinkedIn", res: "nic", txt: "<b>Žádný výsledek</b> na jméno." }
-    ]
-  },
-  {
-    ini: "R. K.", grp: "uzavreno", stav: "Odmítnuto", byt: "A2",
+    ini: "R. K.", grp: "uzavreno", stav: "Odmítnuto", byt: "A2", datum: "2026-09-04",
     score: null,
     termin: null,
     kontakt: {
@@ -686,40 +796,7 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "A. K.", grp: "uzavreno", stav: "K odmítnutí", byt: "A2",
-    score: null,
-    termin: null,
-    kontakt: {
-      tah: "zajemce",
-      hl: "Zpráva odeslána 8. 9. — žádá vysvětlení",
-      prubeh: "První kontakt 8. 9. ráno: dotaz na dostupnost a termín prohlídky, krátký popis páru (nekuřáci, bez dětí a zvířat), žádost o telefon. Veřejně dostupné zdroje ukazují realitní zprostředkování, takže majitel mu odpověděl přímým dotazem, jestli jedná za sebe, nebo za klienta či agenturu, a rovnou uvedl, že o spolupráci s agenturou nemá zájem."
-    },
-    summary: "Skóre se nepočítá. Podle veřejně dostupných zdrojů jde nejspíš o realitního zprostředkovatele, ne o skutečného zájemce o bydlení — běžný vzorec, kdy makléř osloví soukromého majitele s tváří zájemce, aby získal byt do nabídky agentury. Majitel na to reagoval přímým dotazem místo automatického odmítnutí — pokud přijde věrohodné vysvětlení, dá se přehodnotit. Zatím ale karta zůstává nastavená na odmítnutí, protože indicie je ověřená z veřejně dostupného zdroje, ne z dohadu.",
-    resh: [
-      { src: "Veřejný profil", res: "nalez", klic: true, txt: "<b>Toto rozhodlo.</b> Veřejně dostupný profil uvádí realitní zprostředkování jako činnost a odkazuje na aktivní pražskou realitní kancelář. Jistota identity vysoká — shodné jméno, fotka, aktivní účet." },
-      { src: "Profil portál", res: "pozor", txt: "<b>Neověřený uživatel</b>, bez pojištění odpovědnosti." },
-      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů (bez praktického významu, pokud jde o zprostředkovatele)." },
-      { src: "LinkedIn", res: "nic", txt: "<b>Žádný výsledek.</b>" }
-    ]
-  },
-  {
-    ini: "E. D.", grp: "prohlidka", stav: "Prohlídka domluvena", byt: "A2",
-    score: 4, scoreMax: 10,
-    termin: { den: "čtvrtek 10. 9. 2026", cas: "11:45 – 12:15", pozn: "Rezervovala den po nasdílení kalendáře." },
-    kontakt: {
-      tah: "klid",
-      hl: "Domluveno",
-      prubeh: "První kontakt 8. 9.: líbí se jí byt, chce domluvit prohlídku, představila mladou rodinu — dvoupříjmová domácnost, bez zvířat, nekuřáci. Majitel odpověděl a rovnou nasdílel kalendář prohlídek. Termín rezervovala 9. 9."
-    },
-    summary: "Dvoupříjmová domácnost, takže ani jedna jednotlivě nízkopříjmová profese sama o sobě nezastavuje. Rejstřík dlužníků má na shodné jméno víc nálezů, ale jméno je velmi časté a ani jeden geograficky neukazuje k Praze — jistota shody nízká, ověření bezdlužnosti přes portál by to potvrdilo najisto. Chybí zatím počet osob, konkrétní příjem a doba pobytu v ČR — ta se zjistí na prohlídce.",
-    resh: [
-      { src: "Profil portál", res: "pozor", txt: "<b>Neověřená uživatelka</b>, bez pojištění odpovědnosti." },
-      { src: "ISIR", res: "pozor", txt: "<b>Nízká jistota shody.</b> Jméno je velmi časté, více nálezů včetně aktivních řízení, ale bez věku nebo bydliště zájemkyně se nedá říct, jestli jde o ni — ani jeden nález geograficky neukazuje k Praze." },
-      { src: "LinkedIn", res: "nehl", txt: "<b>Nelze prověřit</b> — jméno partnera, u kterého by profese seděla, není známé." }
-    ]
-  },
-  {
-    ini: "K. P.", grp: "uzavreno", stav: "Odmítnuto", byt: "A2",
+    ini: "K. P.", grp: "uzavreno", stav: "Odmítnuto", byt: "A2", datum: "2026-09-08",
     score: null,
     termin: null,
     kontakt: {
@@ -733,38 +810,6 @@ const ZAJEMCI = [
       { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
       { src: "Zaměstnání a příjem", res: "nalez", klic: true, txt: "<b>Neuvedeno vůbec.</b> Rozhodnutí padlo dřív, než dostala možnost cokoli doplnit." },
       { src: "LinkedIn", res: "nic", txt: "<b>Žádný výsledek.</b>" }
-    ]
-  },
-  {
-    ini: "M. Z.", grp: "proces", stav: "Čeká se na odpověď", byt: "A2",
-    score: 1, scoreMax: 10,
-    termin: null,
-    kontakt: {
-      tah: "zajemce",
-      hl: "Druhá zpráva odeslána 9. 9. — čeká se na vysvětlení obojího",
-      prubeh: "První kontakt 8. 9. jen automatickou reakcí portálu; na doptání odpověděla na dvě ze tří otázek — dva lidé, čistotní a bez špatných návyků, důvod stěhování je prodej domu, kde teď bydlí. Na přímou otázku o zaměstnání a režimu práce ale neodpověděla vůbec. K tomu jméno v profilu neodpovídá popisu domácnosti ve zprávě, což majitel rovnou uvedl. Výjimečně proto poslal druhou zprávu, ne jen jednu obvyklou — žádá vyjasnit obojí: kdo skutečně bude bydlet a jaké je zaměstnání."
-    },
-    summary: "Rozhodují dvě otevřené otázky najednou. Na přímo položenou otázku o zaměstnání zatím nereagovala, přestože na zbylé dvě otázky ze stejné zprávy odpověděla — to je signál o tom, jak se bude domlouvat cokoli do budoucna, ne jen mezera k doplnění. K tomu jméno v profilu nesedí s tím, jak popsala domácnost — může jít o drobnou nesrovnalost, nebo o něco, co stojí za vyjasnění dřív, než se řeší cokoli dál. Důvod stěhování je racionální (prodej domu, kde teď bydlí), ne útěk z konfliktu. Pokud odpoví věrohodně na obojí, pokračuje se normálně; pokud ne, karta směřuje k odmítnutí.",
-    resh: [
-      { src: "Profil portál", res: "pozor", txt: "<b>Neověřená uživatelka</b>, bez pojištění odpovědnosti." },
-      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
-      { src: "LinkedIn", res: "nic", txt: "<b>Žádný výsledek.</b>" }
-    ]
-  },
-  {
-    ini: "L. K.", grp: "proces", stav: "Nový zájemce", byt: "A2",
-    score: 3, scoreMax: 10,
-    termin: null,
-    kontakt: {
-      tah: "zajemce",
-      hl: "Kalendář nasdílen 9. 9. — čeká se na rezervaci",
-      prubeh: "První kontakt 9. 9. s představením: dvě osoby (ona a studující dcera), vysokoškolské vzdělání, sama se popisuje jako solventní. Majitel týž den nasdílel kalendář prohlídek a nabídl termín do konce týdne."
-    },
-    summary: "Skóre je opatrnější, než jak vypadalo při prvním zápisu — profil na LinkedInu, který k ní byl zprvu přiřazen, se ukázal jako nespolehlivý podklad (fotka neodpovídala uváděnému věku) a byl stažen. Hodnocení proto stojí jen na tom, co sama napsala: vysokoškolské vzdělání a vlastní tvrzení o solventnosti, bez čísla. Domácnost je fakticky jednopříjmová — druhá osoba studuje a typicky nemá vlastní příjem — takže kritérium pro jednopříjmové domácnosti (nadprůměrný příjem) je tu klíčové a zatím neověřené. Čeká se, jestli si vybere termín prohlídky.",
-    resh: [
-      { src: "Profil portál", res: "ok", txt: "<b>Ověřená identita</b> — zelená fajfka, jedna z mála." },
-      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
-      { src: "LinkedIn", res: "pozor", klic: true, txt: "<b>Nalezený profil na shodné jméno se ukázal nespolehlivý.</b> Fotka na profilu neodpovídala uváděnému věku a avatar na portálu chybí, takže to nešlo ověřit jinak. Profesní údaj z něj se do hodnocení nepočítá — shoda jména a lokality sama o sobě nestačí." }
     ]
   }
 ];
@@ -842,11 +887,48 @@ const filtrovana = () => ZAJEMCI
   .filter(z => filtrGrp === "vse" || z.grp === filtrGrp)
   .filter(z => filtrByt === "vse" || z.byt === filtrByt);
 
+const pad2 = n => String(n).padStart(2, "0");
+const parseDatum = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+const klicDatum = d => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+
+function vykresliGraf(data) {
+  const $chart = document.getElementById("chart");
+  if (!data.length) { $chart.innerHTML = ""; return; }
+
+  const poctyDny = {};
+  data.forEach(z => { poctyDny[z.datum] = (poctyDny[z.datum] || 0) + 1; });
+
+  const nejstarsi = data.map(z => parseDatum(z.datum)).reduce((a, b) => a < b ? a : b);
+  const dnes = new Date(); dnes.setHours(0, 0, 0, 0);
+
+  const dny = [];
+  for (let d = new Date(nejstarsi); d <= dnes; d.setDate(d.getDate() + 1)) {
+    dny.push(new Date(d));
+  }
+
+  const maxPocet = Math.max(1, ...Object.values(poctyDny));
+
+  $chart.innerHTML = dny.map(d => {
+    const klic = klicDatum(d);
+    const n = poctyDny[klic] || 0;
+    const vyska = Math.round((n / maxPocet) * 100);
+    const jeDnes = klic === klicDatum(dnes);
+    const label = `${d.getDate()}. ${d.getMonth() + 1}.`;
+    return `
+      <div class="col${n ? " has-val" : ""}${jeDnes ? " today" : ""}" title="${label}${jeDnes ? " (dnes)" : ""}: ${n} nových zájemců">
+        <div class="n">${n || ""}</div>
+        <div class="track"><div class="bar" style="height:${vyska}%"></div></div>
+        <div class="lbl">${label}</div>
+      </div>`;
+  }).join("");
+}
+
 const vykresli = () => {
   const data = filtrovana();
   document.getElementById("stats").innerHTML = pocty(data)
     .map(s => `<div class="stat ${s.k}"><div class="num">${s.n}</div><div class="lbl">${s.l}</div></div>`)
     .join("");
+  vykresliGraf(data);
   $list.innerHTML = data.length
     ? data.map(karta).join("")
     : `<p style="color:var(--text-dim); font-size:14.5px; padding:8px 2px;">Žádný zájemce neodpovídá zvolenému filtru.</p>`;
