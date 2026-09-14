@@ -146,9 +146,9 @@
     background: var(--surface); border: 1px solid var(--border);
     border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow);
   }
-  .card[data-grp="prohlidka"] { border-left: 4px solid var(--accent); }
-  .card[data-grp="proces"]    { border-left: 4px solid var(--warn); }
-  .card[data-grp="uzavreno"]  { border-left: 4px solid var(--off); }
+  .card[data-barva="prohlidka"] { border-left: 4px solid var(--accent); }
+  .card[data-barva="proces"]    { border-left: 4px solid var(--warn); }
+  .card[data-barva="uzavreno"]  { border-left: 4px solid var(--off); }
 
   .top { display: grid; grid-template-columns: 48px 1fr; gap: 14px; align-items: center; }
   .ini {
@@ -157,9 +157,9 @@
     font-weight: 650; font-size: 15px;
     background: var(--surface-2); color: var(--text-dim); border: 1px solid var(--border);
   }
-  .card[data-grp="prohlidka"] .ini { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
-  .card[data-grp="proces"] .ini    { background: var(--warn-soft); color: var(--warn); border-color: transparent; }
-  .card[data-grp="uzavreno"] .ini  { background: var(--off-soft); color: var(--off); border-color: transparent; }
+  .card[data-barva="prohlidka"] .ini { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+  .card[data-barva="proces"] .ini    { background: var(--warn-soft); color: var(--warn); border-color: transparent; }
+  .card[data-barva="uzavreno"] .ini  { background: var(--off-soft); color: var(--off); border-color: transparent; }
 
   .head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
   .badge { font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: var(--mute-soft); color: var(--mute); }
@@ -171,11 +171,6 @@
     background: var(--surface-2); color: var(--text-dim); border: 1px solid var(--border);
     letter-spacing: .02em;
   }
-
-  .score { display: flex; align-items: center; gap: 8px; margin-top: 7px; }
-  .bar { flex: 0 0 88px; height: 6px; border-radius: 3px; background: var(--surface-2); overflow: hidden; }
-  .bar i { display: block; height: 100%; background: var(--accent); border-radius: 3px; }
-  .score span { font-size: 12.5px; color: var(--text-dim); }
 
   /* ---- termín prohlídky ---- */
   .termin {
@@ -260,8 +255,6 @@
     .stat { padding: 12px 14px; }
     .stat .num { font-size: 26px; }
     .summary { font-size: 14px; }
-    .score { flex-direction: column; align-items: flex-start; gap: 5px; }
-    .bar { flex: 0 0 auto; width: 120px; }
     .src { grid-template-columns: 1fr; gap: 3px; }
     .src .pill { justify-self: start; padding: 3px 9px; }
     .termin .kdy, .termin .cas { font-size: 17px; }
@@ -336,8 +329,7 @@
 // ---------------------------------------------------------------------------
 const ZAJEMCI = [
   {
-    ini: "V. T.", grp: "proces", stav: "Smlouva odeslána", byt: "A1", datum: "2026-08-31",
-    score: 8, scoreMax: 10,
+    ini: "V. T.", grp: "proces", stav: "Smlouva akceptována — čeká na podpis", byt: "A1", datum: "2026-08-31", zeleny: true,
     termin: null,
     kontakt: {
       tah: "zajemce",
@@ -354,8 +346,7 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "V. Sv.", grp: "proces", stav: "Prohlídka proběhla", byt: "A2", datum: "2026-09-04",
-    score: 7, scoreMax: 10,
+    ini: "V. Sv.", grp: "proces", stav: "Prohlídka proběhla", byt: "A2", datum: "2026-09-04", zeleny: true,
     termin: null,
     kontakt: {
       tah: "my",
@@ -369,8 +360,7 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "O. M.", grp: "proces", stav: "Prohlídka proběhla", byt: "A2", datum: "2026-09-11",
-    score: 5, scoreMax: 10,
+    ini: "O. M.", grp: "proces", stav: "Prohlídka proběhla", byt: "A2", datum: "2026-09-11", zeleny: true,
     termin: null,
     kontakt: {
       tah: "my",
@@ -384,8 +374,7 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "M. S.", grp: "proces", stav: "Prohlídka proběhla", byt: "A2", datum: "2026-09-13",
-    score: 5, scoreMax: 10,
+    ini: "M. S.", grp: "proces", stav: "Prohlídka proběhla", byt: "A2", datum: "2026-09-13", zeleny: true,
     termin: null,
     kontakt: {
       tah: "my",
@@ -399,8 +388,7 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "T. H.", grp: "proces", stav: "Prohlídka proběhla", byt: "A2", datum: "2026-09-14",
-    score: 5, scoreMax: 10,
+    ini: "T. H.", grp: "proces", stav: "Prohlídka proběhla", byt: "A2", datum: "2026-09-14", zeleny: true,
     termin: null,
     kontakt: {
       tah: "my",
@@ -414,8 +402,7 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "L. K.", grp: "proces", stav: "Prohlídka proběhla", byt: "A3", datum: "2026-09-11",
-    score: 6, scoreMax: 10,
+    ini: "L. K.", grp: "proces", stav: "Prohlídka proběhla", byt: "A3", datum: "2026-09-11", zeleny: true,
     termin: null,
     kontakt: {
       tah: "my",
@@ -431,7 +418,6 @@ const ZAJEMCI = [
   },
   {
     ini: "M. U.", grp: "proces", stav: "Čeká se na odpověď", byt: "A2", datum: "2026-09-04",
-    score: 6, scoreMax: 10,
     termin: null,
     kontakt: {
       tah: "zajemce",
@@ -446,7 +432,6 @@ const ZAJEMCI = [
   },
   {
     ini: "L. T.", grp: "proces", stav: "Čeká se na odpověď", byt: "A3", datum: "2026-09-10",
-    score: 6, scoreMax: 10,
     termin: null,
     kontakt: {
       tah: "zajemce",
@@ -462,7 +447,6 @@ const ZAJEMCI = [
   },
   {
     ini: "I. S.", grp: "proces", stav: "Čeká se na odpověď", byt: "A2", datum: "2026-09-04",
-    score: 0, scoreMax: 10,
     termin: null,
     kontakt: {
       tah: "zajemce",
@@ -478,7 +462,6 @@ const ZAJEMCI = [
   },
   {
     ini: "H. H.", grp: "proces", stav: "Čeká se na odpověď", byt: "A2", datum: "2026-09-04",
-    score: 0, scoreMax: 10,
     termin: null,
     kontakt: {
       tah: "zajemce",
@@ -494,7 +477,6 @@ const ZAJEMCI = [
   },
   {
     ini: "M. Z.", grp: "proces", stav: "Čeká se na odpověď", byt: "A2", datum: "2026-09-08",
-    score: 1, scoreMax: 10,
     termin: null,
     kontakt: {
       tah: "zajemce",
@@ -510,7 +492,6 @@ const ZAJEMCI = [
   },
   {
     ini: "O. P.", grp: "proces", stav: "Čeká se na odpověď", byt: "A2", datum: "2026-09-11",
-    score: 3, scoreMax: 10,
     termin: null,
     kontakt: {
       tah: "zajemce",
@@ -525,7 +506,6 @@ const ZAJEMCI = [
   },
   {
     ini: "L. P.", grp: "proces", stav: "Čeká se na odpověď", byt: "A2", datum: "2026-09-13",
-    score: 0, scoreMax: 10,
     termin: null,
     kontakt: {
       tah: "zajemce",
@@ -540,7 +520,6 @@ const ZAJEMCI = [
   },
   {
     ini: "V. Se.", grp: "proces", stav: "Čeká se na odpověď", byt: "A2", datum: "2026-09-13",
-    score: 0, scoreMax: 10,
     termin: null,
     kontakt: {
       tah: "zajemce",
@@ -555,7 +534,6 @@ const ZAJEMCI = [
   },
   {
     ini: "L. Z.", grp: "proces", stav: "Rezerva", byt: "A3", datum: "2026-09-10",
-    score: 4, scoreMax: 10,
     termin: null,
     kontakt: {
       tah: "klid",
@@ -570,7 +548,6 @@ const ZAJEMCI = [
   },
   {
     ini: "O. K.", grp: "proces", stav: "Čeká se na odpověď", byt: "A3", datum: "2026-09-10",
-    score: 0, scoreMax: 10,
     termin: null,
     kontakt: {
       tah: "zajemce",
@@ -585,7 +562,6 @@ const ZAJEMCI = [
   },
   {
     ini: "T. B.", grp: "proces", stav: "Čeká se na odpověď", byt: "A3", datum: "2026-09-10",
-    score: 0, scoreMax: 10,
     termin: null,
     kontakt: {
       tah: "zajemce",
@@ -600,7 +576,6 @@ const ZAJEMCI = [
   },
   {
     ini: "R. H.", grp: "proces", stav: "Čeká se na odpověď", byt: "A3", datum: "2026-09-11",
-    score: 3, scoreMax: 10,
     termin: null,
     kontakt: {
       tah: "zajemce",
@@ -615,7 +590,6 @@ const ZAJEMCI = [
   },
   {
     ini: "A. B.", grp: "proces", stav: "Nový zájemce", byt: "A2", datum: "2026-09-04",
-    score: 0, scoreMax: 10,
     termin: null,
     kontakt: {
       tah: "my",
@@ -631,7 +605,6 @@ const ZAJEMCI = [
   },
   {
     ini: "D. T.", grp: "uzavreno", stav: "K odmítnutí", byt: "A1", datum: "2026-08-31",
-    score: null,
     termin: null,
     kontakt: {
       tah: "my",
@@ -649,7 +622,6 @@ const ZAJEMCI = [
   },
   {
     ini: "G. B.", grp: "uzavreno", stav: "K odmítnutí", byt: "A1", datum: "2026-08-31",
-    score: null,
     termin: null,
     kontakt: {
       tah: "my",
@@ -666,7 +638,6 @@ const ZAJEMCI = [
   },
   {
     ini: "K. K.", grp: "uzavreno", stav: "K odmítnutí", byt: "A2", datum: "2026-09-04",
-    score: null,
     termin: null,
     kontakt: {
       tah: "my",
@@ -681,7 +652,6 @@ const ZAJEMCI = [
   },
   {
     ini: "D. T.", grp: "uzavreno", stav: "K odmítnutí", byt: "A2", datum: "2026-09-04",
-    score: null,
     termin: null,
     kontakt: {
       tah: "my",
@@ -697,7 +667,6 @@ const ZAJEMCI = [
   },
   {
     ini: "A. Z.", grp: "uzavreno", stav: "K odmítnutí", byt: "A2", datum: "2026-09-04",
-    score: null,
     termin: null,
     kontakt: {
       tah: "my",
@@ -713,7 +682,6 @@ const ZAJEMCI = [
   },
   {
     ini: "R. K.", grp: "uzavreno", stav: "K odmítnutí", byt: "A2", datum: "2026-09-04",
-    score: null,
     termin: null,
     kontakt: {
       tah: "my",
@@ -729,7 +697,6 @@ const ZAJEMCI = [
   },
   {
     ini: "L. K.", grp: "uzavreno", stav: "K odmítnutí", byt: "A2", datum: "2026-09-09",
-    score: null,
     termin: null,
     kontakt: {
       tah: "my",
@@ -746,7 +713,6 @@ const ZAJEMCI = [
   },
   {
     ini: "I. H.", grp: "uzavreno", stav: "K odmítnutí", byt: "A2", datum: "2026-09-14",
-    score: null,
     termin: null,
     kontakt: {
       tah: "my",
@@ -761,7 +727,6 @@ const ZAJEMCI = [
   },
   {
     ini: "R. K.", grp: "uzavreno", stav: "K odmítnutí", byt: "A3", datum: "2026-09-14",
-    score: null,
     termin: null,
     kontakt: {
       tah: "my",
@@ -776,7 +741,6 @@ const ZAJEMCI = [
   },
   {
     ini: "D. L.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1", datum: "2026-08-31",
-    score: 4, scoreMax: 10,
     termin: null,
     kontakt: {
       tah: "konec",
@@ -793,7 +757,6 @@ const ZAJEMCI = [
   },
   {
     ini: "V. K.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1", datum: "2026-09-01",
-    score: 2, scoreMax: 10,
     termin: null,
     kontakt: {
       tah: "konec",
@@ -809,7 +772,6 @@ const ZAJEMCI = [
   },
   {
     ini: "Y. D.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1", datum: "2026-08-31",
-    score: 2, scoreMax: 10,
     termin: null,
     kontakt: {
       tah: "konec",
@@ -825,7 +787,6 @@ const ZAJEMCI = [
   },
   {
     ini: "C. B.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1", datum: "2026-09-01",
-    score: null,
     termin: null,
     kontakt: {
       tah: "konec",
@@ -841,7 +802,6 @@ const ZAJEMCI = [
   },
   {
     ini: "S. C.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1", datum: "2026-09-01",
-    score: null,
     termin: null,
     kontakt: {
       tah: "konec",
@@ -859,7 +819,6 @@ const ZAJEMCI = [
   },
   {
     ini: "K. M.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1", datum: "2026-09-02",
-    score: null,
     termin: null,
     kontakt: {
       tah: "konec",
@@ -875,7 +834,6 @@ const ZAJEMCI = [
   },
   {
     ini: "O. N.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1", datum: "2026-08-31",
-    score: null,
     termin: null,
     kontakt: {
       tah: "konec",
@@ -891,7 +849,6 @@ const ZAJEMCI = [
   },
   {
     ini: "T. O.", grp: "uzavreno", stav: "Odstoupeno", byt: "A1", datum: "2026-08-31",
-    score: null,
     termin: null,
     kontakt: {
       tah: "konec",
@@ -907,7 +864,6 @@ const ZAJEMCI = [
   },
   {
     ini: "M. S.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1", datum: "2026-09-02",
-    score: null,
     termin: null,
     kontakt: {
       tah: "konec",
@@ -924,7 +880,6 @@ const ZAJEMCI = [
   },
   {
     ini: "D. G.", grp: "uzavreno", stav: "Odstoupil", byt: "A1", datum: "2026-08-31",
-    score: 3, scoreMax: 10,
     termin: null,
     kontakt: {
       tah: "konec",
@@ -940,7 +895,6 @@ const ZAJEMCI = [
   },
   {
     ini: "M. N.", grp: "uzavreno", stav: "Odmítnuto", byt: "A1", datum: "2026-08-31",
-    score: null,
     termin: null,
     kontakt: {
       tah: "konec",
@@ -956,7 +910,6 @@ const ZAJEMCI = [
   },
   {
     ini: "A. B.", grp: "uzavreno", stav: "Odstoupila", byt: "A1", datum: "2026-08-31",
-    score: null,
     termin: null,
     kontakt: {
       tah: "konec",
@@ -972,7 +925,6 @@ const ZAJEMCI = [
   },
   {
     ini: "Z. K.", grp: "uzavreno", stav: "Odmítnuto", byt: "A2", datum: "2026-09-04",
-    score: null,
     termin: null,
     kontakt: {
       tah: "konec",
@@ -988,7 +940,6 @@ const ZAJEMCI = [
   },
   {
     ini: "A. K.", grp: "uzavreno", stav: "Odmítnuto", byt: "A2", datum: "2026-09-08",
-    score: null,
     termin: null,
     kontakt: {
       tah: "konec",
@@ -1004,7 +955,6 @@ const ZAJEMCI = [
   },
   {
     ini: "E. D.", grp: "uzavreno", stav: "Odmítnuto", byt: "A2", datum: "2026-09-08",
-    score: null,
     termin: null,
     kontakt: {
       tah: "konec",
@@ -1020,7 +970,6 @@ const ZAJEMCI = [
   },
   {
     ini: "D. Q.", grp: "uzavreno", stav: "Odmítnuto", byt: "A2", datum: "2026-09-04",
-    score: null,
     termin: null,
     kontakt: {
       tah: "konec",
@@ -1035,7 +984,6 @@ const ZAJEMCI = [
   },
   {
     ini: "K. P.", grp: "uzavreno", stav: "Odmítnuto", byt: "A2", datum: "2026-09-08",
-    score: null,
     termin: null,
     kontakt: {
       tah: "konec",
@@ -1052,7 +1000,6 @@ const ZAJEMCI = [
   },
   {
     ini: "B. Š.", grp: "uzavreno", stav: "Odmítnuto", byt: "A2", datum: "2026-09-12",
-    score: null,
     termin: null,
     kontakt: {
       tah: "konec",
@@ -1068,7 +1015,6 @@ const ZAJEMCI = [
   },
   {
     ini: "R. G.", grp: "uzavreno", stav: "Odmítnuto", byt: "A2", datum: "2026-09-12",
-    score: null,
     termin: null,
     kontakt: {
       tah: "konec",
@@ -1084,7 +1030,6 @@ const ZAJEMCI = [
   },
   {
     ini: "Z. H.", grp: "uzavreno", stav: "Odmítnuto", byt: "A3", datum: "2026-09-10",
-    score: null,
     termin: null,
     kontakt: {
       tah: "konec",
@@ -1100,7 +1045,6 @@ const ZAJEMCI = [
   },
   {
     ini: "A. Ba.", grp: "uzavreno", stav: "Odmítnuto", byt: "A3", datum: "2026-09-12",
-    score: null,
     termin: null,
     kontakt: {
       tah: "konec",
@@ -1114,7 +1058,6 @@ const ZAJEMCI = [
   },
   {
     ini: "A. Bé.", grp: "uzavreno", stav: "Odmítnuto", byt: "A3", datum: "2026-09-13",
-    score: null,
     termin: null,
     kontakt: {
       tah: "konec",
@@ -1129,7 +1072,6 @@ const ZAJEMCI = [
   },
   {
     ini: "A. Ka.", grp: "uzavreno", stav: "Odmítnuto", byt: "A3", datum: "2026-09-12",
-    score: null,
     termin: null,
     kontakt: {
       tah: "konec",
@@ -1144,7 +1086,6 @@ const ZAJEMCI = [
   },
   {
     ini: "Š. B.", grp: "uzavreno", stav: "Odstoupil", byt: "A3", datum: "2026-09-12",
-    score: null,
     termin: null,
     kontakt: {
       tah: "konec",
@@ -1175,11 +1116,7 @@ const pocty = d => {
 };
 
 function karta(z) {
-  const skore = z.score === null ? "" : `
-    <div class="score">
-      <div class="bar"><i style="width:${Math.round(z.score / z.scoreMax * 100)}%"></i></div>
-      <span>skóre ${z.score}/${z.scoreMax} — zbytek nerozhodnutý, chybí informace</span>
-    </div>`;
+  const barva = z.zeleny ? "prohlidka" : z.grp;
 
   const termin = !z.termin ? "" : `
     <div class="termin">
@@ -1207,15 +1144,14 @@ function karta(z) {
     </div>`;
 
   return `
-  <article class="card" data-grp="${z.grp}" data-byt="${z.byt}">
+  <article class="card" data-grp="${z.grp}" data-barva="${barva}" data-byt="${z.byt}">
     <div class="top">
       <div class="ini">${z.ini}</div>
       <div>
         <div class="head">
-          <span class="badge ${z.grp}">${z.stav}</span>
+          <span class="badge ${barva}">${z.stav}</span>
           <span class="bytbadge">byt ${z.byt}</span>
         </div>
-        ${skore}
       </div>
     </div>
     ${termin}
