@@ -274,7 +274,7 @@
 
   <header>
     <h1>Přehled zájemců o pronájem</h1>
-    <p class="stamp">Poslední aktualizace <b>14. 9. 2026 v 20:00</b> · tři sledované byty (A1, A2, A3) · zájemci jsou vedeni pouze pod iniciálami</p>
+    <p class="stamp">Poslední aktualizace <b>14. 9. 2026 v 21:00</b> · tři sledované byty (A1, A2, A3) · zájemci jsou vedeni pouze pod iniciálami</p>
   </header>
 
   <div class="filters" id="filters" role="group" aria-label="Filtr podle stavu">
@@ -414,18 +414,19 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "L. K.", grp: "prohlidka", stav: "Prohlídka domluvena", byt: "A3", datum: "2026-09-11",
-    score: 5, scoreMax: 10,
-    termin: { den: "pondělí 14. 9. 2026", cas: "19:00", pozn: "Chce vidět i druhý, podobný byt (A2). Přítelkyně se možná nezúčastní kvůli firemní akci." },
+    ini: "L. K.", grp: "proces", stav: "Prohlídka proběhla", byt: "A3", datum: "2026-09-11",
+    score: 6, scoreMax: 10,
+    termin: null,
     kontakt: {
-      tah: "klid",
-      hl: "Domluveno",
-      prubeh: "První kontakt 11. 9. s představením páru — on IT datový analytik, ona nutriční terapeutka, nekuřáci, bez zvířat. Po drobném dolaďování termínu (chtěl večerní čas) domluveno na dnešek, pondělí 19:00."
+      tah: "my",
+      hl: "Prohlídka proběhla 14. 9. — rozhodne do konce týdne",
+      prubeh: "První kontakt 11. 9. s představením páru — on IT datový analytik, ona nutriční terapeutka, nekuřáci, bez zvířat. Prohlídka proběhla dnes, v pondělí 19:00, a šla skvěle — majitel: „určitě jeden z nejlepších zájemců\", dobré vystupování, „sedli jsme si\". Stejně jako další zájemci z dnešního dne mají ještě jiné prohlídky jinde, dají vědět do konce týdne."
     },
-    summary: "Ověřený a pojištěný pár se dvěma solidně placenými profesemi. Chce si prohlídnout i druhý, podobný byt (A2) ve stejném termínu. Konkrétní čísla k příjmu a délce nájmu se doptají na místě.",
+    summary: "Jeden z nejlépe hodnocených dojmů z prohlídky za poslední dobu. Ověřený a pojištěný pár se dvěma solidně placenými profesemi, oba působí solventně. Pokud do konce týdne nepřijde silnější kandidát, majitel jim sám napíše, že má zájem.",
     resh: [
       { src: "Profil portál", res: "ok", txt: "<b>Ověřený uživatel</b>, s pojištěním odpovědnosti." },
-      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." }
+      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
+      { src: "Dojem z prohlídky", res: "ok", klic: true, txt: "<b>Velmi dobrý.</b> Přímé pozorování majitele: oba solventní, dobré vystupování." }
     ]
   },
   {
