@@ -267,7 +267,7 @@
 
   <header>
     <h1>Přehled zájemců o pronájem</h1>
-    <p class="stamp">Poslední aktualizace <b>14. 9. 2026 v 21:00</b> · tři sledované byty (A1, A2, A3) · zájemci jsou vedeni pouze pod iniciálami</p>
+    <p class="stamp">Poslední aktualizace <b>17. 9. 2026</b> · tři sledované byty (A1, A2, A3) · zájemci jsou vedeni pouze pod iniciálami</p>
   </header>
 
   <div class="filters" id="filters" role="group" aria-label="Filtr podle stavu">
@@ -346,12 +346,12 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "V. Sv.", grp: "proces", stav: "Prohlídka proběhla", byt: "A2", datum: "2026-09-04", zeleny: true,
+    ini: "V. Sv.", grp: "uzavreno", stav: "Odmítnuto", byt: "A2", datum: "2026-09-04",
     termin: null,
     kontakt: {
       tah: "my",
-      hl: "Prohlídka proběhla 9. 9. — rozhodnutí do úterý",
-      prubeh: "První kontakt 4. 9. s představením mladého páru a racionálním důvodem spěchu — současná majitelka prodává byt, kde teď bydlí. Kalendář nasdílen 7. 9., termín rezervován týž den. Prohlídka 9. 9. proběhla a dopadla dobře — majitel jim slíbil ozvat se s rozhodnutím do úterý, mezitím se čeká, jestli se neobjeví silnější kandidát na některý z obou aktuálně nabízených bytů."
+      hl: "Odmítnuto 15. 9. — majitel dal přednost jinému zájemci",
+      prubeh: "První kontakt 4. 9. s představením mladého páru a racionálním důvodem spěchu — současná majitelka prodává byt, kde teď bydlí. Kalendář nasdílen 7. 9., termín rezervován týž den. Prohlídka 9. 9. proběhla a dopadla dobře — majitel jim slíbil ozvat se s rozhodnutím do úterý, Byt mezitím obsadil jiný zájemce (T. H.); majitel 15. 9. odmítl."
     },
     summary: "Prohlídka dopadla dobře — přišli oba, byt se jim líbil, žádný problém s žádnou podmínkou. Samostatnost jde na plný počet, protože jde o přímé pozorování z místa, ne odhad. Solventnost mírně nahoru: dohromady tři zdroje příjmu na dvoučlennou domácnost, pořád ale bez konkrétních čísel. Dlouhodobost má racionální, ověřitelný důvod spěchu — nucené stěhování kvůli prodeji bytu, kde teď bydlí. Rozhodnutí je odložené do úterý, aby šlo porovnat s případnými dalšími zájemci.",
     resh: [
@@ -374,42 +374,42 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "M. S.", grp: "proces", stav: "Prohlídka proběhla", byt: "A2", datum: "2026-09-13", zeleny: true,
+    ini: "M. S.", grp: "proces", stav: "Prohlídka proběhla — čeká se, zda se ozve", byt: "A2", datum: "2026-09-13", zeleny: true,
     termin: null,
     kontakt: {
       tah: "my",
-      hl: "Prohlídka proběhla 13. 9. — rozhodnutí do pondělí 21. 9.",
-      prubeh: "Napsala na nově vystavený A3, ale na prohlídce řekla, že zájem mají o tenhle byt (A2) — majitel ji proto vede tady, ne podle toho, přes kterou konverzaci napsala. Prohlídka proběhla 13. 9., moc se líbila i partnerovi. Mají ještě další prohlídky jinde, rozhodnou v pondělí 21. 9. Pokud do té doby nebude silnější kandidát, majitel jim byt nabídne."
+      hl: "A2 obsazen jiným zájemcem (L. K.) — pokud se ozve, odmítnuta",
+      prubeh: "Napsala na nově vystavený A3, ale na prohlídce řekla, že zájem mají o tenhle byt (A2) — majitel ji proto vede tady, ne podle toho, přes kterou konverzaci napsala. Prohlídka proběhla 13. 9., moc se líbila i partnerovi. Mají ještě další prohlídky jinde, rozhodnou v pondělí 21. 9. Mezitím se 17. 9. majitel rozhodl pro jiného zájemce (L. K.); pokud se sama ozve, bude odmítnuta, jinak se nic neposílá."
     },
-    summary: "Jeden z nejlépe hodnocených dojmů z prohlídky za poslední dobu. Ona pracuje ve velké státní nemocnici, přítel v developmentu — stálé zaměstnání u velké instituce je solidní podklad k solventnosti i bez konkrétní částky. Zvažují ještě jiné byty a rozhodnou se do pondělí 21. 9.; majitel je zatím nechává jako prioritní volbu pro tenhle byt.",
+    summary: "Jeden z nejlépe hodnocených dojmů z prohlídky za poslední dobu. Ona pracuje ve velké státní nemocnici, přítel v developmentu — stálé zaměstnání u velké instituce je solidní podklad k solventnosti i bez konkrétní částky. Zvažovali ještě jiné byty; mezitím se majitel 17. 9. rozhodl pro jiného zájemce (L. K.). Pokud se sama ozve, bude odmítnuta.",
     resh: [
       { src: "Profil portál", res: "pozor", txt: "<b>Neověřená uživatelka</b>, bez pojištění odpovědnosti." },
       { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." }
     ]
   },
   {
-    ini: "T. H.", grp: "proces", stav: "Prohlídka proběhla", byt: "A2", datum: "2026-09-14", zeleny: true,
+    ini: "T. H.", grp: "proces", stav: "Smlouva akceptována — čeká na podpis", byt: "A3", datum: "2026-09-14", zeleny: true,
     termin: null,
     kontakt: {
       tah: "my",
-      hl: "Prohlídka proběhla 14. 9. — rozhodne do konce týdne",
-      prubeh: "Napsal 14. 9. na tenhle byt (A2), na prohlídce mu majitel ukázal i druhý, podobný byt A3. Mladý zasnoubený pár, hledají první společné bydlení. Majiteli se líbil a na A3 jako jeden z mála nic nenamítal — proto by mu radši nabídl ten byt, ne tenhle. Sám má ještě jiné prohlídky do konce týdne, pak dá vědět."
+      hl: "Smlouva akceptována 17. 9. — čeká se na podpis",
+      prubeh: "Napsal 14. 9. na byt A2, na prohlídce mu majitel ukázal i druhý, podobný byt A3. Mladý zasnoubený pár, hledají první společné bydlení. Majiteli se líbil a na A3 jako jeden z mála nic nenamítal — proto by mu radši nabídl ten byt, ne tenhle. Sám měl ještě jiné prohlídky, ale 17. 9. akceptoval smlouvu na A3 bez připomínek — podpis proběhne příští týden."
     },
-    summary: "Sympatický, solidní pár před svatbou, hledající první společný domov. Oba mají stabilní zaměstnání bez konkrétní udané částky. Nepotřebuje garážové stání, které se u tohoto bytu jinak řeší zvlášť. Majitel by mu ale radši nabídl druhý byt (A3), na který jako jeden z mála neměl žádné výhrady — čeká se, jak se rozhodne on i jestli mezitím nepřijde silnější kandidát.",
+    summary: "Sympatický, solidní pár před svatbou, hledající první společný domov. Oba mají stabilní zaměstnání bez konkrétní udané částky. Nepotřebuje garážové stání, které se u tohoto bytu jinak řeší zvlášť. Majitel mu radši nabídl tenhle druhý byt (A3), na který jako jeden z mála neměl žádné výhrady — 17. 9. smlouvu akceptoval, podpis proběhne příští týden.",
     resh: [
       { src: "Profil portál", res: "ok", txt: "<b>Ověřený uživatel.</b>" },
       { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." }
     ]
   },
   {
-    ini: "L. K.", grp: "proces", stav: "Prohlídka proběhla", byt: "A3", datum: "2026-09-11", zeleny: true,
+    ini: "L. K.", grp: "proces", stav: "Smlouva akceptována — čeká na podpis", byt: "A2", datum: "2026-09-11", zeleny: true,
     termin: null,
     kontakt: {
       tah: "my",
-      hl: "Prohlídka proběhla 14. 9. — rozhodne do konce týdne",
-      prubeh: "První kontakt 11. 9. s představením páru — on IT datový analytik, ona nutriční terapeutka, nekuřáci, bez zvířat. Prohlídka proběhla dnes, v pondělí 19:00, a šla skvěle — majitel: „určitě jeden z nejlepších zájemců\", dobré vystupování, „sedli jsme si\". Stejně jako další zájemci z dnešního dne mají ještě jiné prohlídky jinde, dají vědět do konce týdne."
+      hl: "Smlouva akceptována 17. 9. — čeká se na podpis",
+      prubeh: "První kontakt 11. 9. s představením páru — on IT datový analytik, ona nutriční terapeutka, nekuřáci, bez zvířat. Prohlídka proběhla dnes, v pondělí 19:00, a šla skvěle — majitel: „určitě jeden z nejlepších zájemců\", dobré vystupování, „sedli jsme si\". Rozhodli se pro tenhle byt (A2); 17. 9. akceptovali smlouvu bez připomínek, podpis proběhne příští týden."
     },
-    summary: "Jeden z nejlépe hodnocených dojmů z prohlídky za poslední dobu. Ověřený a pojištěný pár se dvěma solidně placenými profesemi, oba působí solventně. Pokud do konce týdne nepřijde silnější kandidát, majitel jim sám napíše, že má zájem.",
+    summary: "Jeden z nejlépe hodnocených dojmů z prohlídky za poslední dobu. Ověřený a pojištěný pár se dvěma solidně placenými profesemi, oba působí solventně. Silnější kandidát se do konce týdne neobjevil — 17. 9. smlouvu akceptovali, podpis proběhne příští týden.",
     resh: [
       { src: "Profil portál", res: "ok", txt: "<b>Ověřený uživatel</b>, s pojištěním odpovědnosti." },
       { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
@@ -417,12 +417,12 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "M. U.", grp: "proces", stav: "Čeká se na odpověď", byt: "A2", datum: "2026-09-04",
+    ini: "M. U.", grp: "uzavreno", stav: "K odmítnutí", byt: "A2", datum: "2026-09-04",
     termin: null,
     kontakt: {
       tah: "zajemce",
-      hl: "Kalendář nasdílen 7. 9. — termín zatím nevybraný",
-      prubeh: "První kontakt 4. 9. s podrobným představením: manželský pár, v ČR 6 let, trvalý pobyt, oba pracující, bez zvířat, nekuřáci, hledají dlouhodobé bydlení. Profil vyhodnocen jako dost silný na rovnou nasdílení kalendáře prohlídek 7. 9., bez dalšího doptávání na přesná čísla. Termín zatím nevybrala."
+      hl: "K odmítnutí — oba byty obsazeny",
+      prubeh: "První kontakt 4. 9. s podrobným představením: manželský pár, v ČR 6 let, trvalý pobyt, oba pracující, bez zvířat, nekuřáci, hledají dlouhodobé bydlení. Profil vyhodnocen jako dost silný na rovnou nasdílení kalendáře prohlídek 7. 9., bez dalšího doptávání na přesná čísla. Termín zatím nevybrala. 17. 9.: oba byty obsazené (A2 L. K., A3 T. H.), majitel dál nikoho nehledá — zbývá kliknout na odmítnutí na portálu."
     },
     summary: "Jeden z nejsilnějších profilů ze všech nových zájemců na tenhle byt. Dlouhá vazba na ČR — šest let, trvalý pobyt — dává vysokou jistotu dlouhodobosti. Oba pracují, jedna z profesí je jednotlivě nízkopříjmová, ale u dvoupříjmové domácnosti se to nezastavuje. Profil byl vyhodnocen jako dost silný na to, aby šel rovnou na prohlídku bez dalšího doptávání na přesná čísla — ta se zjistí na místě.",
     resh: [
@@ -431,12 +431,12 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "L. T.", grp: "proces", stav: "Čeká se na odpověď", byt: "A3", datum: "2026-09-10",
+    ini: "L. T.", grp: "uzavreno", stav: "K odmítnutí", byt: "A3", datum: "2026-09-10",
     termin: null,
     kontakt: {
       tah: "zajemce",
-      hl: "Kalendář nasdílen 10. 9. — termín zatím nevybraný",
-      prubeh: "První kontakt 10. 9. s představením pracujícího páru — ona v HR/back office, přítel v IT, oba nekuřáci, bez zvířat, platí vždy včas. Majitel nasdílel kalendář prohlídek týž den, termín zatím nevybrala."
+      hl: "K odmítnutí — oba byty obsazeny",
+      prubeh: "První kontakt 10. 9. s představením pracujícího páru — ona v HR/back office, přítel v IT, oba nekuřáci, bez zvířat, platí vždy včas. Majitel nasdílel kalendář prohlídek týž den, termín zatím nevybrala. 17. 9.: oba byty obsazené (A2 L. K., A3 T. H.), majitel dál nikoho nehledá — zbývá kliknout na odmítnutí na portálu."
     },
     summary: "Nejsilnější profil ze všech, co na tenhle byt dosud přišly. Ověřená, pojištěná, a LinkedIn profil je potvrzený i fotkou — stejný snímek jako avatar na portálu, ne jen shoda jména. Stálé zaměstnání u zavedené firmy je solidní podklad k solventnosti i bez konkrétní částky. Zbývá vybrat termín prohlídky.",
     resh: [
@@ -446,12 +446,12 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "I. S.", grp: "proces", stav: "Čeká se na odpověď", byt: "A2", datum: "2026-09-04",
+    ini: "I. S.", grp: "uzavreno", stav: "K odmítnutí", byt: "A2", datum: "2026-09-04",
     termin: null,
     kontakt: {
       tah: "zajemce",
-      hl: "Doptání odesláno na A2 i A3 — zatím bez odpovědi",
-      prubeh: "První kontakt 4. 9. na A2: termín prohlídky by jí vyhovoval kdykoliv, žádá telefonní kontakt. Doptání odesláno týž den, bez odpovědi. 13. 9. napsala stejným způsobem i na nově vystavený A3 — vedeno jako jedna osoba, doptání odesláno i tam."
+      hl: "K odmítnutí — oba byty obsazeny",
+      prubeh: "První kontakt 4. 9. na A2: termín prohlídky by jí vyhovoval kdykoliv, žádá telefonní kontakt. Doptání odesláno týž den, bez odpovědi. 13. 9. napsala stejným způsobem i na nově vystavený A3 — vedeno jako jedna osoba, doptání odesláno i tam. 17. 9.: oba byty obsazené (A2 L. K., A3 T. H.), majitel dál nikoho nehledá — zbývá kliknout na odmítnutí na portálu."
     },
     summary: "Rešerše u jména na portálu naráží na nejistotu — zobrazené příjmení má dodatečný znak, který nejde s jistotou oddělit od skutečného příjmení, takže výsledek hledání v rejstříku dlužníků má nízkou váhu. O zájemkyni samotné zatím nevíme nic než ochotu k prohlídce kdykoliv; doptání čeká na odpověď na obou konverzacích.",
     resh: [
@@ -461,12 +461,12 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "H. H.", grp: "proces", stav: "Čeká se na odpověď", byt: "A2", datum: "2026-09-04",
+    ini: "H. H.", grp: "uzavreno", stav: "K odmítnutí", byt: "A2", datum: "2026-09-04",
     termin: null,
     kontakt: {
       tah: "zajemce",
-      hl: "Doptání přečteno na A2 — zatím bez odpovědi",
-      prubeh: "První kontakt 4. 9. na A2 jen automatickou reakcí, doptání odesláno týž den a je označené jako přečtené, bez odpovědi. 13. 9. napsala stejným způsobem i na A3 — tuhle druhou, duplicitní konverzaci majitel 14. 9. sám rovnou odmítl na portálu. Původní konverzace na A2 zůstává otevřená a nedotčená."
+      hl: "K odmítnutí — oba byty obsazeny",
+      prubeh: "První kontakt 4. 9. na A2 jen automatickou reakcí, doptání odesláno týž den a je označené jako přečtené, bez odpovědi. 13. 9. napsala stejným způsobem i na A3 — tuhle druhou, duplicitní konverzaci majitel 14. 9. sám rovnou odmítl na portálu. Původní konverzace na A2 zůstává otevřená a nedotčená. 17. 9.: oba byty obsazené (A2 L. K., A3 T. H.), majitel dál nikoho nehledá — zbývá kliknout na odmítnutí na portálu."
     },
     summary: "Jediná ze všech zájemců na tenhle byt, u koho portál ukazuje aktivní pojištění odpovědnosti bez nutnosti si ho vyžádat — není to důkaz solventnosti, ale signál, že věci kolem bydlení řeší dopředu. Jinak o ní zatím není známo nic, vlastní zprávu na A2 ještě nenapsala; duplicitní poptávka na A3 byla mezitím uzavřená.",
     resh: [
@@ -476,12 +476,12 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "M. Z.", grp: "proces", stav: "Čeká se na odpověď", byt: "A2", datum: "2026-09-08",
+    ini: "M. Z.", grp: "uzavreno", stav: "K odmítnutí", byt: "A2", datum: "2026-09-08",
     termin: null,
     kontakt: {
       tah: "zajemce",
-      hl: "Druhá zpráva odeslána 9. 9. — čeká se na vysvětlení obojího",
-      prubeh: "První kontakt 8. 9. jen automatickou reakcí portálu; na doptání odpověděla na dvě ze tří otázek — dva lidé, čistotní a bez špatných návyků, důvod stěhování je prodej domu, kde teď bydlí. Na přímou otázku o zaměstnání a režimu práce ale neodpověděla vůbec. K tomu jméno v profilu neodpovídá popisu domácnosti ve zprávě, což majitel rovnou uvedl. Výjimečně proto poslal druhou zprávu, ne jen jednu obvyklou — žádá vyjasnit obojí: kdo skutečně bude bydlet a jaké je zaměstnání."
+      hl: "K odmítnutí — oba byty obsazeny",
+      prubeh: "První kontakt 8. 9. jen automatickou reakcí portálu; na doptání odpověděla na dvě ze tří otázek — dva lidé, čistotní a bez špatných návyků, důvod stěhování je prodej domu, kde teď bydlí. Na přímou otázku o zaměstnání a režimu práce ale neodpověděla vůbec. K tomu jméno v profilu neodpovídá popisu domácnosti ve zprávě, což majitel rovnou uvedl. Výjimečně proto poslal druhou zprávu, ne jen jednu obvyklou — žádá vyjasnit obojí: kdo skutečně bude bydlet a jaké je zaměstnání. 17. 9.: oba byty obsazené (A2 L. K., A3 T. H.), majitel dál nikoho nehledá — zbývá kliknout na odmítnutí na portálu."
     },
     summary: "Rozhodují dvě otevřené otázky najednou. Na přímo položenou otázku o zaměstnání zatím nereagovala, přestože na zbylé dvě otázky ze stejné zprávy odpověděla — to je signál o tom, jak se bude domlouvat cokoli do budoucna, ne jen mezera k doplnění. K tomu jméno v profilu nesedí s tím, jak popsala domácnost — může jít o drobnou nesrovnalost, nebo o něco, co stojí za vyjasnění dřív, než se řeší cokoli dál. Důvod stěhování je racionální (prodej domu, kde teď bydlí), ne útěk z konfliktu. Pokud odpoví věrohodně na obojí, pokračuje se normálně; pokud ne, karta směřuje k odmítnutí.",
     resh: [
@@ -491,12 +491,12 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "O. P.", grp: "proces", stav: "Čeká se na odpověď", byt: "A2", datum: "2026-09-11",
+    ini: "O. P.", grp: "uzavreno", stav: "K odmítnutí", byt: "A2", datum: "2026-09-11",
     termin: null,
     kontakt: {
       tah: "zajemce",
-      hl: "Nabídnuty termíny prohlídky — zatím nevybral",
-      prubeh: "První kontakt 11. 9. s představením manželského páru — dva roky v ČR na vízu dočasné ochrany, oba pracují v IT jako OSVČ, komunikují anglicky, čeština na úrovni A2. Majitel mu 12. 9. nabídl i prohlídku podobného bytu A3 zároveň a termíny na 13.–14. 9. a úterý; termín zatím nevybral."
+      hl: "K odmítnutí — oba byty obsazeny",
+      prubeh: "První kontakt 11. 9. s představením manželského páru — dva roky v ČR na vízu dočasné ochrany, oba pracují v IT jako OSVČ, komunikují anglicky, čeština na úrovni A2. Majitel mu 12. 9. nabídl i prohlídku podobného bytu A3 zároveň a termíny na 13.–14. 9. a úterý; termín zatím nevybral. 17. 9.: oba byty obsazené (A2 L. K., A3 T. H.), majitel dál nikoho nehledá — zbývá kliknout na odmítnutí na portálu."
     },
     summary: "Silný pár na papíře — dva IT příjmy jsou solidní indicie solventnosti. Nejistota je u obou zbylých kritérií: příjem OSVČ může kolísat a délka podnikání není známá, a dočasná ochrana s sebou nese stejnou nejistotu o délce pobytu jako u jiných podobných případů — samo o sobě to není důvod k odmítnutí, jen věc k mít na paměti. Konkrétní čísla se doptají na prohlídce.",
     resh: [
@@ -505,12 +505,12 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "L. P.", grp: "proces", stav: "Čeká se na odpověď", byt: "A2", datum: "2026-09-13",
+    ini: "L. P.", grp: "uzavreno", stav: "K odmítnutí", byt: "A2", datum: "2026-09-13",
     termin: null,
     kontakt: {
       tah: "zajemce",
-      hl: "Doptání odesláno 13. 9. — zatím bez odpovědi",
-      prubeh: "První kontakt 13. 9. jen automatickou reakcí portálu. Doptání odesláno týž den, bez odpovědi."
+      hl: "K odmítnutí — oba byty obsazeny",
+      prubeh: "První kontakt 13. 9. jen automatickou reakcí portálu. Doptání odesláno týž den, bez odpovědi. 17. 9.: oba byty obsazené (A2 L. K., A3 T. H.), majitel dál nikoho nehledá — zbývá kliknout na odmítnutí na portálu."
     },
     summary: "O zájemkyni zatím není známo nic — jen automatická reakce portálu. Rešerše na jméno nic nenašla. Doptání čeká na odpověď.",
     resh: [
@@ -519,12 +519,12 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "V. Se.", grp: "proces", stav: "Čeká se na odpověď", byt: "A2", datum: "2026-09-13",
+    ini: "V. Se.", grp: "uzavreno", stav: "K odmítnutí", byt: "A2", datum: "2026-09-13",
     termin: null,
     kontakt: {
       tah: "zajemce",
-      hl: "Doptání odesláno 13. 9. — zatím bez odpovědi",
-      prubeh: "První kontakt 13. 9. jen automatickou reakcí portálu. Doptání odesláno týž den (včetně věty, že o spolupráci s realitní kanceláří majitel nemá zájem), bez odpovědi."
+      hl: "K odmítnutí — oba byty obsazeny",
+      prubeh: "První kontakt 13. 9. jen automatickou reakcí portálu. Doptání odesláno týž den (včetně věty, že o spolupráci s realitní kanceláří majitel nemá zájem), bez odpovědi. 17. 9.: oba byty obsazené (A2 L. K., A3 T. H.), majitel dál nikoho nehledá — zbývá kliknout na odmítnutí na portálu."
     },
     summary: "O zájemkyni zatím není známo nic — jen automatická reakce portálu. Rejstřík dlužníků má na shodné jméno tři nálezy, dva aktivní, ale bez jakéhokoli údaje o ní nejde posoudit věk ani lokalitu — jistota shody nulová. Doptání čeká na odpověď.",
     resh: [
@@ -533,12 +533,12 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "L. Z.", grp: "proces", stav: "Rezerva", byt: "A3", datum: "2026-09-10",
+    ini: "L. Z.", grp: "uzavreno", stav: "K odmítnutí", byt: "A3", datum: "2026-09-10",
     termin: null,
     kontakt: {
       tah: "klid",
-      hl: "Ponechána jako rezerva — bez akce",
-      prubeh: "První kontakt 10. 9. podrobnou zprávou: 20 let, studentka, bydlela by sama, nájem by hradila matka uvedená ve smlouvě, rok předchozího nájmu bez problémů. Majitel ji vědomě odkládá na později — zájem by byl, jen kdyby nebyli lepší kandidáti."
+      hl: "K odmítnutí — oba byty obsazeny",
+      prubeh: "První kontakt 10. 9. podrobnou zprávou: 20 let, studentka, bydlela by sama, nájem by hradila matka uvedená ve smlouvě, rok předchozího nájmu bez problémů. Majitel ji vědomě odkládá na později — zájem by byl, jen kdyby nebyli lepší kandidáti. 17. 9.: oba byty obsazené (A2 L. K., A3 T. H.), majitel dál nikoho nehledá — zbývá kliknout na odmítnutí na portálu."
     },
     summary: "Řešení stojí a padá s matkou, o které zatím nevíme nic — protože nájem by hradila a byla by ve smlouvě, nejde o čistě jednopříjmovou domácnost studentky bez krytí. Rok předchozího samostatného bydlení bez problémů je aspoň nějaká historie. Majitel ji drží jako rezervu, dokud se neukáže, jestli přijde silnější kandidát.",
     resh: [
@@ -547,12 +547,12 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "O. K.", grp: "proces", stav: "Čeká se na odpověď", byt: "A3", datum: "2026-09-10",
+    ini: "O. K.", grp: "uzavreno", stav: "K odmítnutí", byt: "A3", datum: "2026-09-10",
     termin: null,
     kontakt: {
       tah: "zajemce",
-      hl: "Doptání odesláno 10. 9. — zatím bez odpovědi",
-      prubeh: "První kontakt 10. 9. jen obecnou zprávou o vážném zájmu, bez jakéhokoli údaje o sobě. Doptání odesláno týž den, bez odpovědi."
+      hl: "K odmítnutí — oba byty obsazeny",
+      prubeh: "První kontakt 10. 9. jen obecnou zprávou o vážném zájmu, bez jakéhokoli údaje o sobě. Doptání odesláno týž den, bez odpovědi. 17. 9.: oba byty obsazené (A2 L. K., A3 T. H.), majitel dál nikoho nehledá — zbývá kliknout na odmítnutí na portálu."
     },
     summary: "O zájemkyni zatím není známo nic než obecné ujištění o vážném zájmu. Rešerše na jméno nic nenašla. Doptání čeká na odpověď.",
     resh: [
@@ -561,12 +561,12 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "T. B.", grp: "proces", stav: "Čeká se na odpověď", byt: "A3", datum: "2026-09-10",
+    ini: "T. B.", grp: "uzavreno", stav: "K odmítnutí", byt: "A3", datum: "2026-09-10",
     termin: null,
     kontakt: {
       tah: "zajemce",
-      hl: "Doptání odesláno 10. 9. — zatím bez odpovědi",
-      prubeh: "První kontakt 10. 9. jen automatickou reakcí portálu, žádná vlastní zpráva. Doptání odesláno týž den, bez odpovědi."
+      hl: "K odmítnutí — oba byty obsazeny",
+      prubeh: "První kontakt 10. 9. jen automatickou reakcí portálu, žádná vlastní zpráva. Doptání odesláno týž den, bez odpovědi. 17. 9.: oba byty obsazené (A2 L. K., A3 T. H.), majitel dál nikoho nehledá — zbývá kliknout na odmítnutí na portálu."
     },
     summary: "O zájemkyni zatím není známo nic — jen automatická reakce portálu. Rešerše na jméno nic nenašla. Doptání čeká na odpověď.",
     resh: [
@@ -575,12 +575,12 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "R. H.", grp: "proces", stav: "Čeká se na odpověď", byt: "A3", datum: "2026-09-11",
+    ini: "R. H.", grp: "uzavreno", stav: "K odmítnutí", byt: "A3", datum: "2026-09-11",
     termin: null,
     kontakt: {
       tah: "zajemce",
-      hl: "Majitel žádá vyjasnění délky pobytu",
-      prubeh: "První kontakt 11. 9. jen automatickou reakcí, doptání odesláno 13. 9. Odpověděl 14. 9.: bude bydlet sám, DevOps inženýr v IT na plný úvazek, nájem na 1 rok. Poslední bod majitele zarazil — napsal mu, že pokud tím myslí přesně a jen jeden rok, ne déle, odmítá, protože preferuje nájemníky s reálným záměrem zůstat dlouhodobě."
+      hl: "K odmítnutí — oba byty obsazeny",
+      prubeh: "První kontakt 11. 9. jen automatickou reakcí, doptání odesláno 13. 9. Odpověděl 14. 9.: bude bydlet sám, DevOps inženýr v IT na plný úvazek, nájem na 1 rok. Poslední bod majitele zarazil — napsal mu, že pokud tím myslí přesně a jen jeden rok, ne déle, odmítá, protože preferuje nájemníky s reálným záměrem zůstat dlouhodobě. 17. 9.: oba byty obsazené (A2 L. K., A3 T. H.), majitel dál nikoho nehledá — zbývá kliknout na odmítnutí na portálu."
     },
     summary: "Solidní profil na papíře — samostatné bydlení, dobře placená IT profese — ale narazil na jednu vlastní formulaci: „nájem na 1 rok\" zaznělo jako jeho skutečný záměr, ne jen jako odkaz na standardní délku smlouvy. Majitel na to zareagoval přímo a čeká na vyjasnění, jestli by rád zůstal déle.",
     resh: [
@@ -589,12 +589,12 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "A. B.", grp: "proces", stav: "Nový zájemce", byt: "A2", datum: "2026-09-04",
+    ini: "A. B.", grp: "uzavreno", stav: "K odmítnutí", byt: "A2", datum: "2026-09-04",
     termin: null,
     kontakt: {
       tah: "my",
-      hl: "Čeká na naši první odpověď — od 4. 9.",
-      prubeh: "První kontakt 4. 9. jen automatickou reakcí. Jde o samostatnou, novou konverzaci na jiném bytě — jméno je shodné s dřívějším zájemcem o jiný byt v domě, ale nedá se rozlišit, jestli jde o téhož člověka. Odpověď z naší strany zatím neodešla."
+      hl: "K odmítnutí — oba byty obsazeny",
+      prubeh: "První kontakt 4. 9. jen automatickou reakcí. Jde o samostatnou, novou konverzaci na jiném bytě — jméno je shodné s dřívějším zájemcem o jiný byt v domě, ale nedá se rozlišit, jestli jde o téhož člověka. Odpověď z naší strany zatím neodešla. 17. 9.: oba byty obsazené (A2 L. K., A3 T. H.), majitel dál nikoho nehledá — zbývá kliknout na odmítnutí na portálu."
     },
     summary: "Nová a samostatná konverzace, vedená stejným jménem jako dřívější, už uzavřený zájemce o jiný byt v domě. Může jít o tutéž osobu, která se přihlásila znovu, nebo o shodu jména — z jedné automatické reakce se to rozlišit nedá. Karta se vede zvlášť, dokud sama nenapíše víc.",
     resh: [
@@ -696,14 +696,14 @@ const ZAJEMCI = [
     ]
   },
   {
-    ini: "L. K.", grp: "uzavreno", stav: "K odmítnutí", byt: "A2", datum: "2026-09-09",
+    ini: "L. Kr.", grp: "uzavreno", stav: "Odmítnuto", byt: "A2", datum: "2026-09-09",
     termin: null,
     kontakt: {
       tah: "my",
-      hl: "Prohlídka proběhla — majitel se přiklání k odmítnutí",
-      prubeh: "První kontakt 9. 9., kalendář nasdílen a rezervovala termín 10. 9. v 16:00 — dorazila i s dcerou. Majitel po prohlídce (14. 9.) sdělil tři důvody nespokojenosti: ptala se na možnost vrtání do stěn, bydlení by pro ni bylo jen přechodné (v rozporu s podmínkou roční pevné smlouvy), a celkový dojem z komunikace v něm vzbudil obavu z problémového soužití. Rozhodnutí zatím nezní stoprocentně — zbývá kliknout na odmítnutí."
+      hl: "Definitivně odmítnuto 15. 9.",
+      prubeh: "První kontakt 9. 9., kalendář nasdílen a rezervovala termín 10. 9. v 16:00 — dorazila i s dcerou. Majitel po prohlídce (14. 9.) sdělil tři důvody nespokojenosti: ptala se na možnost vrtání do stěn, bydlení by pro ni bylo jen přechodné (v rozporu s podmínkou roční pevné smlouvy), a celkový dojem z komunikace v něm vzbudil obavu z problémového soužití. Majitel rozhodnutí 15. 9. potvrdil jako definitivní."
     },
-    summary: "Skóre se nepočítá. Prohlídka proběhla 10. 9., dorazila i s dcerou. Majitel po ní uvedl tři důvody k odmítnutí: dotaz na vrtání do stěn (signál zásahů do bytu), bydlení by pro ni bylo jen přechodné — v rozporu s podmínkou roční pevné smlouvy — a celkový dojem z komunikace, který v majiteli vzbudil obavu z problémového soužití. Rozhodnutí je založené na osobním dojmu z prohlídky, ne na papírovém profilu; dřívější, chybný LinkedIn nález na vysokou pozici se do hodnocení nikdy nepočítal. Zatím není stoprocentně uzavřené — zbývá kliknout na odmítnutí.",
+    summary: "Skóre se nepočítá. Prohlídka proběhla 10. 9., dorazila i s dcerou. Majitel po ní uvedl tři důvody k odmítnutí: dotaz na vrtání do stěn (signál zásahů do bytu), bydlení by pro ni bylo jen přechodné — v rozporu s podmínkou roční pevné smlouvy — a celkový dojem z komunikace, který v majiteli vzbudil obavu z problémového soužití. Rozhodnutí je založené na osobním dojmu z prohlídky, ne na papírovém profilu; dřívější, chybný LinkedIn nález na vysokou pozici se do hodnocení nikdy nepočítal. Rozhodnutí bylo 15. 9. potvrzeno jako definitivní.",
     resh: [
       { src: "Dojem z prohlídky", res: "nalez", klic: true, txt: "<b>Toto rozhodlo.</b> Dotaz na možnost vrtání do stěn, jen přechodná potřeba bydlení v rozporu s roční pevnou smlouvou, a celkový dojem z komunikace vzbuzující obavu z problémového soužití." },
       { src: "Profil portál", res: "ok", txt: "<b>Ověřená uživatelka</b> — zelená fajfka u identity, jedna z mála." },
