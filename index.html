@@ -376,47 +376,47 @@ const ZAJEMCI = [
   
   },
   {
-    ini: "A. Ben.", grp: "proces", stav: "Prohlídka byla 27. 9. — výsledek neznámý", byt: "A3", datum: "2026-09-25",
+    ini: "A. Ben.", grp: "proces", stav: "Prohlídka skvělá — ozve se do konce týdne", byt: "A3", datum: "2026-09-25",
     termin: null,
     kontakt: {
-      tah: "my",
-      hl: "Prohlídka byla 27. 9. v 17:00 — čeká se na dojem majitele",
-      prubeh: "První kontakt 25. 9.: 29 let, datový inženýr, žije sám, druhý rok v Praze (z Brna), hledá byt i s garáží kvůli autu. Majitel nasdílel kalendář, zájemce si rezervoval neděli 27. 9. v 17:00. V konverzaci po prohlídce nic není."
+      tah: "zajemce",
+      hl: "Prohlídka 27. 9. byla skvělá — čeká se, až se ozve",
+      prubeh: "První kontakt 25. 9.: 29 let, datový inženýr, žije sám, druhý rok v Praze (z Brna), hledá byt i s garáží kvůli autu. Prohlídka 27. 9. v 17:00 proběhla skvěle a majitel by ho klidně v bytě ubytoval. Zájemce má ještě další prohlídky a slíbil, že se ozve do konce týdne."
     },
-    summary: "Ověřený uživatel, jednočlenná domácnost s datovou rolí — laťka pro jednoho člověka je vysoko, ale tahle profese ji obvykle splní. Bez dojmu majitele z prohlídky nejde vyhodnotit.",
+    summary: "Ověřený uživatel, jednočlenná domácnost s datovou rolí — laťka pro jednoho člověka je vysoko, ale tahle profese ji obvykle splní. Po prohlídce ho majitel hodnotí velmi dobře. Míč je na jeho straně, ozvat se má do konce týdne.",
     resh: [
       { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
-      { src: "Profil portál", res: "ok", txt: "<b>Ověřený uživatel</b>, bez pojištění odpovědnosti." }
+      { src: "Dojem z prohlídky", res: "ok", klic: true, txt: "<b>Skvělý.</b> Přímé pozorování majitele — klidně by ho ubytoval." }
     ]
   
   },
   {
-    ini: "T. L.", grp: "proces", stav: "Kalendář nasdílen", byt: "A3", datum: "2026-09-26",
+    ini: "T. L.", grp: "uzavreno", stav: "Odmítnuto", byt: "A3", datum: "2026-09-26",
     termin: null,
     kontakt: {
-      tah: "zajemce",
-      hl: "Kalendář nasdílen 26. 9. — čeká se na výběr termínu",
-      prubeh: "První kontakt 26. 9. v noci: 37 let, OSVČ, hodně pracující, nekuřák, bez zvířat, hledá dlouhodobý pronájem a zajímá ho nabíjení elektroauta. Majitel odpověděl, že nabíjení u stání není jisté, a nasdílel kalendář; 30. 9. termíny aktualizoval."
+      tah: "konec",
+      hl: "Odmítnuto 30. 9. — chce nabíjení elektroauta, které v bytě není",
+      prubeh: "První kontakt 26. 9.: 37 let, OSVČ, hodně pracující, nekuřák, bez zvířat, hledá dlouhodobý pronájem. Majitel nasdílel kalendář, zájemce ale požadoval nabíječku pro elektroauto, kterou byt nemá, a bez ní pronajmout nechce. 30. 9. ho majitel odmítl."
     },
-    summary: "OSVČ bez upřesnění oboru a délky podnikání — to se zjistí osobně. Nabízí o 420 Kč vyšší nájem. Termín si zatím nevybral.",
+    summary: "Odmítnutí stojí na konkrétní podmínce — chybějící vybavení (nabíječka na elektroauto), ne na profilu zájemce.",
     resh: [
-      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
-      { src: "Profil portál", res: "pozor", txt: "<b>Neověřený uživatel</b>, bez pojištění odpovědnosti." }
+      { src: "Podmínky pronájmu", res: "nalez", klic: true, txt: "<b>Toto rozhodlo.</b> Požaduje nabíjení elektroauta, které v bytě není." },
+      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." }
     ]
   
   },
   {
-    ini: "A. E.", grp: "proces", stav: "Kalendář nasdílen", byt: "A3", datum: "2026-09-30",
+    ini: "A. E.", grp: "proces", stav: "Realitní makléřka — necháno", byt: "A3", datum: "2026-09-30",
     termin: null,
     kontakt: {
-      tah: "zajemce",
-      hl: "Kalendář nasdílen 30. 9. — čeká se na výběr termínu",
-      prubeh: "První kontakt 30. 9.: pár, oba pracují a mají povolení k pobytu, nekuřáci, bez mazlíčků. Majitel za tři minuty odpověděl a nasdílel kalendář."
+      tah: "klid",
+      hl: "Makléřka hledající zájemce — majitel ji nechal a uvidí",
+      prubeh: "První kontakt 30. 9., majitel nasdílel kalendář. Zájemkyně majiteli zavolala a ukázalo se, že je realitní makléřka a snaží se sehnat nějaké zájemce. Protože je byt potřeba obsadit už teď, majitel ji nechal a uvidí, s čím případně přijde."
     },
-    summary: "O zájemkyni zatím víme málo — profil nevyplněn, zaměstnání není upřesněno. Jméno vypadá jako přezdívka, takže rešerše má malou váhu.",
+    summary: "Nejde o nájemnici, ale o zprostředkovatelku — vylučovací podmínka „není skutečný zájemce o bydlení\" platí, majitel ji ale vědomě odkládá a využívá. Případné zájemce od ní je potřeba posuzovat stejně jako kohokoli jiného.",
     resh: [
-      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." },
-      { src: "Profil portál", res: "pozor", txt: "<b>Neověřený uživatel</b>, bez pojištění odpovědnosti." }
+      { src: "Osobní kontakt", res: "nalez", klic: true, txt: "<b>Toto rozhodlo.</b> Telefonát s majitelem — realitní makléřka hledající zájemce." },
+      { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." }
     ]
   
   },
