@@ -419,6 +419,19 @@ const ZAJEMCI = [
       { src: "ISIR", res: "ok", txt: "<b>Čistý</b> — 0 nálezů." }
     ]
   
+  },  {
+    ini: "K. T.", grp: "proces", stav: "Kalendář nasdílen", byt: "A3", datum: "2026-09-26",
+    termin: null,
+    kontakt: {
+      tah: "zajemce",
+      hl: "Pozván 30. 9. — čeká se na výběr termínu",
+      prubeh: "První kontakt 26. 9.: pár, oba pracují ve stejné softwarové firmě v Praze, klidní nekuřáci; vlastní malý pes, kterého nabízejí přivést na prohlídku. Majitel se několik dní neozval kvůli nemoci; 30. 9. je pozval na prohlídku a nasdílel kalendář. Podmínku o zvířatech rozvolnil, protože se nedaří najít nájemce."
+    },
+    summary: "Stabilní pár, oba pracují v Praze. Pes byl dřív vylučovací podmínka, teď už nevadí — písemný souhlas se zvířetem se řeší v nájemní smlouvě. Čeká se, jestli si vyberou termín.",
+    resh: [
+      { src: "Zvíře", res: "pozor", txt: "<b>Malý pes.</b> Podmínka rozvolněna, řeší se písemným souhlasem ve smlouvě." },
+      { src: "Profil portál", res: "ok", txt: "<b>Ověřený uživatel</b>, bez pojištění odpovědnosti." }
+    ]
   },
   {
     ini: "M. B.", grp: "proces", stav: "Kalendář nasdílen", byt: "A3", datum: "2026-09-19",
@@ -705,31 +718,17 @@ const ZAJEMCI = [
     termin: null,
     kontakt: {
       tah: "my",
-      hl: "K odmítnutí — vlastní pes",
+      hl: "K odmítnutí — nástup až prosinec/leden",
       prubeh: "První kontakt 26. 9.: pár po sedmi letech vztahu, vedoucí HR v mezinárodní firmě a překladatelka, vlastní 2letá fenka. Nástup plánují až na prosinec/leden, majitel hledá nájemce od 1. 10."
     },
-    summary: "Vlastní pes je vylučovací podmínka, k tomu nástup až za dva až tři měsíce. Zbývá kliknout na odmítnutí.",
+    summary: "Pes už nevadí (podmínka rozvolněna), ale nástup až za dva až tři měsíce nesedí k termínu volnosti. Zbývá kliknout na odmítnutí.",
     resh: [
       { src: "Zvíře", res: "nalez", klic: true, txt: "<b>Vlastní pes.</b> Vylučovací podmínka." },
       { src: "Profil portál", res: "ok", txt: "<b>Ověřený uživatel</b>, bez pojištění odpovědnosti." }
     ]
   
   },
-  {
-    ini: "K. T.", grp: "uzavreno", stav: "K odmítnutí", byt: "A3", datum: "2026-09-26",
-    termin: null,
-    kontakt: {
-      tah: "my",
-      hl: "K odmítnutí — vlastní pes",
-      prubeh: "První kontakt 26. 9.: pár, oba pracují ve stejné softwarové firmě v Praze, klidní nekuřáci; vlastní malý pes, kterého nabízejí přivést na prohlídku."
-    },
-    summary: "Jinak stabilní pár, ale vlastní pes je vylučovací podmínka. Zbývá kliknout na odmítnutí.",
-    resh: [
-      { src: "Zvíře", res: "nalez", klic: true, txt: "<b>Vlastní pes.</b> Vylučovací podmínka." },
-      { src: "Profil portál", res: "ok", txt: "<b>Ověřený uživatel</b>, bez pojištění odpovědnosti." }
-    ]
-  
-  },
+
   {
     ini: "T.", grp: "uzavreno", stav: "Odstoupila", byt: "A3", datum: "2026-09-25",
     termin: null,
